@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+    <channel>
+        <title>nim-lang.dev</title>
+        <link>https://nim-lang.dev/posts</link>
+        <description>nim-lang.dev blog posts</description>
+        <lastBuildDate>Wed, 02 Oct 2019 00:12:55 GMT</lastBuildDate>
+        <docs>http://blogs.law.harvard.edu/tech/rss</docs>
+        <generator>Elmstatic</generator>
+        <language>cn</language>
+        <image>
+            <title>nim-lang.dev</title>
+            <url>https://nim-lang.dev/img/logo.png</url>
+            <link>https://nim-lang.dev/posts</link>
+        </image>
+        <copyright>nim-lang.dev</copyright>
+        <item>
+            <title><![CDATA[学习nim语言]]></title>
+            <link>https://nim-lang.dev/posts/2019-10-01-nim-dev-first</link>
+            <guid>https://nim-lang.dev/posts/2019-10-01-nim-dev-first</guid>
+            <pubDate>Tue, 01 Oct 2019 00:00:00 GMT</pubDate>
+            <description><![CDATA[
+存放学习nim语言的资源的站点。
+...]]></description>
+        </item>
+    </channel>
+</rss>
