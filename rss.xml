@@ -4,7 +4,7 @@
         <title>nim-lang.dev</title>
         <link>https://nim-lang.dev/posts</link>
         <description>nim-lang.dev blog posts</description>
-        <lastBuildDate>Wed, 02 Oct 2019 00:12:55 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 02 Oct 2019 08:28:20 GMT</lastBuildDate>
         <docs>http://blogs.law.harvard.edu/tech/rss</docs>
         <generator>Elmstatic</generator>
         <language>cn</language>
@@ -15,12 +15,30 @@
         </image>
         <copyright>nim-lang.dev</copyright>
         <item>
-            <title><![CDATA[学习nim语言]]></title>
-            <link>https://nim-lang.dev/posts/2019-10-01-nim-dev-first</link>
-            <guid>https://nim-lang.dev/posts/2019-10-01-nim-dev-first</guid>
+            <title><![CDATA[nim语言的特性笔记]]></title>
+            <link>https://nim-lang.dev/posts/2019-10-01-nim-language-features</link>
+            <guid>https://nim-lang.dev/posts/2019-10-01-nim-language-features</guid>
             <pubDate>Tue, 01 Oct 2019 00:00:00 GMT</pubDate>
             <description><![CDATA[
-存放学习nim语言的资源的站点。
+多种从函数返回值的方式
+
+第一种，函数最后一条表达式的值作为函数的返回值。
+proc add1(a,b:int):int =
+    a + b
+
+echo add1(1,2)
+
+第二种，使用函数的隐含返回变量result来返回值。
+proc add2(a,b:int):int =
+    result = a + b
+
+echo add2(2,3)
+
+第三种，通过return语句来返回值。
+proc add3(a,b:int):int =
+    return a + b
+
+echo add3(3,4)
 ...]]></description>
         </item>
     </channel>
