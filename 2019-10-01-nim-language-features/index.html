@@ -25,6 +25,37 @@ var white_space_set:set[char]={'\t','\n',' '}
 ch = '\t'
 if ch in white_space_set:
   echo fmt"'{ch}' is in white space set"
+</code></pre><h2 id="16-10-">16进制字符串转为10进制数字</h2>
+<p>在parseutils模块中有parseHex函数，可以用来将16进制字符串转为10进制数字。类似地，还有parseBin和parseOct函数用于2进制和8进制的转换。</p>
+<p>在strutils模块中有fromHex, fromBin, fromOct函数可以完成类似功能。同时在其中还包括toHex, toBin, toOct函数来完成反向的转换。</p>
+<pre><code>import parseutils
+
+var hexStr:string = "1B"
+var num:int 
+if parseHex(hexStr,num) &gt; 0:
+  echo "success:" &amp; $num
+else:
+  echo "failure"
+</code></pre><h2 id="-">获取命令行参数</h2>
+<p>可以使用os模块的paramCount和paramStr来获取命令行参数的个数和每一个命令行参数。paramStr(0)可以用来获取应用程序的名称。paramStr(1)用来获取第一个参数，依此类推。和c语言的main函数的argc不同，如果没有指定任何命令行参数，paramCount为0。</p>
+<pre><code>import os,parseutils
+
+var beepPerMinute = 60
+
+if os.paramCount() &lt;= 0:
+  echo "usage: ./beep &lt;beep per minute&gt;"
+  quit(-1)
+
+if parseutils.parseInt(os.paramStr(1),beepPerMinute) &lt;= 0:
+  beepPerMinute = 60
+
+var sleepTimeMillis:int = int(float64(60*1000)/float64(beepPerMinute))
+
+var count = 1    
+while true:
+  echo $count &amp; $chr(7)
+  inc(count)
+  os.sleep(sleepTimeMillis)
 </code></pre><h2 id="-">使用正则表达式</h2>
 <p>下面程序使用正则表达式来判断一个字符是否属于定义的合法字符的集合</p>
 <pre><code>import re
