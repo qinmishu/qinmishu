@@ -1,0 +1,14 @@
+---
+title: "Post With Code"
+author: "Harlow Malloc"
+date: "2023-04-06"
+categories: [news, code, analysis]
+image: "image.jpg"
+jupyter: python3
+---
+
+这是一篇带有代码的博客.
+
+```{python}
+1 + 1
+```

@@ -1,0 +1,21 @@
+---
+title: "关于"
+image: profile.jpg
+about:
+  template: jolla
+  links:
+#    - icon: twitter
+#      text: Twitter
+#      href: https://twitter.com
+#    - icon: linkedin
+#      text: LinkedIn
+#      href: https://linkedin.com
+    - icon: github
+      text: Github
+      href: https://github.com
+
+---
+
+欢迎来到亲密数频道! 
+
+个人简介：我从事通信行业的软件开发工作，已经超过10年，至今对信息技术仍充满热情。 我参与过GSM、WCDMA、IMS、LTE、5G等几代网络的网元和协议的开发。我有在Linux、Windows及云计算平台上的应用开发经验。我对几种编程范式如面向过程、面向对象及函数式编程等有一定的理解。我使用过多种编程语言进行开发，如C/C++、Java、Python、Go等。同时我对互联网相关技术如HTML、CSS、Javascript和游戏开发等方面也感兴趣。我也具有一定的用Python或Julia进行数据分析的技能。 业余时间我喜欢看数学、文学、历史等方面的书籍。总体而言我是个热爱技术、乐于学习的技术人员。

@@ -1,0 +1,11 @@
+{
+  "hash": "6dc4a5a92693d46d2403fd7c6d3328af",
+  "result": {
+    "markdown": "---\ntitle: Post With Code\nauthor: Harlow Malloc\ndate: '2023-04-06'\ncategories:\n  - news\n  - code\n  - analysis\nimage: image.jpg\n---\n\n这是一篇带有代码的博客.\n\n::: {.cell execution_count=1}\n``` {.python .cell-code}\n1 + 1\n```\n\n::: {.cell-output .cell-output-display execution_count=1}\n```\n2\n```\n:::\n:::\n\n\n",
+    "supporting": [
+      "index_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}

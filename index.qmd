@@ -1,0 +1,14 @@
+---
+title: "亲密数"
+listing:
+  contents: posts
+  sort: "date desc"
+  type: default
+  categories: true
+  sort-ui: false
+  filter-ui: false
+page-layout: full
+title-block-banner: true
+---
+
+欢迎来到亲密数频道! 
