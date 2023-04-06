@@ -11,7 +11,7 @@
     "href": "index.html",
     "title": "亲密数",
     "section": "",
-    "text": "欢迎来到亲密数频道!\n\n\n\n\n\n\n\n\n  \n\n\n\n\nPost With Code\n\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\n\n\nApr 6, 2023\n\n\nHarlow Malloc\n\n\n\n\n\n\n  \n\n\n\n\n欢迎来到我的博客\n\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\n\n\nApr 3, 2023\n\n\nTristan O’Malley\n\n\n\n\n\n\nNo matching items"
+    "text": "欢迎来到亲密数频道!\n\n\n\n\n\n\n\n\n  \n\n\n\n\nARM汇编语言编程\n\n\n\n\n\n\n\narm\n\n\nassembly\n\n\nraspberry-pi\n\n\n\n\n\n\n\n\n\n\n\nApr 6, 2023\n\n\n秦米书\n\n\n\n\n\n\n  \n\n\n\n\nPost With Code\n\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\n\n\nApr 6, 2023\n\n\n秦米书\n\n\n\n\n\n\n  \n\n\n\n\n欢迎来到我的博客\n\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\n\n\nApr 3, 2023\n\n\n秦米书\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/post-with-code/index.html",
@@ -26,5 +26,40 @@
     "title": "欢迎来到我的博客",
     "section": "",
     "text": "这是第一篇博客. 欢迎!"
+  },
+  {
+    "objectID": "posts/arm-assembly/index.html",
+    "href": "posts/arm-assembly/index.html",
+    "title": "ARM汇编语言编程",
+    "section": "",
+    "text": "以下内容为学习https://thinkingeek.com/2013/01/27/arm-assembler-raspberry-pi-chapter-8/的摘录.\n\n\nThese sets of allowed operands in instructions are collectively called indexing modes.\n\n\n\nAn array is a sequence of items of the same kind in memory."
+  },
+  {
+    "objectID": "posts/arm-assembly/index.html#chap7-数组和结构体",
+    "href": "posts/arm-assembly/index.html#chap7-数组和结构体",
+    "title": "ARM架构汇编语言编程",
+    "section": "",
+    "text": "1 + 1"
+  },
+  {
+    "objectID": "posts/arm-assembly/index.html#索引模式的定义",
+    "href": "posts/arm-assembly/index.html#索引模式的定义",
+    "title": "ARM汇编语言编程-08-数组和结构体",
+    "section": "索引模式的定义",
+    "text": "索引模式的定义\nThese sets of allowed operands in instructions are collectively called indexing modes."
+  },
+  {
+    "objectID": "posts/arm-assembly/index.html#数组和结构体",
+    "href": "posts/arm-assembly/index.html#数组和结构体",
+    "title": "ARM汇编语言编程",
+    "section": "",
+    "text": "以下内容为学习https://thinkingeek.com/2013/01/27/arm-assembler-raspberry-pi-chapter-8/的摘录.\n\n\nThese sets of allowed operands in instructions are collectively called indexing modes.\n\n\n\nAn array is a sequence of items of the same kind in memory."
+  },
+  {
+    "objectID": "posts/arm-assembly/index.html#函数",
+    "href": "posts/arm-assembly/index.html#函数",
+    "title": "ARM汇编语言编程",
+    "section": "09-函数",
+    "text": "09-函数\n以下内容为学习https://thinkingeek.com/2013/02/02/arm-assembler-raspberry-pi-chapter-9/的摘录.\nFunctions are a way to reuse code.\nAAPCS:Procedure Call Standard for ARM Architecture\n\n\n\nRegister\nRegister Alias\nDescription\nRemark\n\n\n\n\nr15\npc\nProgram Counter\n\n\n\nr14\nlr\nLink Register\n\n\n\nr13\nsp\nStack Pointer\n\n\n\n\ncpsr\nCurrent Program Status Register\n\n\n\n\nFunctions can receive parameters. The first 4 parameters must be stored, sequentially, in the registers r0, r1, r2 and r3.\n\nWell behaved functions\nA function must adhere, at least, to the following rules if we want it to be AAPCS compliant.\n\nA function should not make any assumption on the contents of the cpsr. So, at the entry of a function condition codes N, Z, C and V are unknown.\nA function can freely modify registers r0, r1, r2 and r3.\nA function cannot assume anything on the contents of r0, r1, r2 and r3 unless they are playing the role of a parameter.\nA function can freely modify lr but the value upon entering the function will be needed when leaving the function (so such value must be kept somewhere).\nA function can modify all the remaining registers as long as their values are restored upon leaving the function. This includes sp and registers r4 to r11.\nThis means that, after calling a function, we have to assume that (only) registers r0, r1, r2, r3 and lr have been overwritten.\n\n\n\nCalling a function\ndirect call:\nbl label\nindirect call(first storing the address of the function into a register):\nblx Rsource1 /* Rsource1 means register operand1 */\nIn both cases the behaviour is as follows: the address of the function (immediately encoded in the bl or using the value of the register in blx) is stored in pc. The address of the instruction following the bl or blx instruction is kept in lr.\n\n\nLeaving a function\nA well behaved function, as stated above, will have to keep the initial value of lr somewhere. When leaving the function, we will retrieve that value and put it in some register (it can be lr again but this is not mandatory). Then we will bx Rsource1 (we could use blx as well but the latter would update lr which is useless here).\n\n\nReturning data from functions\nFunctions must use r0 for data that fits in 32 bit (or less). This is, C types char, short, int, long (and float though we have not seen floating point yet) will be returned in r0. For basic types of 64 bit, like C types long long and double, they will be returned in r1 and r0. Any other data is returned through the stack unless it is 32 bit or less, where it will be returned in r0.\n\n\nHello world (puts)\n/* -- hello01.s */\n.data\n\ngreeting:\n .asciz \"Hello world\"\n\n.balign 4\nreturn: .word 0\n\n.text\n\n.global main\nmain:\n    ldr r1, address_of_return     /*   r1 ← &address_of_return */\n    str lr, [r1]                  /*   *r1 ← lr */\n\n    ldr r0, address_of_greeting   /* r0 ← &address_of_greeting */\n                                  /* First parameter of puts */\n\n    bl puts                       /* Call to puts */\n                                  /* lr ← address of next instruction */\n\n    ldr r1, address_of_return     /* r1 ← &address_of_return */\n    ldr lr, [r1]                  /* lr ← *r1 */\n    bx lr                         /* return from main */\naddress_of_greeting: .word greeting\naddress_of_return: .word return\n\n/* External */\n.global puts\n\n\nInteraction (scanf, printf)\n/* -- printf01.s */\n.data\n\n/* First message */\n.balign 4\nmessage1: .asciz \"Hey, type a number: \"\n\n/* Second message */\n.balign 4\nmessage2: .asciz \"I read the number %d\\n\"\n\n/* Format pattern for scanf */\n.balign 4\nscan_pattern : .asciz \"%d\"\n\n/* Where scanf will store the number read */\n.balign 4\nnumber_read: .word 0\n\n.balign 4\nreturn: .word 0\n\n.text\n\n.global main\nmain:\n    ldr r1, address_of_return        /* r1 ← &address_of_return */\n    str lr, [r1]                     /* *r1 ← lr */\n\n    ldr r0, address_of_message1      /* r0 ← &message1 */\n    bl printf                        /* call to printf */\n\n    ldr r0, address_of_scan_pattern  /* r0 ← &scan_pattern */\n    ldr r1, address_of_number_read   /* r1 ← &number_read */\n    bl scanf                         /* call to scanf */\n\n    ldr r0, address_of_message2      /* r0 ← &message2 */\n    ldr r1, address_of_number_read   /* r1 ← &number_read */\n    ldr r1, [r1]                     /* r1 ← *r1 */\n    bl printf                        /* call to printf */\n\n    ldr r0, address_of_number_read   /* r0 ← &number_read */\n    ldr r0, [r0]                     /* r0 ← *r0 */\n\n    ldr lr, address_of_return        /* lr ← &address_of_return */\n    ldr lr, [lr]                     /* lr ← *lr */\n    bx lr                            /* return from main using lr */\naddress_of_message1 : .word message1\naddress_of_message2 : .word message2\naddress_of_scan_pattern : .word scan_pattern\naddress_of_number_read : .word number_read\naddress_of_return : .word return\n\n/* External */\n.global printf\n.global scanf\n\n\nFirst function (multiply by 5)\n/* -- printf02.s */\n.data\n\n/* First message */\n.balign 4\nmessage1: .asciz \"Hey, type a number: \"\n\n/* Second message */\n.balign 4\nmessage2: .asciz \"%d times 5 is %d\\n\"\n\n/* Format pattern for scanf */\n.balign 4\nscan_pattern : .asciz \"%d\"\n\n/* Where scanf will store the number read */\n.balign 4\nnumber_read: .word 0\n\n.balign 4\nreturn: .word 0\n\n.balign 4\nreturn2: .word 0\n\n.text\n\n/*\nmult_by_5 function\n*/\nmult_by_5: \n    ldr r1, address_of_return2       /* r1 ← &address_of_return */\n    str lr, [r1]                     /* *r1 ← lr */\n\n    add r0, r0, r0, LSL #2           /* r0 ← r0 + 4*r0 */\n\n    ldr lr, address_of_return2       /* lr ← &address_of_return */\n    ldr lr, [lr]                     /* lr ← *lr */\n    bx lr                            /* return from main using lr */\naddress_of_return2 : .word return2\n\n.global main\nmain:\n    ldr r1, address_of_return        /* r1 ← &address_of_return */\n    str lr, [r1]                     /* *r1 ← lr */\n\n    ldr r0, address_of_message1      /* r0 ← &message1 */\n    bl printf                        /* call to printf */\n\n    ldr r0, address_of_scan_pattern  /* r0 ← &scan_pattern */\n    ldr r1, address_of_number_read   /* r1 ← &number_read */\n    bl scanf                         /* call to scanf */\n\n    ldr r0, address_of_number_read   /* r0 ← &number_read */\n    ldr r0, [r0]                     /* r0 ← *r0 */\n    bl mult_by_5\n\n    mov r2, r0                       /* r2 ← r0 */\n    ldr r1, address_of_number_read   /* r1 ← &number_read */\n    ldr r1, [r1]                     /* r1 ← *r1 */\n    ldr r0, address_of_message2      /* r0 ← &message2 */\n    bl printf                        /* call to printf */\n\n    ldr lr, address_of_return        /* lr ← &address_of_return */\n    ldr lr, [lr]                     /* lr ← *lr */\n    bx lr                            /* return from main using lr */\naddress_of_message1 : .word message1\naddress_of_message2 : .word message2\naddress_of_scan_pattern : .word scan_pattern\naddress_of_number_read : .word number_read\naddress_of_return : .word return\n\n/* External */\n.global printf\n.global scanf"
   }
 ]

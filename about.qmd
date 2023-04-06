@@ -12,7 +12,10 @@ about:
 #      href: https://linkedin.com
     - icon: github
       text: Github
-      href: https://github.com
+      href: https://github.com/qinmishu
+    - icon: twitter  
+      text: CSDN 
+      href: https://blog.csdn.net/xuhx
 
 ---
 

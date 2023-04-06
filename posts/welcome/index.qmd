@@ -1,6 +1,6 @@
 ---
 title: "欢迎来到我的博客"
-author: "Tristan O'Malley"
+author: "秦米书"
 date: "2023-04-03"
 categories: [news]
 ---

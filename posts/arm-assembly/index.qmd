@@ -1,0 +1,257 @@
+---
+title: "ARM汇编语言编程"
+author: "秦米书"
+date: "2023-04-06"
+categories: [arm, assembly, raspberry-pi]
+image: "image.jpg"
+format: 
+  html:
+    toc: true 
+editor: visual
+jupyter: julia-1.8
+---
+
+## 08-数组和结构体
+
+以下内容为学习<https://thinkingeek.com/2013/01/27/arm-assembler-raspberry-pi-chapter-8/>的摘录.
+
+### 索引模式的定义
+
+These sets of allowed operands in instructions are collectively called indexing modes.
+
+### 什么是数组
+
+An array is a sequence of items of the same kind in memory.
+
+## 09-函数
+
+以下内容为学习<https://thinkingeek.com/2013/02/02/arm-assembler-raspberry-pi-chapter-9/>的摘录.
+
+Functions are a way to reuse code.
+
+AAPCS:Procedure Call Standard for ARM Architecture
+
+| Register | Register Alias | Description                     | Remark |
+|----------|----------------|---------------------------------|--------|
+| r15      | pc             | Program Counter                 |        |
+| r14      | lr             | Link Register                   |        |
+| r13      | sp             | Stack Pointer                   |        |
+|          | cpsr           | Current Program Status Register |        |
+
+Functions can receive parameters. The first 4 parameters must be stored, sequentially, in the registers `r0`, `r1`, `r2` and `r3`.
+
+### Well behaved functions
+
+A function must adhere, at least, to the following rules if we want it to be AAPCS compliant.
+
+-   A function should not make any assumption on the contents of the `cpsr`. So, at the entry of a function condition codes N, Z, C and V are unknown.
+
+-   A function can freely modify registers `r0`, `r1`, `r2` and `r3`.
+
+-   A function cannot assume anything on the contents of `r0`, `r1`, `r2` and `r3` unless they are playing the role of a parameter.
+
+-   A function can freely modify `lr` but the value upon entering the function will be needed when leaving the function (so such value must be kept somewhere).
+
+-   A function can modify all the remaining registers as long as their values are restored upon leaving the function. This includes `sp` and registers `r4` to `r11`.
+
+-   This means that, after calling a function, we have to assume that (only) registers `r0`, `r1`, `r2`, `r3` and `lr` have been overwritten.
+
+### Calling a function
+
+direct call:
+
+```         
+bl label
+```
+
+indirect call(first storing the address of the function into a register):
+
+```         
+blx Rsource1 /* Rsource1 means register operand1 */
+```
+
+In both cases the behaviour is as follows: the address of the function (immediately encoded in the bl or using the value of the register in blx) is stored in pc. The address of the instruction following the bl or blx instruction is kept in lr.
+
+### Leaving a function
+
+A well behaved function, as stated above, will have to keep the initial value of lr somewhere. When leaving the function, we will retrieve that value and put it in some register (it can be lr again but this is not mandatory). Then we will bx Rsource1 (we could use blx as well but the latter would update lr which is useless here).
+
+### Returning data from functions
+
+Functions must use r0 for data that fits in 32 bit (or less). This is, C types char, short, int, long (and float though we have not seen floating point yet) will be returned in r0. For basic types of 64 bit, like C types long long and double, they will be returned in r1 and r0. Any other data is returned through the stack unless it is 32 bit or less, where it will be returned in r0.
+
+### Hello world (puts)
+
+```
+/* -- hello01.s */
+.data
+
+greeting:
+ .asciz "Hello world"
+
+.balign 4
+return: .word 0
+
+.text
+
+.global main
+main:
+    ldr r1, address_of_return     /*   r1 ← &address_of_return */
+    str lr, [r1]                  /*   *r1 ← lr */
+
+    ldr r0, address_of_greeting   /* r0 ← &address_of_greeting */
+                                  /* First parameter of puts */
+
+    bl puts                       /* Call to puts */
+                                  /* lr ← address of next instruction */
+
+    ldr r1, address_of_return     /* r1 ← &address_of_return */
+    ldr lr, [r1]                  /* lr ← *r1 */
+    bx lr                         /* return from main */
+address_of_greeting: .word greeting
+address_of_return: .word return
+
+/* External */
+.global puts
+```
+
+### Interaction (scanf, printf)
+
+```
+/* -- printf01.s */
+.data
+
+/* First message */
+.balign 4
+message1: .asciz "Hey, type a number: "
+
+/* Second message */
+.balign 4
+message2: .asciz "I read the number %d\n"
+
+/* Format pattern for scanf */
+.balign 4
+scan_pattern : .asciz "%d"
+
+/* Where scanf will store the number read */
+.balign 4
+number_read: .word 0
+
+.balign 4
+return: .word 0
+
+.text
+
+.global main
+main:
+    ldr r1, address_of_return        /* r1 ← &address_of_return */
+    str lr, [r1]                     /* *r1 ← lr */
+
+    ldr r0, address_of_message1      /* r0 ← &message1 */
+    bl printf                        /* call to printf */
+
+    ldr r0, address_of_scan_pattern  /* r0 ← &scan_pattern */
+    ldr r1, address_of_number_read   /* r1 ← &number_read */
+    bl scanf                         /* call to scanf */
+
+    ldr r0, address_of_message2      /* r0 ← &message2 */
+    ldr r1, address_of_number_read   /* r1 ← &number_read */
+    ldr r1, [r1]                     /* r1 ← *r1 */
+    bl printf                        /* call to printf */
+
+    ldr r0, address_of_number_read   /* r0 ← &number_read */
+    ldr r0, [r0]                     /* r0 ← *r0 */
+
+    ldr lr, address_of_return        /* lr ← &address_of_return */
+    ldr lr, [lr]                     /* lr ← *lr */
+    bx lr                            /* return from main using lr */
+address_of_message1 : .word message1
+address_of_message2 : .word message2
+address_of_scan_pattern : .word scan_pattern
+address_of_number_read : .word number_read
+address_of_return : .word return
+
+/* External */
+.global printf
+.global scanf
+```
+
+### First function (multiply by 5) 
+
+```
+/* -- printf02.s */
+.data
+
+/* First message */
+.balign 4
+message1: .asciz "Hey, type a number: "
+
+/* Second message */
+.balign 4
+message2: .asciz "%d times 5 is %d\n"
+
+/* Format pattern for scanf */
+.balign 4
+scan_pattern : .asciz "%d"
+
+/* Where scanf will store the number read */
+.balign 4
+number_read: .word 0
+
+.balign 4
+return: .word 0
+
+.balign 4
+return2: .word 0
+
+.text
+
+/*
+mult_by_5 function
+*/
+mult_by_5: 
+    ldr r1, address_of_return2       /* r1 ← &address_of_return */
+    str lr, [r1]                     /* *r1 ← lr */
+
+    add r0, r0, r0, LSL #2           /* r0 ← r0 + 4*r0 */
+
+    ldr lr, address_of_return2       /* lr ← &address_of_return */
+    ldr lr, [lr]                     /* lr ← *lr */
+    bx lr                            /* return from main using lr */
+address_of_return2 : .word return2
+
+.global main
+main:
+    ldr r1, address_of_return        /* r1 ← &address_of_return */
+    str lr, [r1]                     /* *r1 ← lr */
+
+    ldr r0, address_of_message1      /* r0 ← &message1 */
+    bl printf                        /* call to printf */
+
+    ldr r0, address_of_scan_pattern  /* r0 ← &scan_pattern */
+    ldr r1, address_of_number_read   /* r1 ← &number_read */
+    bl scanf                         /* call to scanf */
+
+    ldr r0, address_of_number_read   /* r0 ← &number_read */
+    ldr r0, [r0]                     /* r0 ← *r0 */
+    bl mult_by_5
+
+    mov r2, r0                       /* r2 ← r0 */
+    ldr r1, address_of_number_read   /* r1 ← &number_read */
+    ldr r1, [r1]                     /* r1 ← *r1 */
+    ldr r0, address_of_message2      /* r0 ← &message2 */
+    bl printf                        /* call to printf */
+
+    ldr lr, address_of_return        /* lr ← &address_of_return */
+    ldr lr, [lr]                     /* lr ← *lr */
+    bx lr                            /* return from main using lr */
+address_of_message1 : .word message1
+address_of_message2 : .word message2
+address_of_scan_pattern : .word scan_pattern
+address_of_number_read : .word number_read
+address_of_return : .word return
+
+/* External */
+.global printf
+.global scanf
+```
