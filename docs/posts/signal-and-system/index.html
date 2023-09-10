@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="秦米书">
+<meta name="dcterms.date" content="2023-09-10">
 
-<title>亲密数</title>
+<title>亲密数 - Signal and System a Primer</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,24 +25,22 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -60,40 +60,11 @@ ul.task-list li input[type="checkbox"] {
     "search-submit-button-title": "Submit"
   }
 }</script>
-<script>
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../../styles.css">
 </head>
 
 <body class="nav-fixed">
@@ -103,7 +74,7 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">亲密数</span>
     </a>
   </div>
@@ -114,7 +85,7 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./about.html" rel="" target="">
+    <a class="nav-link" href="../../about.html" rel="" target="">
  <span class="menu-text">关于</span></a>
   </li>  
   <li class="nav-item compact">
@@ -137,196 +108,191 @@ ul.task-list li input[type="checkbox"] {
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page-left">
-      <h1 class="title">亲密数</h1>
-                      </div>
+    <div class="quarto-title column-body">
+      <h1 class="title">Signal and System a Primer</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">telecom</div>
+              </div>
+                  </div>
   </div>
     
   
   <div class="quarto-title-meta">
 
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>秦米书 </p>
+            </div>
+    </div>
       
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">September 10, 2023</p>
+      </div>
+    </div>
     
       
     </div>
     
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(4)</span></div><div class="category" data-category="analysis">analysis <span class="quarto-category-count">(1)</span></div><div class="category" data-category="arm">arm <span class="quarto-category-count">(1)</span></div><div class="category" data-category="assembly">assembly <span class="quarto-category-count">(1)</span></div><div class="category" data-category="code">code <span class="quarto-category-count">(1)</span></div><div class="category" data-category="news">news <span class="quarto-category-count">(2)</span></div><div class="category" data-category="raspberry-pi">raspberry-pi <span class="quarto-category-count">(1)</span></div><div class="category" data-category="telecom">telecom <span class="quarto-category-count">(1)</span></div></div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#reference" id="toc-reference" class="nav-link active" data-scroll-target="#reference">reference</a></li>
+  <li><a href="#basic-concepts" id="toc-basic-concepts" class="nav-link" data-scroll-target="#basic-concepts">1 Basic Concepts</a>
+  <ul class="collapse">
+  <li><a href="#basic-continuous-time-signals" id="toc-basic-continuous-time-signals" class="nav-link" data-scroll-target="#basic-continuous-time-signals">1.4 basic continuous time signals</a></li>
+  <li><a href="#basic-discrete-time-signals" id="toc-basic-discrete-time-signals" class="nav-link" data-scroll-target="#basic-discrete-time-signals">1.5 basic discrete time signals</a></li>
+  <li><a href="#basic-operations-on-signals" id="toc-basic-operations-on-signals" class="nav-link" data-scroll-target="#basic-operations-on-signals">1.6 Basic operations on signals</a></li>
+  <li><a href="#classifications-of-systems" id="toc-classifications-of-systems" class="nav-link" data-scroll-target="#classifications-of-systems">1.7 Classifications of systems</a></li>
+  </ul></li>
+  <li><a href="#convolution" id="toc-convolution" class="nav-link" data-scroll-target="#convolution">2 Convolution</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
 
-<p>欢迎来到亲密数频道!</p>
+<p>This is a note for Signal and System a Primer with Matlab. I don’t have Matlab, but I may use Scilab/Octave/Python/Julia/R/Haskell instead when necessary.</p>
+<section id="reference" class="level1">
+<h1>reference</h1>
+<p><a href="https://quickref.me/latex">latex cheetsheet</a></p>
+</section>
+<section id="basic-concepts" class="level1">
+<h1>1 Basic Concepts</h1>
+<p>Signal: x(t), function of time, simplified definition.</p>
+<p>System: A collection of devices that operate on input signal x(t) and produce output signal y(t).</p>
+<p>Continuous time signal: takes a value at every instant of time.</p>
+<p>Discrete time signal: is only defined at particular instant of time.</p>
+<p>Periodic vs nonperiodic signals</p>
+<p>Analog vs digital signals</p>
+<p>ADC: Analog to Digital Converter</p>
+<p>For continuous signal x(t), the normalized energy E of x(t) is (assuming x(t) is real)</p>
+<p><span class="math display">\[
+E = \int_{-\infty}^{+\infty} x(t)^2 dt
+\]</span></p>
+<p>The normalized power P is</p>
+<p><span class="math display">\[
+P = \lim\limits_{T \rightarrow \infty} \frac{1}{T} \int_{-T/2}^{+T/2} x(t)^2 dt
+\]</span></p>
+<p>If x(t) is complex valued</p>
+<p><span class="math display">\[
+E = \int_{-\infty}^{+\infty} \vert x(t) \vert ^2 dt
+\]</span></p>
+<p>The normalized power P is</p>
+<p><span class="math display">\[
+P = \lim\limits_{T \rightarrow \infty} \frac{1}{T} \int_{-T/2}^{+T/2} \vert x(t) \vert ^2 dt
+\]</span></p>
+<p>For discrete time signal x[n]</p>
+<p><span class="math display">\[
+E = \sum_{n = -\infty}^{+\infty} \vert x[n] \vert ^2
+\]</span></p>
+<p>The normalized power P</p>
+<p><span class="math display">\[
+P = \lim\limits_{N \rightarrow \infty} \frac{1}{2N+1} \sum_{n = -N}^{+N} \vert x[n] \vert ^2
+\]</span></p>
+<p>Energy signal: <span class="math inline">\(0&lt;E&lt;\infty\)</span></p>
+<p>Power signal: <span class="math inline">\(0&lt;P&lt;\infty\)</span></p>
+<p>Even vs Odd signal</p>
+<p>Any signal can be represented as sum of even and odd signals</p>
+<p><span class="math display">\[
+\begin{align}
+x(t) = x_e(t) + x_o(t) \\
+x_e(t) = \frac{1}{2} ( x(t) + x(-t) ) \\
+x_o(t) = \frac{1}{2} ( x(t) - x(-t) )
+\end{align}
+\]</span></p>
+<section id="basic-continuous-time-signals" class="level2">
+<h2 class="anchored" data-anchor-id="basic-continuous-time-signals">1.4 basic continuous time signals</h2>
+<p>Unit step function u(t)</p>
+<p><span class="math display">\[
+u(t) = \begin{cases}
+   1 &amp;\text{t &gt; 0} \\
+   0 &amp;\text{t &lt; 0}   
+\end{cases}
+\]</span></p>
+<p>Unit impulse function <span class="math inline">\(\delta(t)\)</span></p>
+<p><span class="math display">\[
+\delta(t) = \frac{d}{dt}u(t) = \begin{cases}
+   0 &amp; t \ne 0 \\
+   \text{undefined} &amp; t = 0
+\end{cases}
+\]</span></p>
+<p>The impulse function has the property(called sampling or sifting property)</p>
+<p><span class="math display">\[
+\int_{a}^{b} f(t) \delta(t-t_0)  dt = \int_{a}^{b} f(t_0) \delta(t-t_0) dt = f(t_0) \int_{a}^{b} \delta(t-t_0) dt = f(t_0)
+\]</span></p>
+<p>Unit ramp function</p>
+<p><span class="math display">\[
+r(t) = t \times u(t)
+\]</span></p>
+<p>Unit rectangle pulse function</p>
+<p>Unit triangular pulse function</p>
+<p>sinusoidal signal</p>
+<p>exponential signal</p>
+</section>
+<section id="basic-discrete-time-signals" class="level2">
+<h2 class="anchored" data-anchor-id="basic-discrete-time-signals">1.5 basic discrete time signals</h2>
+<p>Unit step sequence</p>
+<p><span class="math display">\[
+u(n) = \begin{cases}
+   0 &amp;\text{n &lt; 0} \\
+   1 &amp; n \ge 0
+\end{cases}
+\]</span></p>
+<p>Unit impulse sequence</p>
+<p><span class="math display">\[
+\delta(n) = \begin{cases}
+   0 &amp; n \ne 0 \\
+   1 &amp; n = 0
+\end{cases}
+\]</span></p>
+<p>Unit ramp sequence</p>
+<p><span class="math display">\[
+r(n) = \begin{cases}
+   0 &amp; n &lt; 0 \\
+   n &amp; n \ge 0
+\end{cases}
+\]</span></p>
+<p>Sinusoidal sequence</p>
+<p>Exponential sequence</p>
+</section>
+<section id="basic-operations-on-signals" class="level2">
+<h2 class="anchored" data-anchor-id="basic-operations-on-signals">1.6 Basic operations on signals</h2>
+<p>Time reversal</p>
+<p>Time scaling</p>
+<p>Time shifting</p>
+<p>Amplitude transformation</p>
+</section>
+<section id="classifications-of-systems" class="level2">
+<h2 class="anchored" data-anchor-id="classifications-of-systems">1.7 Classifications of systems</h2>
+<p>continuous time vs discrete time systems</p>
+<p>causal vs noncausal systems: A causal system is one whose output y(t) at present time depends only on the present and past values(not future) of the input x(t).</p>
+<p>linear and nonlinear systems: Linearity is the property of the system describing a linear relationship between input (cause) and output (effect). The property is a combination of both homogeneity(scaling) property and the additivity property. The homogeneity property requires that if the input is multiplied by any constant k, then the output is multiplied by the same constant. The additivity property requires that the response to a sum of inputs is the sum of the responses to each input applied separately.</p>
+<p><span class="math display">\[
+T \lbrace k_1 x_1 + k_2 x_2 \rbrace = k_1 y_1 + k_2 y_2
+\]</span></p>
+<p>time varying and time invariant systems: A time-varying system is one whose parameters vary with time. In a time-invariant system, a time shift (advance or delay) in the input signal leads to the time shift in the output signal.</p>
+<p>systems with and without memory: When the output of a system depends on the past and/or future input, the system is said to have a memory. A memoryless system is one in which the current output depends only on the current input; it does not depend on the past or future inputs.A system with a memory is also called a dynamic system. A memoryless system is called a static system.</p>
+</section>
+</section>
+<section id="convolution" class="level1">
+<h1>2 Convolution</h1>
 
 
+</section>
 
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="telecom" data-listing-date-sort="1694275200000" data-listing-file-modified-sort="1694317564906" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4">
-<div class="thumbnail">
-<p><a href="./posts/signal-and-system/index.html"> <img src="./posts/signal-and-system/image.jpg" class="thumbnail-image"> </a></p>
-</div>
-<div class="body">
-<a href="./posts/signal-and-system/index.html">
-<h3 class="no-anchor listing-title">
-Signal and System a Primer
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('telecom'); return false;">
-telecom
-</div>
-</div>
-<a href="./posts/signal-and-system/index.html">
-<div class="listing-description">
-This is a note for Signal and System a Primer with Matlab. I don’t have Matlab, but I may use Scilab/Octave/Python/Julia/R/Haskell instead when necessary.
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/signal-and-system/index.html">
-<div class="listing-date">
-Sep 10, 2023
-</div>
-<div class="listing-author">
-秦米书
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="arm,assembly,raspberry-pi" data-listing-date-sort="1680710400000" data-listing-file-modified-sort="1680767944288" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11">
-<div class="thumbnail">
-<p><a href="./posts/arm-assembly/index.html"> <img src="./posts/arm-assembly/image.jpg" class="thumbnail-image"> </a></p>
-</div>
-<div class="body">
-<a href="./posts/arm-assembly/index.html">
-<h3 class="no-anchor listing-title">
-ARM汇编语言编程
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('arm'); return false;">
-arm
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('assembly'); return false;">
-assembly
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('raspberry-pi'); return false;">
-raspberry-pi
-</div>
-</div>
-<a href="./posts/arm-assembly/index.html">
-<div class="listing-description">
-以下内容为学习https://thinkingeek.com/2013/01/27/arm-assembler-raspberry-pi-chapter-8/的摘录.
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/arm-assembly/index.html">
-<div class="listing-date">
-Apr 6, 2023
-</div>
-<div class="listing-author">
-秦米书
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="news,code,analysis" data-listing-date-sort="1680710400000" data-listing-file-modified-sort="1680757569926" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
-<div class="thumbnail">
-<p><a href="./posts/post-with-code/index.html"> <img src="./posts/post-with-code/image.jpg" class="thumbnail-image"> </a></p>
-</div>
-<div class="body">
-<a href="./posts/post-with-code/index.html">
-<h3 class="no-anchor listing-title">
-Post With Code
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('news'); return false;">
-news
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('code'); return false;">
-code
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('analysis'); return false;">
-analysis
-</div>
-</div>
-<a href="./posts/post-with-code/index.html">
-<div class="listing-description">
-这是一篇带有代码的博客.
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/post-with-code/index.html">
-<div class="listing-date">
-Apr 6, 2023
-</div>
-<div class="listing-author">
-秦米书
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="3" data-categories="news" data-listing-date-sort="1680451200000" data-listing-file-modified-sort="1680758034093" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
-<div class="thumbnail">
-<p><a href="./posts/welcome/index.html"> <p class="card-img-top"><img src="posts\welcome\thumbnail.jpg"  class="thumbnail-image card-img"/></p> </a></p>
-</div>
-<div class="body">
-<a href="./posts/welcome/index.html">
-<h3 class="no-anchor listing-title">
-欢迎来到我的博客
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('news'); return false;">
-news
-</div>
-</div>
-<a href="./posts/welcome/index.html">
-<div class="listing-description">
-这是第一篇博客. 欢迎!
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/welcome/index.html">
-<div class="listing-date">
-Apr 3, 2023
-</div>
-<div class="listing-author">
-秦米书
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

@@ -1,0 +1,187 @@
+---
+title: "Signal and System a Primer"
+author: "秦米书"
+date: "2023-09-10"
+categories: [telecom]
+image: "image.jpg"
+format: 
+  html:
+    toc: true 
+editor: visual
+jupyter: julia-1.8
+---
+
+This is a note for Signal and System a Primer with Matlab. I don't have Matlab, but I may use Scilab/Octave/Python/Julia/R/Haskell instead when necessary. 
+
+# reference
+
+[latex cheetsheet](https://quickref.me/latex)
+
+# 1 Basic Concepts 
+
+Signal: x(t), function of time, simplified definition. 
+
+System: A collection of devices that operate on input signal x(t) and produce output signal y(t). 
+
+Continuous time signal: takes a value at every instant of time. 
+
+Discrete time signal: is only defined at particular instant of time. 
+
+Periodic vs nonperiodic signals 
+
+Analog vs digital signals 
+
+ADC: Analog to Digital Converter 
+
+For continuous signal x(t), the normalized energy E of x(t) is (assuming x(t) is real)
+
+$$
+E = \int_{-\infty}^{+\infty} x(t)^2 dt 
+$$
+
+The normalized power P is 
+
+$$
+P = \lim\limits_{T \rightarrow \infty} \frac{1}{T} \int_{-T/2}^{+T/2} x(t)^2 dt 
+$$
+
+If x(t) is complex valued 
+
+$$
+E = \int_{-\infty}^{+\infty} \vert x(t) \vert ^2 dt 
+$$
+
+The normalized power P is 
+
+$$
+P = \lim\limits_{T \rightarrow \infty} \frac{1}{T} \int_{-T/2}^{+T/2} \vert x(t) \vert ^2 dt 
+$$
+
+For discrete time signal x[n] 
+
+$$
+E = \sum_{n = -\infty}^{+\infty} \vert x[n] \vert ^2 
+$$
+
+The normalized power P 
+
+$$
+P = \lim\limits_{N \rightarrow \infty} \frac{1}{2N+1} \sum_{n = -N}^{+N} \vert x[n] \vert ^2 
+$$
+
+Energy signal: $0<E<\infty$
+
+Power signal: $0<P<\infty$ 
+
+Even vs Odd signal 
+
+Any signal can be represented as sum of even and odd signals 
+
+$$ 
+\begin{align}
+x(t) = x_e(t) + x_o(t) \\
+x_e(t) = \frac{1}{2} ( x(t) + x(-t) ) \\
+x_o(t) = \frac{1}{2} ( x(t) - x(-t) ) 
+\end{align}
+$$
+
+## 1.4 basic continuous time signals 
+
+Unit step function u(t) 
+
+$$
+u(t) = \begin{cases}
+   1 &\text{t > 0} \\
+   0 &\text{t < 0}   
+\end{cases}
+$$
+
+Unit impulse function $\delta(t)$ 
+
+$$
+\delta(t) = \frac{d}{dt}u(t) = \begin{cases}
+   0 & t \ne 0 \\
+   \text{undefined} & t = 0 
+\end{cases}
+$$
+
+The impulse function has the property(called sampling or sifting property)  
+
+$$
+\int_{a}^{b} f(t) \delta(t-t_0)  dt = \int_{a}^{b} f(t_0) \delta(t-t_0) dt = f(t_0) \int_{a}^{b} \delta(t-t_0) dt = f(t_0) 
+$$
+
+Unit ramp function 
+
+$$
+r(t) = t \times u(t)
+$$
+
+Unit rectangle pulse function 
+
+Unit triangular pulse function 
+
+sinusoidal signal 
+
+exponential signal 
+
+## 1.5 basic discrete time signals 
+Unit step sequence 
+
+$$
+u(n) = \begin{cases}
+   0 &\text{n < 0} \\
+   1 & n \ge 0 
+\end{cases}
+$$
+
+Unit impulse sequence 
+
+$$
+\delta(n) = \begin{cases}
+   0 & n \ne 0 \\
+   1 & n = 0 
+\end{cases}
+$$
+
+Unit ramp sequence 
+
+$$
+r(n) = \begin{cases}
+   0 & n < 0 \\
+   n & n \ge 0 
+\end{cases}
+$$
+
+Sinusoidal sequence 
+
+Exponential sequence 
+
+## 1.6 Basic operations on signals 
+
+Time reversal 
+
+Time scaling 
+
+Time shifting 
+
+Amplitude transformation 
+
+## 1.7 Classifications of systems 
+
+continuous time vs discrete time systems 
+
+causal vs noncausal systems: A causal system is one whose output y(t) at present time  depends only on the present and past values(not future) of the input x(t). 
+
+linear and nonlinear systems: Linearity is the property of the system describing a linear relationship between input (cause) and output (effect). The property is a combination of both homogeneity(scaling) property and the additivity property. The homogeneity property requires that if the input is multiplied by any constant k, then the output is multiplied by the same constant. The additivity property requires that the response to a sum of inputs is the sum of the responses to each input applied separately.
+
+$$ 
+T \lbrace k_1 x_1 + k_2 x_2 \rbrace = k_1 y_1 + k_2 y_2 
+$$
+
+time varying and time invariant systems: A time-varying system is one whose parameters vary with time. In a time-invariant system, a time shift (advance or delay) in the input signal leads to the time shift in the output signal. 
+
+systems with and without memory: When the output of a system depends on the past and/or future input, the system is said to have a memory. A memoryless system is one in which the current output depends only on the current input; it does not depend on the past or future inputs.A system with a memory is also called a dynamic system. A memoryless system is called a static system.
+
+# 2 Convolution 
+
