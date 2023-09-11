@@ -11,27 +11,27 @@ editor: visual
 jupyter: julia-1.8
 ---
 
-This is a note for Signal and System a Primer with Matlab. I don't have Matlab, but I may use Scilab/Octave/Python/Julia/R/Haskell instead when necessary. 
+This is a note for Signal and System a Primer with Matlab. I don't have Matlab, but I may use Scilab/Octave/Python/Julia/R/Haskell instead when necessary.
 
 # reference
 
 [latex cheetsheet](https://quickref.me/latex)
 
-# 1 Basic Concepts 
+# 1 Basic Concepts
 
-Signal: x(t), function of time, simplified definition. 
+Signal: x(t), function of time, simplified definition.
 
-System: A collection of devices that operate on input signal x(t) and produce output signal y(t). 
+System: A collection of devices that operate on input signal x(t) and produce output signal y(t).
 
-Continuous time signal: takes a value at every instant of time. 
+Continuous time signal: takes a value at every instant of time.
 
-Discrete time signal: is only defined at particular instant of time. 
+Discrete time signal: is only defined at particular instant of time.
 
-Periodic vs nonperiodic signals 
+Periodic vs nonperiodic signals
 
-Analog vs digital signals 
+Analog vs digital signals
 
-ADC: Analog to Digital Converter 
+ADC: Analog to Digital Converter
 
 For continuous signal x(t), the normalized energy E of x(t) is (assuming x(t) is real)
 
@@ -39,31 +39,31 @@ $$
 E = \int_{-\infty}^{+\infty} x(t)^2 dt 
 $$
 
-The normalized power P is 
+The normalized power P is
 
 $$
 P = \lim\limits_{T \rightarrow \infty} \frac{1}{T} \int_{-T/2}^{+T/2} x(t)^2 dt 
 $$
 
-If x(t) is complex valued 
+If x(t) is complex valued
 
 $$
 E = \int_{-\infty}^{+\infty} \vert x(t) \vert ^2 dt 
 $$
 
-The normalized power P is 
+The normalized power P is
 
 $$
 P = \lim\limits_{T \rightarrow \infty} \frac{1}{T} \int_{-T/2}^{+T/2} \vert x(t) \vert ^2 dt 
 $$
 
-For discrete time signal x[n] 
+For discrete time signal x\[n\]
 
 $$
 E = \sum_{n = -\infty}^{+\infty} \vert x[n] \vert ^2 
 $$
 
-The normalized power P 
+The normalized power P
 
 $$
 P = \lim\limits_{N \rightarrow \infty} \frac{1}{2N+1} \sum_{n = -N}^{+N} \vert x[n] \vert ^2 
@@ -71,11 +71,11 @@ $$
 
 Energy signal: $0<E<\infty$
 
-Power signal: $0<P<\infty$ 
+Power signal: $0<P<\infty$
 
-Even vs Odd signal 
+Even vs Odd signal
 
-Any signal can be represented as sum of even and odd signals 
+Any signal can be represented as sum of even and odd signals
 
 $$ 
 \begin{align}
@@ -85,9 +85,9 @@ x_o(t) = \frac{1}{2} ( x(t) - x(-t) )
 \end{align}
 $$
 
-## 1.4 basic continuous time signals 
+## 1.4 basic continuous time signals
 
-Unit step function u(t) 
+Unit step function u(t)
 
 $$
 u(t) = \begin{cases}
@@ -96,7 +96,7 @@ u(t) = \begin{cases}
 \end{cases}
 $$
 
-Unit impulse function $\delta(t)$ 
+Unit impulse function $\delta(t)$
 
 $$
 \delta(t) = \frac{d}{dt}u(t) = \begin{cases}
@@ -105,28 +105,29 @@ $$
 \end{cases}
 $$
 
-The impulse function has the property(called sampling or sifting property)  
+The impulse function has the property(called sampling or sifting property)
 
 $$
 \int_{a}^{b} f(t) \delta(t-t_0)  dt = \int_{a}^{b} f(t_0) \delta(t-t_0) dt = f(t_0) \int_{a}^{b} \delta(t-t_0) dt = f(t_0) 
 $$
 
-Unit ramp function 
+Unit ramp function
 
 $$
 r(t) = t \times u(t)
 $$
 
-Unit rectangle pulse function 
+Unit rectangle pulse function
 
-Unit triangular pulse function 
+Unit triangular pulse function
 
-sinusoidal signal 
+sinusoidal signal
 
-exponential signal 
+exponential signal
 
-## 1.5 basic discrete time signals 
-Unit step sequence 
+## 1.5 basic discrete time signals
+
+Unit step sequence
 
 $$
 u(n) = \begin{cases}
@@ -135,7 +136,7 @@ u(n) = \begin{cases}
 \end{cases}
 $$
 
-Unit impulse sequence 
+Unit impulse sequence
 
 $$
 \delta(n) = \begin{cases}
@@ -144,7 +145,7 @@ $$
 \end{cases}
 $$
 
-Unit ramp sequence 
+Unit ramp sequence
 
 $$
 r(n) = \begin{cases}
@@ -153,25 +154,25 @@ r(n) = \begin{cases}
 \end{cases}
 $$
 
-Sinusoidal sequence 
+Sinusoidal sequence
 
-Exponential sequence 
+Exponential sequence
 
-## 1.6 Basic operations on signals 
+## 1.6 Basic operations on signals
 
-Time reversal 
+Time reversal
 
-Time scaling 
+Time scaling
 
-Time shifting 
+Time shifting
 
-Amplitude transformation 
+Amplitude transformation
 
-## 1.7 Classifications of systems 
+## 1.7 Classifications of systems
 
-continuous time vs discrete time systems 
+continuous time vs discrete time systems
 
-causal vs noncausal systems: A causal system is one whose output y(t) at present time  depends only on the present and past values(not future) of the input x(t). 
+causal vs noncausal systems: A causal system is one whose output y(t) at present time depends only on the present and past values(not future) of the input x(t).
 
 linear and nonlinear systems: Linearity is the property of the system describing a linear relationship between input (cause) and output (effect). The property is a combination of both homogeneity(scaling) property and the additivity property. The homogeneity property requires that if the input is multiplied by any constant k, then the output is multiplied by the same constant. The additivity property requires that the response to a sum of inputs is the sum of the responses to each input applied separately.
 
@@ -179,9 +180,90 @@ $$
 T \lbrace k_1 x_1 + k_2 x_2 \rbrace = k_1 y_1 + k_2 y_2 
 $$
 
-time varying and time invariant systems: A time-varying system is one whose parameters vary with time. In a time-invariant system, a time shift (advance or delay) in the input signal leads to the time shift in the output signal. 
+time varying and time invariant systems: A time-varying system is one whose parameters vary with time. In a time-invariant system, a time shift (advance or delay) in the input signal leads to the time shift in the output signal.
 
 systems with and without memory: When the output of a system depends on the past and/or future input, the system is said to have a memory. A memoryless system is one in which the current output depends only on the current input; it does not depend on the past or future inputs.A system with a memory is also called a dynamic system. A memoryless system is called a static system.
 
-# 2 Convolution 
+# 2 Convolution
 
+The behavior of the system can be described mathematically either in the time domain or in the frequency domain.
+
+Convolution is a tool for time-domain analysis of systems.
+
+LTI system: Linear, time-invariant system
+
+## 2.2 Impulse response 
+
+The impulse response h(t) is the response of the system when the input is the unit impulse function $\delta(t)$, that is,
+
+$$
+h(t) = T \delta(t)
+$$
+
+The input signal x(t) can be expressed as ($\tau$ is a dummy variable) the below equation. It is the sifting property of the unit impulse.
+
+$$
+x(t) = \int_{-\infty}^{+\infty} x(\tau) \delta(t-\tau)d\tau   
+$$
+
+The response y(t) to the input x(t) is obtained by:
+
+$$
+\begin{align}
+y(t) &= Tx(t)=T \lbrace \int_{-\infty}^{+\infty} x(\tau) \delta(t-\tau)d\tau \rbrace \\
+&= \int_{-\infty}^{+\infty} x(\tau) T \lbrace \delta(t-\tau) \rbrace d\tau \\
+&= \int_{-\infty}^{+\infty} x(\tau)  h(t-\tau)  d\tau
+\end{align}
+$$
+
+This shows that an LTI system is characterized by its impulse response.
+
+## 2.3 Convolution Integral 
+
+The below equation is also called convolution integral or superposition integral. 
+
+$$
+y(t) = \int_{-\infty}^{+\infty} x(\tau)  h(t-\tau)  d\tau
+$$
+
+The convolution of two signals x(t) and h(t) is usually written in terms of the operator `*`. That is, y(t) equals x(t) convolved with h(t). 
+
+$$
+y(t) = x(t) * h(t) = \int_{-\infty}^{+\infty} x(\tau)  h(t-\tau)  d\tau
+$$
+
+We can split the integral into two parts: 
+
+$$
+y(t) = x(t) * h(t) = \int_{-\infty}^{t_0} x(\tau)  h(t-\tau)  d\tau + \int_{t_0}^{+\infty} x(\tau)  h(t-\tau)  d\tau
+$$
+
+The 1st part is $y_{zir}$, the 2nd part is $y_{zsr}$. 
+
+ZIR: Zero Input Response. (natural response) 
+
+ZSR: Zero State Response. (the forced response)
+
+$t_0$ is the initial time. 
+
+The convolution integral can be simplified if we assume that a system has two properties. 
+
+First, if x(t) = 0 for t < 0, then 
+
+$$
+y(t) = x(t) * h(t) = \int_{-\infty}^{+\infty} x(\tau) h(t-\tau)  d\tau = \int_{0}^{+\infty} x(\tau) h(t-\tau)  d\tau
+$$ 
+
+Second, if we assume that the system is causal (that is y(t) does not depend on future signal of x(t)or h(t)), h(t) = 0 for t < 0, the equation becomes, 
+
+$$
+y(t) = x(t) * h(t) = \int_{-\infty}^{+\infty} x(\tau) h(t-\tau)  d\tau = \int_{0}^{t} x(\tau) h(t-\tau)  d\tau
+$$ 
+
+Important properties of the convolution integral: 
+
+(1) The order in which two functions are convolved is unmportant. 
+
+(2) Width property. If the durations of x(t) and h(t) are $T_1$ and $T_2$, then the duration of $y(t) = x(t) * h(t)$ is $T_1 + T_2$. If the areas under x(t) and h(t) are $A_1$ and $A_2$, then the area under $y(t) = x(t) * h(t)$ is $A_1A_2$. 
+
+## 2.4 Graphical convolution 

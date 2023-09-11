@@ -153,7 +153,12 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#basic-operations-on-signals" id="toc-basic-operations-on-signals" class="nav-link" data-scroll-target="#basic-operations-on-signals">1.6 Basic operations on signals</a></li>
   <li><a href="#classifications-of-systems" id="toc-classifications-of-systems" class="nav-link" data-scroll-target="#classifications-of-systems">1.7 Classifications of systems</a></li>
   </ul></li>
-  <li><a href="#convolution" id="toc-convolution" class="nav-link" data-scroll-target="#convolution">2 Convolution</a></li>
+  <li><a href="#convolution" id="toc-convolution" class="nav-link" data-scroll-target="#convolution">2 Convolution</a>
+  <ul class="collapse">
+  <li><a href="#impulse-response" id="toc-impulse-response" class="nav-link" data-scroll-target="#impulse-response">2.2 Impulse response</a></li>
+  <li><a href="#convolution-integral" id="toc-convolution-integral" class="nav-link" data-scroll-target="#convolution-integral">2.3 Convolution Integral</a></li>
+  <li><a href="#graphical-convolution" id="toc-graphical-convolution" class="nav-link" data-scroll-target="#graphical-convolution">2.4 Graphical convolution</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -288,8 +293,67 @@ T \lbrace k_1 x_1 + k_2 x_2 \rbrace = k_1 y_1 + k_2 y_2
 </section>
 <section id="convolution" class="level1">
 <h1>2 Convolution</h1>
+<p>The behavior of the system can be described mathematically either in the time domain or in the frequency domain.</p>
+<p>Convolution is a tool for time-domain analysis of systems.</p>
+<p>LTI system: Linear, time-invariant system</p>
+<section id="impulse-response" class="level2">
+<h2 class="anchored" data-anchor-id="impulse-response">2.2 Impulse response</h2>
+<p>The impulse response h(t) is the response of the system when the input is the unit impulse function <span class="math inline">\(\delta(t)\)</span>, that is,</p>
+<p><span class="math display">\[
+h(t) = T \delta(t)
+\]</span></p>
+<p>The input signal x(t) can be expressed as (<span class="math inline">\(\tau\)</span> is a dummy variable) the below equation. It is the sifting property of the unit impulse.</p>
+<p><span class="math display">\[
+x(t) = \int_{-\infty}^{+\infty} x(\tau) \delta(t-\tau)d\tau   
+\]</span></p>
+<p>The response y(t) to the input x(t) is obtained by:</p>
+<p><span class="math display">\[
+\begin{align}
+y(t) &amp;= Tx(t)=T \lbrace \int_{-\infty}^{+\infty} x(\tau) \delta(t-\tau)d\tau \rbrace \\
+&amp;= \int_{-\infty}^{+\infty} x(\tau) T \lbrace \delta(t-\tau) \rbrace d\tau \\
+&amp;= \int_{-\infty}^{+\infty} x(\tau)  h(t-\tau)  d\tau
+\end{align}
+\]</span></p>
+<p>This shows that an LTI system is characterized by its impulse response.</p>
+</section>
+<section id="convolution-integral" class="level2">
+<h2 class="anchored" data-anchor-id="convolution-integral">2.3 Convolution Integral</h2>
+<p>The below equation is also called convolution integral or superposition integral.</p>
+<p><span class="math display">\[
+y(t) = \int_{-\infty}^{+\infty} x(\tau)  h(t-\tau)  d\tau
+\]</span></p>
+<p>The convolution of two signals x(t) and h(t) is usually written in terms of the operator <code>*</code>. That is, y(t) equals x(t) convolved with h(t).</p>
+<p><span class="math display">\[
+y(t) = x(t) * h(t) = \int_{-\infty}^{+\infty} x(\tau)  h(t-\tau)  d\tau
+\]</span></p>
+<p>We can split the integral into two parts:</p>
+<p><span class="math display">\[
+y(t) = x(t) * h(t) = \int_{-\infty}^{t_0} x(\tau)  h(t-\tau)  d\tau + \int_{t_0}^{+\infty} x(\tau)  h(t-\tau)  d\tau
+\]</span></p>
+<p>The 1st part is <span class="math inline">\(y_{zir}\)</span>, the 2nd part is <span class="math inline">\(y_{zsr}\)</span>.</p>
+<p>ZIR: Zero Input Response. (natural response)</p>
+<p>ZSR: Zero State Response. (the forced response)</p>
+<p><span class="math inline">\(t_0\)</span> is the initial time.</p>
+<p>The convolution integral can be simplified if we assume that a system has two properties.</p>
+<p>First, if x(t) = 0 for t &lt; 0, then</p>
+<p><span class="math display">\[
+y(t) = x(t) * h(t) = \int_{-\infty}^{+\infty} x(\tau) h(t-\tau)  d\tau = \int_{0}^{+\infty} x(\tau) h(t-\tau)  d\tau
+\]</span></p>
+<p>Second, if we assume that the system is causal (that is y(t) does not depend on future signal of x(t)or h(t)), h(t) = 0 for t &lt; 0, the equation becomes,</p>
+<p><span class="math display">\[
+y(t) = x(t) * h(t) = \int_{-\infty}^{+\infty} x(\tau) h(t-\tau)  d\tau = \int_{0}^{t} x(\tau) h(t-\tau)  d\tau
+\]</span></p>
+<p>Important properties of the convolution integral:</p>
+<ol type="1">
+<li><p>The order in which two functions are convolved is unmportant.</p></li>
+<li><p>Width property. If the durations of x(t) and h(t) are <span class="math inline">\(T_1\)</span> and <span class="math inline">\(T_2\)</span>, then the duration of <span class="math inline">\(y(t) = x(t) * h(t)\)</span> is <span class="math inline">\(T_1 + T_2\)</span>. If the areas under x(t) and h(t) are <span class="math inline">\(A_1\)</span> and <span class="math inline">\(A_2\)</span>, then the area under <span class="math inline">\(y(t) = x(t) * h(t)\)</span> is <span class="math inline">\(A_1A_2\)</span>.</p></li>
+</ol>
+</section>
+<section id="graphical-convolution" class="level2">
+<h2 class="anchored" data-anchor-id="graphical-convolution">2.4 Graphical convolution</h2>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

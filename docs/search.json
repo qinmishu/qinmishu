@@ -96,5 +96,26 @@
     "title": "Signal and System a Primer",
     "section": "1.7 Classifications of systems",
     "text": "1.7 Classifications of systems\ncontinuous time vs discrete time systems\ncausal vs noncausal systems: A causal system is one whose output y(t) at present time depends only on the present and past values(not future) of the input x(t).\nlinear and nonlinear systems: Linearity is the property of the system describing a linear relationship between input (cause) and output (effect). The property is a combination of both homogeneity(scaling) property and the additivity property. The homogeneity property requires that if the input is multiplied by any constant k, then the output is multiplied by the same constant. The additivity property requires that the response to a sum of inputs is the sum of the responses to each input applied separately.\n\\[\nT \\lbrace k_1 x_1 + k_2 x_2 \\rbrace = k_1 y_1 + k_2 y_2\n\\]\ntime varying and time invariant systems: A time-varying system is one whose parameters vary with time. In a time-invariant system, a time shift (advance or delay) in the input signal leads to the time shift in the output signal.\nsystems with and without memory: When the output of a system depends on the past and/or future input, the system is said to have a memory. A memoryless system is one in which the current output depends only on the current input; it does not depend on the past or future inputs.A system with a memory is also called a dynamic system. A memoryless system is called a static system."
+  },
+  {
+    "objectID": "posts/signal-and-system/index.html#impulse-response",
+    "href": "posts/signal-and-system/index.html#impulse-response",
+    "title": "Signal and System a Primer",
+    "section": "2.2 Impulse response",
+    "text": "2.2 Impulse response\nThe impulse response h(t) is the response of the system when the input is the unit impulse function \\(\\delta(t)\\), that is,\n\\[\nh(t) = T \\delta(t)\n\\]\nThe input signal x(t) can be expressed as (\\(\\tau\\) is a dummy variable) the below equation. It is the sifting property of the unit impulse.\n\\[\nx(t) = \\int_{-\\infty}^{+\\infty} x(\\tau) \\delta(t-\\tau)d\\tau   \n\\]\nThe response y(t) to the input x(t) is obtained by:\n\\[\n\\begin{align}\ny(t) &= Tx(t)=T \\lbrace \\int_{-\\infty}^{+\\infty} x(\\tau) \\delta(t-\\tau)d\\tau \\rbrace \\\\\n&= \\int_{-\\infty}^{+\\infty} x(\\tau) T \\lbrace \\delta(t-\\tau) \\rbrace d\\tau \\\\\n&= \\int_{-\\infty}^{+\\infty} x(\\tau)  h(t-\\tau)  d\\tau\n\\end{align}\n\\]\nThis shows that an LTI system is characterized by its impulse response."
+  },
+  {
+    "objectID": "posts/signal-and-system/index.html#convolution-integral",
+    "href": "posts/signal-and-system/index.html#convolution-integral",
+    "title": "Signal and System a Primer",
+    "section": "2.3 Convolution Integral",
+    "text": "2.3 Convolution Integral\nThe below equation is also called convolution integral or superposition integral.\n\\[\ny(t) = \\int_{-\\infty}^{+\\infty} x(\\tau)  h(t-\\tau)  d\\tau\n\\]\nThe convolution of two signals x(t) and h(t) is usually written in terms of the operator *. That is, y(t) equals x(t) convolved with h(t).\n\\[\ny(t) = x(t) * h(t) = \\int_{-\\infty}^{+\\infty} x(\\tau)  h(t-\\tau)  d\\tau\n\\]\nWe can split the integral into two parts:\n\\[\ny(t) = x(t) * h(t) = \\int_{-\\infty}^{t_0} x(\\tau)  h(t-\\tau)  d\\tau + \\int_{t_0}^{+\\infty} x(\\tau)  h(t-\\tau)  d\\tau\n\\]\nThe 1st part is \\(y_{zir}\\), the 2nd part is \\(y_{zsr}\\).\nZIR: Zero Input Response. (natural response)\nZSR: Zero State Response. (the forced response)\n\\(t_0\\) is the initial time.\nThe convolution integral can be simplified if we assume that a system has two properties.\nFirst, if x(t) = 0 for t &lt; 0, then\n\\[\ny(t) = x(t) * h(t) = \\int_{-\\infty}^{+\\infty} x(\\tau) h(t-\\tau)  d\\tau = \\int_{0}^{+\\infty} x(\\tau) h(t-\\tau)  d\\tau\n\\]\nSecond, if we assume that the system is causal (that is y(t) does not depend on future signal of x(t)or h(t)), h(t) = 0 for t &lt; 0, the equation becomes,\n\\[\ny(t) = x(t) * h(t) = \\int_{-\\infty}^{+\\infty} x(\\tau) h(t-\\tau)  d\\tau = \\int_{0}^{t} x(\\tau) h(t-\\tau)  d\\tau\n\\]\nImportant properties of the convolution integral:\n\nThe order in which two functions are convolved is unmportant.\nWidth property. If the durations of x(t) and h(t) are \\(T_1\\) and \\(T_2\\), then the duration of \\(y(t) = x(t) * h(t)\\) is \\(T_1 + T_2\\). If the areas under x(t) and h(t) are \\(A_1\\) and \\(A_2\\), then the area under \\(y(t) = x(t) * h(t)\\) is \\(A_1A_2\\)."
+  },
+  {
+    "objectID": "posts/signal-and-system/index.html#graphical-convolution",
+    "href": "posts/signal-and-system/index.html#graphical-convolution",
+    "title": "Signal and System a Primer",
+    "section": "2.4 Graphical convolution",
+    "text": "2.4 Graphical convolution"
   }
 ]
