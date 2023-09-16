@@ -22,6 +22,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -158,6 +192,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#impulse-response" id="toc-impulse-response" class="nav-link" data-scroll-target="#impulse-response">2.2 Impulse response</a></li>
   <li><a href="#convolution-integral" id="toc-convolution-integral" class="nav-link" data-scroll-target="#convolution-integral">2.3 Convolution Integral</a></li>
   <li><a href="#graphical-convolution" id="toc-graphical-convolution" class="nav-link" data-scroll-target="#graphical-convolution">2.4 Graphical convolution</a></li>
+  <li><a href="#block-diagram-representation" id="toc-block-diagram-representation" class="nav-link" data-scroll-target="#block-diagram-representation">2.5 Block Diagram Representation</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -339,7 +374,7 @@ y(t) = x(t) * h(t) = \int_{-\infty}^{t_0} x(\tau)  h(t-\tau)  d\tau + \int_{t_0}
 <p><span class="math display">\[
 y(t) = x(t) * h(t) = \int_{-\infty}^{+\infty} x(\tau) h(t-\tau)  d\tau = \int_{0}^{+\infty} x(\tau) h(t-\tau)  d\tau
 \]</span></p>
-<p>Second, if we assume that the system is causal (that is y(t) does not depend on future signal of x(t)or h(t)), h(t) = 0 for t &lt; 0, the equation becomes,</p>
+<p>Second, if we assume that the system is causal (that is y(t) does not depend on future signal of x(t) or h(t)), h(t) = 0 for t &lt; 0, the equation becomes,</p>
 <p><span class="math display">\[
 y(t) = x(t) * h(t) = \int_{-\infty}^{+\infty} x(\tau) h(t-\tau)  d\tau = \int_{0}^{t} x(\tau) h(t-\tau)  d\tau
 \]</span></p>
@@ -348,9 +383,221 @@ y(t) = x(t) * h(t) = \int_{-\infty}^{+\infty} x(\tau) h(t-\tau)  d\tau = \int_{0
 <li><p>The order in which two functions are convolved is unmportant.</p></li>
 <li><p>Width property. If the durations of x(t) and h(t) are <span class="math inline">\(T_1\)</span> and <span class="math inline">\(T_2\)</span>, then the duration of <span class="math inline">\(y(t) = x(t) * h(t)\)</span> is <span class="math inline">\(T_1 + T_2\)</span>. If the areas under x(t) and h(t) are <span class="math inline">\(A_1\)</span> and <span class="math inline">\(A_2\)</span>, then the area under <span class="math inline">\(y(t) = x(t) * h(t)\)</span> is <span class="math inline">\(A_1A_2\)</span>.</p></li>
 </ol>
+<p>The convolution integral can be evaluated in 3 different ways:</p>
+<ol type="1">
+<li>Analytical method, which involves performing the integration by hand when x(t) and h(t) are specified analytically.<br>
+</li>
+<li>Graphical method, which is appropriate when x(t) and h(t) are provided in graphical form.<br>
+</li>
+<li>Numerical method, where we approximate x(t) and h(t) by numerical sequence and obtain y(t) by discrete convolution using a digital computer.</li>
+</ol>
 </section>
 <section id="graphical-convolution" class="level2">
 <h2 class="anchored" data-anchor-id="graphical-convolution">2.4 Graphical convolution</h2>
+<p>Graphical method of evaluating the convolution integral. This method usually involves 4 steps:</p>
+<ol type="1">
+<li>Folding: Take the mirror image of <span class="math inline">\(h(\tau)\)</span> about the ordinate(vertical) axis</li>
+<li>Shifting: Displace or shift <span class="math inline">\(h(\tau)\)</span> by t to obtain <span class="math inline">\(h(t-\tau)\)</span></li>
+<li>Multiplication: Multiply <span class="math inline">\(h(t-\tau)\)</span> and <span class="math inline">\(x(\tau)\)</span> together</li>
+<li>Integration: For a given t, integrate the product <span class="math inline">\(h(t-\tau)x(\tau)\)</span> over <span class="math inline">\(0 &lt; \tau &lt; t\)</span> to get y(t) at t</li>
+</ol>
+<p>We are going to use the below auxiliary functions.</p>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">step</span>(t)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> t <span class="op">&gt;=</span> <span class="fl">0</span>  </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="fl">1</span> </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="fl">0</span> </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span> </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span> </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">ramp</span>(t)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="fu">t*step</span>(t)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="35">
+<pre><code>ramp (generic function with 1 method)</code></pre>
+</div>
+</div>
+<p>Obtain the convolution of the two signals in <a href="#fig-graph-convolution-ex-1">Figure&nbsp;1</a></p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Plots</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">LaTeXStrings </span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">x</span>(t) <span class="op">=</span> <span class="fu">step</span>(t) </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">h</span>(t) <span class="op">=</span> <span class="fu">ramp</span>(t<span class="op">+</span><span class="fl">2</span>) <span class="op">*</span> <span class="fu">step</span>(<span class="op">-</span>t) <span class="op">+</span> <span class="fl">2</span><span class="fu">*step</span>(t)<span class="fu">*step</span>(<span class="fl">2</span><span class="op">-</span>t)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>xplot <span class="op">=</span> <span class="fu">plot</span>(x,<span class="op">-</span><span class="fl">2</span>,<span class="fl">2</span>,title<span class="op">=</span><span class="st">"x(t)"</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>hplot <span class="op">=</span> <span class="fu">plot</span>(h,<span class="op">-</span><span class="fl">2</span>,<span class="fl">2</span>,title<span class="op">=</span><span class="st">"h(t)"</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(xplot,hplot,layout<span class="op">=</span>(<span class="fl">1</span>,<span class="fl">2</span>), legend<span class="op">=</span><span class="cn">false</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="36">
+<div id="fig-graph-convolution-ex-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="index_files/figure-html/fig-graph-convolution-ex-1-output-1.svg" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1: graph convolution example</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Definition of x(t) <span class="math display">\[
+x(t) = step(t)
+\]</span></p>
+<p>Definition of h(t) <span class="math display">\[
+h(t) = \begin{cases}
+   2+t &amp;\text{-2 &lt; t &lt; 0} \\
+   1 &amp;\text{0 &lt; t &lt; 2}   
+\end{cases}
+\]</span></p>
+<p>In this case, it is easy to fold x(t), the unit step function. Let</p>
+<p><span class="math display">\[
+y(t) = x(t)*h(t) = \int x(t-\tau)h(\tau)d\tau
+\]</span></p>
+<p>First, we fold x(t)</p>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">x_fold</span>(t) <span class="op">=</span> <span class="fu">x</span>(<span class="op">-</span>t)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x_fold, <span class="op">-</span><span class="fl">2</span>, <span class="fl">2</span>, title<span class="op">=</span>L<span class="st">"x(- </span><span class="sc">\t</span><span class="st">au)"</span>, legend<span class="op">=</span><span class="cn">false</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="37">
+<p><img src="index_files/figure-html/cell-4-output-1.svg" class="img-fluid"></p>
+</div>
+</div>
+<p>and shift it by t</p>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> <span class="fl">1</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">x_shift</span>(tau) <span class="op">=</span> <span class="fu">x</span>(t<span class="op">-</span>tau)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x_shift, <span class="op">-</span><span class="fl">3</span>, <span class="fl">2</span>, title<span class="op">=</span>L<span class="st">"x(t - </span><span class="sc">\t</span><span class="st">au)"</span>, legend<span class="op">=</span><span class="cn">false</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="38">
+<p><img src="index_files/figure-html/cell-5-output-1.svg" class="img-fluid"></p>
+</div>
+</div>
+<p>For <span class="math inline">\(t &lt; -2\)</span>, there is no overlap of the two signals, as shown in <a href="#fig-graph-convolution-ex-1-less-minus-2">Figure&nbsp;2</a> , Hence,</p>
+<p><span class="math display">\[
+y(t) = x(t) * h(t) = 0, t&lt; -2
+\]</span></p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> <span class="op">-</span><span class="fl">2.5</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x_shift,<span class="op">-</span><span class="fl">3</span>,<span class="fl">2</span>,label<span class="op">=</span>L<span class="st">"x(t - </span><span class="sc">\t</span><span class="st">au)"</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot!</span>(h,<span class="op">-</span><span class="fl">3</span>,<span class="fl">2</span>,label<span class="op">=</span>L<span class="st">"h(</span><span class="sc">\t</span><span class="st">au)"</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">title!</span>( <span class="st">"convolution x(t)*h(t), t &lt; -2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="39">
+<div id="fig-graph-convolution-ex-1-less-minus-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="index_files/figure-html/fig-graph-convolution-ex-1-less-minus-2-output-1.svg" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;2: t &lt; -2</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>For -2 &lt; t &lt; 0, the two signals overlap between -2 and t, as shown in figure <a href="#fig-graph-convolution-ex-1-minus-2-and-0">Figure&nbsp;3</a> , Hence,</p>
+<p><span class="math display">\[
+\begin{align}
+y(t) &amp;= \int_{-2}^{t} x(t-\tau)h(\tau)d\tau \\
+&amp;= \int_{-2}^{t} (1)(2+\tau) d\tau \\
+&amp;= 2\tau + \frac{\tau^2}{2} \biggr\rvert_{-2}^{t} = 0.5 t^2 + 2t + 2, \text{-2 &lt; t &lt; 0}
+\end{align}
+\]</span></p>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> <span class="op">-</span><span class="fl">1.5</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x_shift,<span class="op">-</span><span class="fl">3</span>,<span class="fl">2</span>,label<span class="op">=</span>L<span class="st">"x(t - </span><span class="sc">\t</span><span class="st">au)"</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot!</span>(h,<span class="op">-</span><span class="fl">3</span>,<span class="fl">2</span>,label<span class="op">=</span>L<span class="st">"h(</span><span class="sc">\t</span><span class="st">au)"</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">title!</span>( <span class="st">"convolution x(t)*h(t), -2 &lt; t &lt; 0"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="40">
+<div id="fig-graph-convolution-ex-1-minus-2-and-0" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="index_files/figure-html/fig-graph-convolution-ex-1-minus-2-and-0-output-1.svg" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;3: -2 &lt; t &lt; 0</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>For 0 &lt; t &lt; 2, the two signals overlap between -2 and t, as shown in figure <a href="#fig-graph-convolution-ex-1-0-and-2">Figure&nbsp;4</a> , Hence,</p>
+<p><span class="math display">\[
+\begin{align}
+y(t) &amp;= \int_{-2}^{t} x(t-\tau)h(\tau)d\tau \\
+&amp;= \int_{-2}^{0} (1)(2+\tau) d\tau + \int_{0}^{t}(1)(2) d\tau \\
+&amp;= (2 \tau + \frac{\tau^2}{2}) \biggr\rvert_{-2}^{0} + 2 \tau \biggr\rvert_{0}^{t} \\
+&amp;= 2+2t , \text{0 &lt; t &lt; 2}
+\end{align}
+\]</span></p>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> <span class="fl">1</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x_shift,<span class="op">-</span><span class="fl">3</span>,<span class="fl">2</span>,label<span class="op">=</span>L<span class="st">"x(t - </span><span class="sc">\t</span><span class="st">au)"</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot!</span>(h,<span class="op">-</span><span class="fl">3</span>,<span class="fl">3</span>,label<span class="op">=</span>L<span class="st">"h(</span><span class="sc">\t</span><span class="st">au)"</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">title!</span>( <span class="st">"convolution x(t)*h(t), 0 &lt; t &lt; 2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="41">
+<div id="fig-graph-convolution-ex-1-0-and-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="index_files/figure-html/fig-graph-convolution-ex-1-0-and-2-output-1.svg" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;4: 0 &lt; t &lt; 2</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>For t &gt; 2, the two signals overlap between -2 and 2, as shown in figure <a href="#fig-graph-convolution-ex-1-gt-2">Figure&nbsp;5</a> , Hence,</p>
+<p><span class="math display">\[
+\begin{align}
+y(t) &amp;= \int_{-2}^{t} x(t-\tau)h(\tau)d\tau \\
+&amp;= \int_{-2}^{0} (1)(2+\tau) d\tau + \int_{0}^{2}(2)(2) d\tau \\
+&amp;= (2 \tau + \frac{\tau^2}{2}) \biggr\rvert_{-2}^{0} + 2 \tau \biggr\rvert_{0}^{2} \\
+&amp;= 6 , \text{ t &gt; 2}
+\end{align}
+\]</span></p>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> <span class="fl">2.5</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x_shift,<span class="op">-</span><span class="fl">3</span>,<span class="fl">3</span>,label<span class="op">=</span>L<span class="st">"x(t - </span><span class="sc">\t</span><span class="st">au)"</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot!</span>(h,<span class="op">-</span><span class="fl">3</span>,<span class="fl">3</span>,label<span class="op">=</span>L<span class="st">"h(</span><span class="sc">\t</span><span class="st">au)"</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">title!</span>( <span class="st">"convolution x(t)*h(t), t &gt; 2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="42">
+<div id="fig-graph-convolution-ex-1-gt-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="index_files/figure-html/fig-graph-convolution-ex-1-gt-2-output-1.svg" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;5: t &gt; 2</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Combining the results, we obtain, see <a href="#fig-graph-convolution-ex-1-result">Figure&nbsp;6</a></p>
+<p><span class="math display">\[
+y(t) = \begin{cases}
+   0.5t^2 + 2t + 2,  &amp;\text{-2 &lt; t &lt; 0} \\
+   2t+2,  &amp;\text{0 &lt; t &lt; 2} \\
+   6, &amp;\text{ t &gt; 2} \\
+   0, &amp;\text{otherwise}
+\end{cases}
+\]</span></p>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">y</span>(t) <span class="op">=</span> <span class="cf">begin</span> </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span> (<span class="op">-</span><span class="fl">2</span> <span class="op">&lt;=</span> t) <span class="op">&amp;&amp;</span> (t <span class="op">&lt;=</span> <span class="fl">0</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>      <span class="fl">0.5</span><span class="op">*</span>t<span class="op">*</span>t <span class="op">+</span> <span class="fl">2</span><span class="op">*</span>t <span class="op">+</span> <span class="fl">2</span> </span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>   <span class="cf">elseif</span> (<span class="fl">0</span> <span class="op">&lt;=</span> t) <span class="op">&amp;&amp;</span> (t <span class="op">&lt;=</span> <span class="fl">2</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>      <span class="fl">2</span><span class="op">*</span>t <span class="op">+</span> <span class="fl">2</span> </span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>   <span class="cf">elseif</span> t <span class="op">&gt;</span> <span class="fl">2</span> </span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>      <span class="fl">6</span> </span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>   <span class="cf">else</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>      <span class="fl">0</span>  </span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>   <span class="cf">end</span>    </span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span> </span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(y,<span class="op">-</span><span class="fl">4</span>,<span class="fl">4</span>)</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="fu">title!</span>( <span class="st">"convolution x(t)*h(t), result"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="43">
+<div id="fig-graph-convolution-ex-1-result" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="index_files/figure-html/fig-graph-convolution-ex-1-result-output-1.svg" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;6: convolution result</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="block-diagram-representation" class="level2">
+<h2 class="anchored" data-anchor-id="block-diagram-representation">2.5 Block Diagram Representation</h2>
 
 
 </section>

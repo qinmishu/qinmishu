@@ -254,7 +254,7 @@ $$
 y(t) = x(t) * h(t) = \int_{-\infty}^{+\infty} x(\tau) h(t-\tau)  d\tau = \int_{0}^{+\infty} x(\tau) h(t-\tau)  d\tau
 $$ 
 
-Second, if we assume that the system is causal (that is y(t) does not depend on future signal of x(t)or h(t)), h(t) = 0 for t < 0, the equation becomes, 
+Second, if we assume that the system is causal (that is y(t) does not depend on future signal of x(t) or h(t)), h(t) = 0 for t < 0, the equation becomes, 
 
 $$
 y(t) = x(t) * h(t) = \int_{-\infty}^{+\infty} x(\tau) h(t-\tau)  d\tau = \int_{0}^{t} x(\tau) h(t-\tau)  d\tau
@@ -266,4 +266,200 @@ Important properties of the convolution integral:
 
 (2) Width property. If the durations of x(t) and h(t) are $T_1$ and $T_2$, then the duration of $y(t) = x(t) * h(t)$ is $T_1 + T_2$. If the areas under x(t) and h(t) are $A_1$ and $A_2$, then the area under $y(t) = x(t) * h(t)$ is $A_1A_2$. 
 
+The convolution integral can be evaluated in 3 different ways: 
+
+1. Analytical method, which involves performing the integration by hand when x(t) and h(t) are specified analytically.  
+2. Graphical method, which is appropriate when x(t) and h(t) are provided in graphical form.  
+3. Numerical method, where we approximate x(t) and h(t) by numerical sequence and obtain y(t) by discrete convolution using a digital computer. 
+
+
+
 ## 2.4 Graphical convolution 
+
+Graphical method of evaluating the convolution integral. This method usually involves 4 steps: 
+
+1. Folding: Take the mirror image of $h(\tau)$ about the ordinate(vertical) axis
+2. Shifting: Displace or shift $h(\tau)$ by t to obtain $h(t-\tau)$ 
+3. Multiplication: Multiply $h(t-\tau)$ and $x(\tau)$ together 
+4. Integration: For a given t, integrate the product $h(t-\tau)x(\tau)$ over $0 < \tau < t$ to get y(t) at t 
+
+We are going to use the below auxiliary functions.  
+```{julia}
+function step(t)
+    if t >= 0  
+        return 1 
+    else 
+        return 0 
+    end 
+end 
+
+function ramp(t)
+    return t*step(t)
+end 
+```
+
+Obtain the convolution of the two signals in @fig-graph-convolution-ex-1
+
+```{julia}
+#| label: fig-graph-convolution-ex-1
+#| fig-cap: "graph convolution example"
+using Plots
+using LaTeXStrings 
+
+x(t) = step(t) 
+
+h(t) = ramp(t+2) * step(-t) + 2*step(t)*step(2-t)
+
+xplot = plot(x,-2,2,title="x(t)")
+hplot = plot(h,-2,2,title="h(t)")
+plot(xplot,hplot,layout=(1,2), legend=false)
+```
+
+Definition of x(t)
+$$
+x(t) = step(t) 
+$$
+
+Definition of h(t) 
+$$
+h(t) = \begin{cases}
+   2+t &\text{-2 < t < 0} \\
+   1 &\text{0 < t < 2}   
+\end{cases}
+$$ 
+
+In this case, it is easy to fold x(t), the unit step function. Let 
+
+$$ 
+y(t) = x(t)*h(t) = \int x(t-\tau)h(\tau)d\tau
+$$
+
+First, we fold x(t) 
+
+```{julia}
+x_fold(t) = x(-t)
+
+plot(x_fold, -2, 2, title=L"x(- \tau)", legend=false)
+```
+
+and shift it by t 
+
+```{julia}
+t = 1
+
+x_shift(tau) = x(t-tau)
+
+plot(x_shift, -3, 2, title=L"x(t - \tau)", legend=false)
+```
+
+For $t < -2$, there is no overlap of the two signals, as shown in @fig-graph-convolution-ex-1-less-minus-2 , Hence, 
+
+$$
+y(t) = x(t) * h(t) = 0, t< -2 
+$$
+
+```{julia}
+#| label: fig-graph-convolution-ex-1-less-minus-2
+#| fig-cap: t < -2 
+t = -2.5 
+
+plot(x_shift,-3,2,label=L"x(t - \tau)")
+plot!(h,-3,2,label=L"h(\tau)")
+title!( "convolution x(t)*h(t), t < -2")
+```
+
+For -2 < t < 0, the two signals overlap between -2 and t, as shown in figure @fig-graph-convolution-ex-1-minus-2-and-0 , Hence, 
+
+$$
+\begin{align}
+y(t) &= \int_{-2}^{t} x(t-\tau)h(\tau)d\tau \\
+&= \int_{-2}^{t} (1)(2+\tau) d\tau \\
+&= 2\tau + \frac{\tau^2}{2} \biggr\rvert_{-2}^{t} = 0.5 t^2 + 2t + 2, \text{-2 < t < 0} 
+\end{align}
+$$
+
+```{julia}
+#| label: fig-graph-convolution-ex-1-minus-2-and-0
+#| fig-cap:  -2 < t < 0
+t = -1.5 
+
+plot(x_shift,-3,2,label=L"x(t - \tau)")
+plot!(h,-3,2,label=L"h(\tau)")
+title!( "convolution x(t)*h(t), -2 < t < 0")
+```
+
+For 0 < t < 2, the two signals overlap between -2 and t, as shown in figure @fig-graph-convolution-ex-1-0-and-2 , Hence, 
+
+$$
+\begin{align}
+y(t) &= \int_{-2}^{t} x(t-\tau)h(\tau)d\tau \\
+&= \int_{-2}^{0} (1)(2+\tau) d\tau + \int_{0}^{t}(1)(2) d\tau \\
+&= (2 \tau + \frac{\tau^2}{2}) \biggr\rvert_{-2}^{0} + 2 \tau \biggr\rvert_{0}^{t} \\
+&= 2+2t , \text{0 < t < 2} 
+\end{align}
+$$
+
+```{julia}
+#| label: fig-graph-convolution-ex-1-0-and-2
+#| fig-cap:  0 < t < 2
+t = 1 
+
+plot(x_shift,-3,2,label=L"x(t - \tau)")
+plot!(h,-3,3,label=L"h(\tau)")
+title!( "convolution x(t)*h(t), 0 < t < 2")
+```
+
+
+For  t > 2, the two signals overlap between -2 and 2, as shown in figure @fig-graph-convolution-ex-1-gt-2 , Hence, 
+
+$$
+\begin{align}
+y(t) &= \int_{-2}^{t} x(t-\tau)h(\tau)d\tau \\
+&= \int_{-2}^{0} (1)(2+\tau) d\tau + \int_{0}^{2}(2)(2) d\tau \\
+&= (2 \tau + \frac{\tau^2}{2}) \biggr\rvert_{-2}^{0} + 2 \tau \biggr\rvert_{0}^{2} \\
+&= 6 , \text{ t > 2} 
+\end{align}
+$$
+
+```{julia}
+#| label: fig-graph-convolution-ex-1-gt-2
+#| fig-cap: t > 2
+t = 2.5
+
+plot(x_shift,-3,3,label=L"x(t - \tau)")
+plot!(h,-3,3,label=L"h(\tau)")
+title!( "convolution x(t)*h(t), t > 2")
+```
+
+Combining the results, we obtain, see  @fig-graph-convolution-ex-1-result
+
+$$
+y(t) = \begin{cases}
+   0.5t^2 + 2t + 2,  &\text{-2 < t < 0} \\
+   2t+2,  &\text{0 < t < 2} \\
+   6, &\text{ t > 2} \\
+   0, &\text{otherwise} 
+\end{cases}
+$$ 
+
+```{julia}
+#| label: fig-graph-convolution-ex-1-result
+#| fig-cap: convolution result 
+
+y(t) = begin 
+   if (-2 <= t) && (t <= 0)
+      0.5*t*t + 2*t + 2 
+   elseif (0 <= t) && (t <= 2)
+      2*t + 2 
+   elseif t > 2 
+      6 
+   else
+      0  
+   end    
+end 
+
+plot(y,-4,4)
+title!( "convolution x(t)*h(t), result")
+```
+
+## 2.5 Block Diagram Representation 
