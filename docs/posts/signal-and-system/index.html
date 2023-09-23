@@ -94,6 +94,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-submit-button-title": "Submit"
   }
 }</script>
+<script src="../../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -207,6 +210,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="reference" class="level1">
 <h1>reference</h1>
 <p><a href="https://quickref.me/latex">latex cheetsheet</a></p>
+<p><a href="https://mermaid.js.org/syntax/flowchart.html">mermaid</a></p>
 </section>
 <section id="basic-concepts" class="level1">
 <h1>1 Basic Concepts</h1>
@@ -414,7 +418,7 @@ y(t) = x(t) * h(t) = \int_{-\infty}^{+\infty} x(\tau) h(t-\tau)  d\tau = \int_{0
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">ramp</span>(t)</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="fu">t*step</span>(t)</span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="35">
+<div class="cell-output cell-output-display" data-execution_count="541">
 <pre><code>ramp (generic function with 1 method)</code></pre>
 </div>
 </div>
@@ -430,7 +434,7 @@ y(t) = x(t) * h(t) = \int_{-\infty}^{+\infty} x(\tau) h(t-\tau)  d\tau = \int_{0
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>xplot <span class="op">=</span> <span class="fu">plot</span>(x,<span class="op">-</span><span class="fl">2</span>,<span class="fl">2</span>,title<span class="op">=</span><span class="st">"x(t)"</span>)</span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>hplot <span class="op">=</span> <span class="fu">plot</span>(h,<span class="op">-</span><span class="fl">2</span>,<span class="fl">2</span>,title<span class="op">=</span><span class="st">"h(t)"</span>)</span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(xplot,hplot,layout<span class="op">=</span>(<span class="fl">1</span>,<span class="fl">2</span>), legend<span class="op">=</span><span class="cn">false</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="36">
+<div class="cell-output cell-output-display" data-execution_count="542">
 <div id="fig-graph-convolution-ex-1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="index_files/figure-html/fig-graph-convolution-ex-1-output-1.svg" class="img-fluid figure-img"></p>
@@ -457,7 +461,7 @@ y(t) = x(t)*h(t) = \int x(t-\tau)h(\tau)d\tau
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">x_fold</span>(t) <span class="op">=</span> <span class="fu">x</span>(<span class="op">-</span>t)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x_fold, <span class="op">-</span><span class="fl">2</span>, <span class="fl">2</span>, title<span class="op">=</span>L<span class="st">"x(- </span><span class="sc">\t</span><span class="st">au)"</span>, legend<span class="op">=</span><span class="cn">false</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="37">
+<div class="cell-output cell-output-display" data-execution_count="543">
 <p><img src="index_files/figure-html/cell-4-output-1.svg" class="img-fluid"></p>
 </div>
 </div>
@@ -468,7 +472,7 @@ y(t) = x(t)*h(t) = \int x(t-\tau)h(\tau)d\tau
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">x_shift</span>(tau) <span class="op">=</span> <span class="fu">x</span>(t<span class="op">-</span>tau)</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x_shift, <span class="op">-</span><span class="fl">3</span>, <span class="fl">2</span>, title<span class="op">=</span>L<span class="st">"x(t - </span><span class="sc">\t</span><span class="st">au)"</span>, legend<span class="op">=</span><span class="cn">false</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="38">
+<div class="cell-output cell-output-display" data-execution_count="544">
 <p><img src="index_files/figure-html/cell-5-output-1.svg" class="img-fluid"></p>
 </div>
 </div>
@@ -482,7 +486,7 @@ y(t) = x(t) * h(t) = 0, t&lt; -2
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x_shift,<span class="op">-</span><span class="fl">3</span>,<span class="fl">2</span>,label<span class="op">=</span>L<span class="st">"x(t - </span><span class="sc">\t</span><span class="st">au)"</span>)</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot!</span>(h,<span class="op">-</span><span class="fl">3</span>,<span class="fl">2</span>,label<span class="op">=</span>L<span class="st">"h(</span><span class="sc">\t</span><span class="st">au)"</span>)</span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">title!</span>( <span class="st">"convolution x(t)*h(t), t &lt; -2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="39">
+<div class="cell-output cell-output-display" data-execution_count="545">
 <div id="fig-graph-convolution-ex-1-less-minus-2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="index_files/figure-html/fig-graph-convolution-ex-1-less-minus-2-output-1.svg" class="img-fluid figure-img"></p>
@@ -505,7 +509,7 @@ y(t) &amp;= \int_{-2}^{t} x(t-\tau)h(\tau)d\tau \\
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x_shift,<span class="op">-</span><span class="fl">3</span>,<span class="fl">2</span>,label<span class="op">=</span>L<span class="st">"x(t - </span><span class="sc">\t</span><span class="st">au)"</span>)</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot!</span>(h,<span class="op">-</span><span class="fl">3</span>,<span class="fl">2</span>,label<span class="op">=</span>L<span class="st">"h(</span><span class="sc">\t</span><span class="st">au)"</span>)</span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">title!</span>( <span class="st">"convolution x(t)*h(t), -2 &lt; t &lt; 0"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="40">
+<div class="cell-output cell-output-display" data-execution_count="546">
 <div id="fig-graph-convolution-ex-1-minus-2-and-0" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="index_files/figure-html/fig-graph-convolution-ex-1-minus-2-and-0-output-1.svg" class="img-fluid figure-img"></p>
@@ -529,7 +533,7 @@ y(t) &amp;= \int_{-2}^{t} x(t-\tau)h(\tau)d\tau \\
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x_shift,<span class="op">-</span><span class="fl">3</span>,<span class="fl">2</span>,label<span class="op">=</span>L<span class="st">"x(t - </span><span class="sc">\t</span><span class="st">au)"</span>)</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot!</span>(h,<span class="op">-</span><span class="fl">3</span>,<span class="fl">3</span>,label<span class="op">=</span>L<span class="st">"h(</span><span class="sc">\t</span><span class="st">au)"</span>)</span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">title!</span>( <span class="st">"convolution x(t)*h(t), 0 &lt; t &lt; 2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="41">
+<div class="cell-output cell-output-display" data-execution_count="547">
 <div id="fig-graph-convolution-ex-1-0-and-2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="index_files/figure-html/fig-graph-convolution-ex-1-0-and-2-output-1.svg" class="img-fluid figure-img"></p>
@@ -553,7 +557,7 @@ y(t) &amp;= \int_{-2}^{t} x(t-\tau)h(\tau)d\tau \\
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x_shift,<span class="op">-</span><span class="fl">3</span>,<span class="fl">3</span>,label<span class="op">=</span>L<span class="st">"x(t - </span><span class="sc">\t</span><span class="st">au)"</span>)</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot!</span>(h,<span class="op">-</span><span class="fl">3</span>,<span class="fl">3</span>,label<span class="op">=</span>L<span class="st">"h(</span><span class="sc">\t</span><span class="st">au)"</span>)</span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">title!</span>( <span class="st">"convolution x(t)*h(t), t &gt; 2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="42">
+<div class="cell-output cell-output-display" data-execution_count="548">
 <div id="fig-graph-convolution-ex-1-gt-2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="index_files/figure-html/fig-graph-convolution-ex-1-gt-2-output-1.svg" class="img-fluid figure-img"></p>
@@ -586,7 +590,7 @@ y(t) = \begin{cases}
 <span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(y,<span class="op">-</span><span class="fl">4</span>,<span class="fl">4</span>)</span>
 <span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="fu">title!</span>( <span class="st">"convolution x(t)*h(t), result"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="43">
+<div class="cell-output cell-output-display" data-execution_count="549">
 <div id="fig-graph-convolution-ex-1-result" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="index_files/figure-html/fig-graph-convolution-ex-1-result-output-1.svg" class="img-fluid figure-img"></p>
@@ -598,6 +602,86 @@ y(t) = \begin{cases}
 </section>
 <section id="block-diagram-representation" class="level2">
 <h2 class="anchored" data-anchor-id="block-diagram-representation">2.5 Block Diagram Representation</h2>
+<p>The commutative property of the convolution integral.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR 
+subgraph g1[1]
+    direction LR    
+    x["x(t)" ]--&gt;h["h(t)" ]--&gt;y["y(t)"];
+    style x stroke-width:0px
+    style y stroke-width:0px
+end 
+
+subgraph g2[2]
+    direction LR 
+    h1["h(t)" ]--&gt;x1["x(t)" ]--&gt;y1["y(t)"];
+    style h1 stroke-width:0px
+    style y1 stroke-width:0px
+end 
+
+g1-.-|equals|g2
+</pre>
+</div>
+</div>
+</div>
+</div>
+<p>The associative property of the convolution integral.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR 
+subgraph g1[1]
+    direction LR    
+    x["x(t)" ]--&gt;h1["h1(t)" ]--&gt;h2["h2(t)" ]--&gt;y["y(t)"];
+    style x stroke-width:0px
+    style y stroke-width:0px
+end 
+
+subgraph g2[2]
+    direction LR 
+    xx["x(t)" ]--&gt;convolution["h1(t)*h2(t)" ]--&gt;yy["y(t)"];
+    style xx stroke-width:0px
+    style yy stroke-width:0px
+end 
+
+g1-.-|equals|g2
+</pre>
+</div>
+</div>
+</div>
+</div>
+<p>The distributive property of the convolution integral.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR 
+subgraph g1[1]
+    direction LR    
+    x["x(t)"]--&gt;h1["h1(t)"] &amp; h2["h2(t)"] 
+    h1--&gt;y["y(t)"] 
+    h2--&gt;y 
+    style x stroke-width:0px
+    style y stroke-width:0px
+end 
+
+subgraph g2[2]
+    direction LR 
+    xx["x(t)" ]--&gt;addition["h1(t)+h2(t)" ]--&gt;yy["y(t)"];
+    style xx stroke-width:0px
+    style yy stroke-width:0px
+end 
+
+g1-.-|equals|g2
+</pre>
+</div>
+</div>
+</div>
+</div>
 
 
 </section>

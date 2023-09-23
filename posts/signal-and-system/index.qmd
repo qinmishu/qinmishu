@@ -17,6 +17,8 @@ This is a note for Signal and System a Primer with Matlab. I don't have Matlab, 
 
 [latex cheetsheet](https://quickref.me/latex)
 
+[mermaid](https://mermaid.js.org/syntax/flowchart.html) 
+
 # 1 Basic Concepts
 
 Signal: x(t), function of time, simplified definition.
@@ -463,3 +465,67 @@ title!( "convolution x(t)*h(t), result")
 ```
 
 ## 2.5 Block Diagram Representation 
+
+The commutative property of the convolution integral. 
+```{mermaid}
+flowchart LR 
+subgraph g1[1]
+    direction LR    
+    x["x(t)" ]-->h["h(t)" ]-->y["y(t)"];
+    style x stroke-width:0px
+    style y stroke-width:0px
+end 
+
+subgraph g2[2]
+    direction LR 
+    h1["h(t)" ]-->x1["x(t)" ]-->y1["y(t)"];
+    style h1 stroke-width:0px
+    style y1 stroke-width:0px
+end 
+
+g1-.-|equals|g2
+```
+
+
+The associative property of the convolution integral. 
+```{mermaid}
+flowchart LR 
+subgraph g1[1]
+    direction LR    
+    x["x(t)" ]-->h1["h1(t)" ]-->h2["h2(t)" ]-->y["y(t)"];
+    style x stroke-width:0px
+    style y stroke-width:0px
+end 
+
+subgraph g2[2]
+    direction LR 
+    xx["x(t)" ]-->convolution["h1(t)*h2(t)" ]-->yy["y(t)"];
+    style xx stroke-width:0px
+    style yy stroke-width:0px
+end 
+
+g1-.-|equals|g2
+```
+
+
+The distributive property of the convolution integral. 
+```{mermaid}
+flowchart LR 
+subgraph g1[1]
+    direction LR    
+    x["x(t)"]-->h1["h1(t)"] & h2["h2(t)"] 
+    h1-->y["y(t)"] 
+    h2-->y 
+    style x stroke-width:0px
+    style y stroke-width:0px
+end 
+
+subgraph g2[2]
+    direction LR 
+    xx["x(t)" ]-->addition["h1(t)+h2(t)" ]-->yy["y(t)"];
+    style xx stroke-width:0px
+    style yy stroke-width:0px
+end 
+
+g1-.-|equals|g2
+```
