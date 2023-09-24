@@ -19,6 +19,12 @@ This is a note for Signal and System a Primer with Matlab. I don't have Matlab, 
 
 [mermaid](https://mermaid.js.org/syntax/flowchart.html) 
 
+[greeksymbols](https://www.greeksymbols.net/) 
+
+[julia plots](https://docs.juliaplots.org/latest/tutorial/)
+
+[quarto](https://quarto.org/)
+
 # 1 Basic Concepts
 
 Signal: x(t), function of time, simplified definition.
@@ -464,7 +470,7 @@ plot(y,-4,4)
 title!( "convolution x(t)*h(t), result")
 ```
 
-## 2.5 Block Diagram Representation 
+## 2.5 Block Diagram Representation of continuous signal convolution properties 
 
 The commutative property of the convolution integral. 
 ```{mermaid}
@@ -529,3 +535,238 @@ end
 
 g1-.-|equals|g2
 ```
+
+## 2.6 Discrete Convolution 
+
+Unit step sequence definition 
+
+$$
+u[n] = \begin{cases}
+   0 \ n < 0 \\
+   1 \ n \ge 0 
+\end{cases}
+$$
+
+Unit impulse sequence definition 
+
+$$ 
+\delta(n) = \begin{cases} 
+    0 \ n \ne 0 \\
+    1 \ n = 0 
+\end{cases}
+$$ 
+
+An alternative way of expressing any discrete signal x[n]. I.e. we can represent x[n] as a weighted sum of delayed impulses. 
+
+$$
+x[n] = \sum_{k=-\infty}^{\infty} x[k] \delta[n-k]
+$$ 
+
+The multiplication property of the impulse function is (The 2 equations hold because $\delta[n] = 1$ only if n is 0 )
+
+$$ 
+\begin{align}
+\delta[n] x[n-k] &= x[-k] \delta[n] \\ 
+\delta[n-k] x[n] &= x[k] \delta[n-k] 
+\end{align}
+$$ 
+
+The impulse response h[n] of of a discrete LTI system is the response of the system when the input is $\delta[n]$. I.e. 
+
+$$ 
+h[n] = T\{\delta[n]\}
+$$ 
+
+or 
+
+```{mermaid} 
+flowchart LR 
+      
+    delta["δ[n]" ]-->s["system T" ]-->h["h[n]"];
+    style delta stroke-width:0px
+    style h stroke-width:0px
+```
+
+The convolution of the discrete input signal x[n] and impulse response h[n] is (`*` is the convolution symbol)
+
+$$ 
+y[n] = x[n] * h[n]
+$$
+
+It is defined as 
+
+$$ 
+y[n] = \sum_{k=-\infty}^{\infty} x[k] h[n-k] 
+$$ 
+
+This is known as the **convolution sum** or **superposition sum** for the system response. 
+
+As in continuous time convolution, one of the signals is time-inverted, shifted and then multiplied by the other. By the change of variables $m=n-k$, we have (m in the below equation, and k in the above equation are called dummy variables)
+
+$$
+y[n] = \sum_{m=-\infty}^{\infty} x[n-m] h[m]
+$$ 
+
+This shows the order of summation is immaterial; discrete convolution is commutative. 
+
+Properties of convolution sum. 
+
+$$ 
+\begin{align}
+& x[n]*h[n] = h[n]*x[n] \quad \text{commutative} \\
+& f[n]*[x[n]+y[n]] = f[n]*x[n] + f[n]*y[n] \quad \text{distributative} \\
+& f[n]*[x[n]*y[n]] = [f[n]*x[n]]*y[n] \quad \text{associative} \\
+& x[n-m]*h[n-k] = y[n-m-k] \quad \text{shifting} \\
+& x[n]*\delta[n] = x[n] 
+\end{align}
+$$ 
+
+If both x[n] and h[n] are causal, that is, x[n] and h[n] are 0 for all $ n < 0 $, the summation becomes 
+
+$$
+y[n] = \sum_{m=0}^{n} x[n-m] h[m]
+$$ 
+
+The convolution of M-point sequence with a N-point sequence produces an (M+N-1)-point sequence. 
+
+Evaluating the convolution sum requires the following steps:  
+
+
+1.	The signal h[k] is time-reversed to get h[−k] and then shifted by n to form h[n − k] or h[−(k − n)], which should be regarded as a function of k with parameter n.
+2.	For a fixed value of n, multiply x[k] and h[n − k] for all values of k.
+3.	The product x[k]h[n − k] is summed over all k to produce a single value of y[n].
+4.	Repeat steps 1–3 for various values of n to produce the entire output y[n].
+
+Example, find r[n], given that r[n] is the convolution of 2 unit step sequences, that is 
+
+$$
+r[n] = u[n] * u[n]
+$$
+
+Solution: 
+
+$$
+r[n] = u[n] * u[n] = \sum_{k=-\infty}^{\infty} u[k] u[n-k] 
+$$ 
+
+The function u[k], u[-k], u[n-k] are shown in in@fig-discrete-convolution-ex . The convolution takes place when we multiply the sequences (a) with (c) and (d).
+
+For $n<0$, the non-zero values of u[k] and u[n-k] do not overlap, so $u[k] u[n-k] = 0$ for all values of k. This implies that $r[n] = 0$ for $n < 0$. 
+
+For $n \ge 0$, he non-zero values of u[k] and u[n-k] overlap. This overlap begins with u[k] at k = 0 and ends with u[n-k] at k = n. Hence,
+
+$$
+r[n] = \sum_{k=0}^n u[k]u[n-k] = \sum_{k=0}^n (1) = n + 1 
+$$
+
+Therefore (considering both $n<0$ and $n \ge 0$), $r[n] = (n+1)u[n]$. This is the unit ramp sequence and is shown in (e). 
+
+```{julia} 
+#| label: fig-discrete-convolution-ex 
+#| fig-cap: discrete convolution example 
+
+using Plots
+
+u(k)=begin
+    if k >= 0 
+        1
+    else 
+        0 
+    end 
+end 
+
+n = -3 
+xs = collect(-10:10)
+y_u_k = u.(xs) 
+y_minus_u_k =  u.(xs*(-1)) 
+
+#n < 0 
+y_n_minus_k = u.((xs .- n)*(-1))
+
+u_k = plot(xs,y_u_k,seriestype=:sticks,markershape=:circle, ylimit=[0,2],legend=false,title="u(k) --- (a)") 
+
+u_minus_k = plot(xs,y_minus_u_k,seriestype=:sticks,markershape=:circle, ylimit=[0,2],legend=false,title="u(-k) --- (b)") 
+
+u_n_minus_k = plot(xs,y_n_minus_k,seriestype=:sticks,markershape=:circle, ylimit=[0,2],legend=false,title="u(n-k) n<0 --- (c)") 
+
+n = 3 
+# n > 0 
+y_n_minus_k = u.((xs .- n)*(-1))
+u_n_minus_k_n_gt_0 = plot(xs,y_n_minus_k,seriestype=:sticks,markershape=:circle, ylimit=[0,2],legend=false,title="u(n-k) n>=0 --- (d)") 
+
+r(k) = u(k)*(k+1)
+r_sequence = r.(xs) 
+r_n = plot(xs,r_sequence,seriestype=:sticks,markershape=:circle, ylimit=[0,12],legend=false,title="r(n) --- (e)") 
+
+plot(u_k,u_minus_k,u_n_minus_k,u_n_minus_k_n_gt_0,r_n,layout=(3,2))
+
+```
+
+## 2.7 Block diagram of discrete convolution properties 
+
+
+The commutative property 
+```{mermaid}
+flowchart LR 
+subgraph g1[1]
+    direction LR    
+    x["x[n]" ]-->h["h[n]" ]-->y["y[n]"];
+    style x stroke-width:0px
+    style y stroke-width:0px
+end 
+
+subgraph g2[2]
+    direction LR 
+    h1["h[n]" ]-->x1["x[n]" ]-->y1["y[n]"];
+    style h1 stroke-width:0px
+    style y1 stroke-width:0px
+end 
+
+g1-.-|equals|g2
+```
+
+
+The associative property 
+```{mermaid}
+flowchart LR 
+subgraph g1[1]
+    direction LR    
+    x["x[n]" ]-->h1["h1[n]" ]-->h2["h2[n]" ]-->y["y[n]"];
+    style x stroke-width:0px
+    style y stroke-width:0px
+end 
+
+subgraph g2[2]
+    direction LR 
+    xx["x[n]" ]-->convolution["h1[n]*h2[n]" ]-->yy["y[n]"];
+    style xx stroke-width:0px
+    style yy stroke-width:0px
+end 
+
+g1-.-|equals|g2
+```
+
+
+The distributive property 
+```{mermaid}
+flowchart LR 
+subgraph g1[1]
+    direction LR    
+    x["x[n]"]-->h1["h1[n]"] & h2["h2[n]"] 
+    h1-->y["y(t)"] 
+    h2-->y 
+    style x stroke-width:0px
+    style y stroke-width:0px
+end 
+
+subgraph g2[2]
+    direction LR 
+    xx["x[n]" ]-->addition["h1[n]+h2[n]" ]-->yy["y[n]"];
+    style xx stroke-width:0px
+    style yy stroke-width:0px
+end 
+
+g1-.-|equals|g2
+```
+
+## 2.8 Deconvolution 

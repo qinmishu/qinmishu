@@ -195,7 +195,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#impulse-response" id="toc-impulse-response" class="nav-link" data-scroll-target="#impulse-response">2.2 Impulse response</a></li>
   <li><a href="#convolution-integral" id="toc-convolution-integral" class="nav-link" data-scroll-target="#convolution-integral">2.3 Convolution Integral</a></li>
   <li><a href="#graphical-convolution" id="toc-graphical-convolution" class="nav-link" data-scroll-target="#graphical-convolution">2.4 Graphical convolution</a></li>
-  <li><a href="#block-diagram-representation" id="toc-block-diagram-representation" class="nav-link" data-scroll-target="#block-diagram-representation">2.5 Block Diagram Representation</a></li>
+  <li><a href="#block-diagram-representation-of-continuous-signal-convolution-properties" id="toc-block-diagram-representation-of-continuous-signal-convolution-properties" class="nav-link" data-scroll-target="#block-diagram-representation-of-continuous-signal-convolution-properties">2.5 Block Diagram Representation of continuous signal convolution properties</a></li>
+  <li><a href="#discrete-convolution" id="toc-discrete-convolution" class="nav-link" data-scroll-target="#discrete-convolution">2.6 Discrete Convolution</a></li>
+  <li><a href="#block-diagram-of-discrete-convolution-properties" id="toc-block-diagram-of-discrete-convolution-properties" class="nav-link" data-scroll-target="#block-diagram-of-discrete-convolution-properties">2.7 Block diagram of discrete convolution properties</a></li>
+  <li><a href="#deconvolution" id="toc-deconvolution" class="nav-link" data-scroll-target="#deconvolution">2.8 Deconvolution</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -211,6 +214,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1>reference</h1>
 <p><a href="https://quickref.me/latex">latex cheetsheet</a></p>
 <p><a href="https://mermaid.js.org/syntax/flowchart.html">mermaid</a></p>
+<p><a href="https://www.greeksymbols.net/">greeksymbols</a></p>
+<p><a href="https://docs.juliaplots.org/latest/tutorial/">julia plots</a></p>
+<p><a href="https://quarto.org/">quarto</a></p>
 </section>
 <section id="basic-concepts" class="level1">
 <h1>1 Basic Concepts</h1>
@@ -418,7 +424,7 @@ y(t) = x(t) * h(t) = \int_{-\infty}^{+\infty} x(\tau) h(t-\tau)  d\tau = \int_{0
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">ramp</span>(t)</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="fu">t*step</span>(t)</span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="541">
+<div class="cell-output cell-output-display" data-execution_count="62">
 <pre><code>ramp (generic function with 1 method)</code></pre>
 </div>
 </div>
@@ -434,7 +440,7 @@ y(t) = x(t) * h(t) = \int_{-\infty}^{+\infty} x(\tau) h(t-\tau)  d\tau = \int_{0
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>xplot <span class="op">=</span> <span class="fu">plot</span>(x,<span class="op">-</span><span class="fl">2</span>,<span class="fl">2</span>,title<span class="op">=</span><span class="st">"x(t)"</span>)</span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>hplot <span class="op">=</span> <span class="fu">plot</span>(h,<span class="op">-</span><span class="fl">2</span>,<span class="fl">2</span>,title<span class="op">=</span><span class="st">"h(t)"</span>)</span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(xplot,hplot,layout<span class="op">=</span>(<span class="fl">1</span>,<span class="fl">2</span>), legend<span class="op">=</span><span class="cn">false</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="542">
+<div class="cell-output cell-output-display" data-execution_count="63">
 <div id="fig-graph-convolution-ex-1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="index_files/figure-html/fig-graph-convolution-ex-1-output-1.svg" class="img-fluid figure-img"></p>
@@ -461,7 +467,7 @@ y(t) = x(t)*h(t) = \int x(t-\tau)h(\tau)d\tau
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">x_fold</span>(t) <span class="op">=</span> <span class="fu">x</span>(<span class="op">-</span>t)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x_fold, <span class="op">-</span><span class="fl">2</span>, <span class="fl">2</span>, title<span class="op">=</span>L<span class="st">"x(- </span><span class="sc">\t</span><span class="st">au)"</span>, legend<span class="op">=</span><span class="cn">false</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="543">
+<div class="cell-output cell-output-display" data-execution_count="64">
 <p><img src="index_files/figure-html/cell-4-output-1.svg" class="img-fluid"></p>
 </div>
 </div>
@@ -472,7 +478,7 @@ y(t) = x(t)*h(t) = \int x(t-\tau)h(\tau)d\tau
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">x_shift</span>(tau) <span class="op">=</span> <span class="fu">x</span>(t<span class="op">-</span>tau)</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x_shift, <span class="op">-</span><span class="fl">3</span>, <span class="fl">2</span>, title<span class="op">=</span>L<span class="st">"x(t - </span><span class="sc">\t</span><span class="st">au)"</span>, legend<span class="op">=</span><span class="cn">false</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="544">
+<div class="cell-output cell-output-display" data-execution_count="65">
 <p><img src="index_files/figure-html/cell-5-output-1.svg" class="img-fluid"></p>
 </div>
 </div>
@@ -486,7 +492,7 @@ y(t) = x(t) * h(t) = 0, t&lt; -2
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x_shift,<span class="op">-</span><span class="fl">3</span>,<span class="fl">2</span>,label<span class="op">=</span>L<span class="st">"x(t - </span><span class="sc">\t</span><span class="st">au)"</span>)</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot!</span>(h,<span class="op">-</span><span class="fl">3</span>,<span class="fl">2</span>,label<span class="op">=</span>L<span class="st">"h(</span><span class="sc">\t</span><span class="st">au)"</span>)</span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">title!</span>( <span class="st">"convolution x(t)*h(t), t &lt; -2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="545">
+<div class="cell-output cell-output-display" data-execution_count="66">
 <div id="fig-graph-convolution-ex-1-less-minus-2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="index_files/figure-html/fig-graph-convolution-ex-1-less-minus-2-output-1.svg" class="img-fluid figure-img"></p>
@@ -509,7 +515,7 @@ y(t) &amp;= \int_{-2}^{t} x(t-\tau)h(\tau)d\tau \\
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x_shift,<span class="op">-</span><span class="fl">3</span>,<span class="fl">2</span>,label<span class="op">=</span>L<span class="st">"x(t - </span><span class="sc">\t</span><span class="st">au)"</span>)</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot!</span>(h,<span class="op">-</span><span class="fl">3</span>,<span class="fl">2</span>,label<span class="op">=</span>L<span class="st">"h(</span><span class="sc">\t</span><span class="st">au)"</span>)</span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">title!</span>( <span class="st">"convolution x(t)*h(t), -2 &lt; t &lt; 0"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="546">
+<div class="cell-output cell-output-display" data-execution_count="67">
 <div id="fig-graph-convolution-ex-1-minus-2-and-0" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="index_files/figure-html/fig-graph-convolution-ex-1-minus-2-and-0-output-1.svg" class="img-fluid figure-img"></p>
@@ -533,7 +539,7 @@ y(t) &amp;= \int_{-2}^{t} x(t-\tau)h(\tau)d\tau \\
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x_shift,<span class="op">-</span><span class="fl">3</span>,<span class="fl">2</span>,label<span class="op">=</span>L<span class="st">"x(t - </span><span class="sc">\t</span><span class="st">au)"</span>)</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot!</span>(h,<span class="op">-</span><span class="fl">3</span>,<span class="fl">3</span>,label<span class="op">=</span>L<span class="st">"h(</span><span class="sc">\t</span><span class="st">au)"</span>)</span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">title!</span>( <span class="st">"convolution x(t)*h(t), 0 &lt; t &lt; 2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="547">
+<div class="cell-output cell-output-display" data-execution_count="68">
 <div id="fig-graph-convolution-ex-1-0-and-2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="index_files/figure-html/fig-graph-convolution-ex-1-0-and-2-output-1.svg" class="img-fluid figure-img"></p>
@@ -557,7 +563,7 @@ y(t) &amp;= \int_{-2}^{t} x(t-\tau)h(\tau)d\tau \\
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x_shift,<span class="op">-</span><span class="fl">3</span>,<span class="fl">3</span>,label<span class="op">=</span>L<span class="st">"x(t - </span><span class="sc">\t</span><span class="st">au)"</span>)</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot!</span>(h,<span class="op">-</span><span class="fl">3</span>,<span class="fl">3</span>,label<span class="op">=</span>L<span class="st">"h(</span><span class="sc">\t</span><span class="st">au)"</span>)</span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">title!</span>( <span class="st">"convolution x(t)*h(t), t &gt; 2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="548">
+<div class="cell-output cell-output-display" data-execution_count="69">
 <div id="fig-graph-convolution-ex-1-gt-2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="index_files/figure-html/fig-graph-convolution-ex-1-gt-2-output-1.svg" class="img-fluid figure-img"></p>
@@ -590,7 +596,7 @@ y(t) = \begin{cases}
 <span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(y,<span class="op">-</span><span class="fl">4</span>,<span class="fl">4</span>)</span>
 <span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="fu">title!</span>( <span class="st">"convolution x(t)*h(t), result"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="549">
+<div class="cell-output cell-output-display" data-execution_count="70">
 <div id="fig-graph-convolution-ex-1-result" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="index_files/figure-html/fig-graph-convolution-ex-1-result-output-1.svg" class="img-fluid figure-img"></p>
@@ -600,8 +606,8 @@ y(t) = \begin{cases}
 </div>
 </div>
 </section>
-<section id="block-diagram-representation" class="level2">
-<h2 class="anchored" data-anchor-id="block-diagram-representation">2.5 Block Diagram Representation</h2>
+<section id="block-diagram-representation-of-continuous-signal-convolution-properties" class="level2">
+<h2 class="anchored" data-anchor-id="block-diagram-representation-of-continuous-signal-convolution-properties">2.5 Block Diagram Representation of continuous signal convolution properties</h2>
 <p>The commutative property of the convolution integral.</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -682,6 +688,234 @@ g1-.-|equals|g2
 </div>
 </div>
 </div>
+</section>
+<section id="discrete-convolution" class="level2">
+<h2 class="anchored" data-anchor-id="discrete-convolution">2.6 Discrete Convolution</h2>
+<p>Unit step sequence definition</p>
+<p><span class="math display">\[
+u[n] = \begin{cases}
+   0 \ n &lt; 0 \\
+   1 \ n \ge 0
+\end{cases}
+\]</span></p>
+<p>Unit impulse sequence definition</p>
+<p><span class="math display">\[
+\delta(n) = \begin{cases}
+    0 \ n \ne 0 \\
+    1 \ n = 0
+\end{cases}
+\]</span></p>
+<p>An alternative way of expressing any discrete signal x[n]. I.e. we can represent x[n] as a weighted sum of delayed impulses.</p>
+<p><span class="math display">\[
+x[n] = \sum_{k=-\infty}^{\infty} x[k] \delta[n-k]
+\]</span></p>
+<p>The multiplication property of the impulse function is (The 2 equations hold because <span class="math inline">\(\delta[n] = 1\)</span> only if n is 0 )</p>
+<p><span class="math display">\[
+\begin{align}
+\delta[n] x[n-k] &amp;= x[-k] \delta[n] \\
+\delta[n-k] x[n] &amp;= x[k] \delta[n-k]
+\end{align}
+\]</span></p>
+<p>The impulse response h[n] of of a discrete LTI system is the response of the system when the input is <span class="math inline">\(\delta[n]\)</span>. I.e.</p>
+<p><span class="math display">\[
+h[n] = T\{\delta[n]\}
+\]</span></p>
+<p>or</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR 
+      
+    delta["δ[n]" ]--&gt;s["system T" ]--&gt;h["h[n]"];
+    style delta stroke-width:0px
+    style h stroke-width:0px
+</pre>
+</div>
+</div>
+</div>
+</div>
+<p>The convolution of the discrete input signal x[n] and impulse response h[n] is (<code>*</code> is the convolution symbol)</p>
+<p><span class="math display">\[
+y[n] = x[n] * h[n]
+\]</span></p>
+<p>It is defined as</p>
+<p><span class="math display">\[
+y[n] = \sum_{k=-\infty}^{\infty} x[k] h[n-k]
+\]</span></p>
+<p>This is known as the <strong>convolution sum</strong> or <strong>superposition sum</strong> for the system response.</p>
+<p>As in continuous time convolution, one of the signals is time-inverted, shifted and then multiplied by the other. By the change of variables <span class="math inline">\(m=n-k\)</span>, we have (m in the below equation, and k in the above equation are called dummy variables)</p>
+<p><span class="math display">\[
+y[n] = \sum_{m=-\infty}^{\infty} x[n-m] h[m]
+\]</span></p>
+<p>This shows the order of summation is immaterial; discrete convolution is commutative.</p>
+<p>Properties of convolution sum.</p>
+<p><span class="math display">\[
+\begin{align}
+&amp; x[n]*h[n] = h[n]*x[n] \quad \text{commutative} \\
+&amp; f[n]*[x[n]+y[n]] = f[n]*x[n] + f[n]*y[n] \quad \text{distributative} \\
+&amp; f[n]*[x[n]*y[n]] = [f[n]*x[n]]*y[n] \quad \text{associative} \\
+&amp; x[n-m]*h[n-k] = y[n-m-k] \quad \text{shifting} \\
+&amp; x[n]*\delta[n] = x[n]
+\end{align}
+\]</span></p>
+<p>If both x[n] and h[n] are causal, that is, x[n] and h[n] are 0 for all $ n &lt; 0 $, the summation becomes</p>
+<p><span class="math display">\[
+y[n] = \sum_{m=0}^{n} x[n-m] h[m]
+\]</span></p>
+<p>The convolution of M-point sequence with a N-point sequence produces an (M+N-1)-point sequence.</p>
+<p>Evaluating the convolution sum requires the following steps:</p>
+<ol type="1">
+<li>The signal h[k] is time-reversed to get h[−k] and then shifted by n to form h[n − k] or h[−(k − n)], which should be regarded as a function of k with parameter n.</li>
+<li>For a fixed value of n, multiply x[k] and h[n − k] for all values of k.</li>
+<li>The product x[k]h[n − k] is summed over all k to produce a single value of y[n].</li>
+<li>Repeat steps 1–3 for various values of n to produce the entire output y[n].</li>
+</ol>
+<p>Example, find r[n], given that r[n] is the convolution of 2 unit step sequences, that is</p>
+<p><span class="math display">\[
+r[n] = u[n] * u[n]
+\]</span></p>
+<p>Solution:</p>
+<p><span class="math display">\[
+r[n] = u[n] * u[n] = \sum_{k=-\infty}^{\infty} u[k] u[n-k]
+\]</span></p>
+<p>The function u[k], u[-k], u[n-k] are shown in in@fig-discrete-convolution-ex . The convolution takes place when we multiply the sequences (a) with (c) and (d).</p>
+<p>For <span class="math inline">\(n&lt;0\)</span>, the non-zero values of u[k] and u[n-k] do not overlap, so <span class="math inline">\(u[k] u[n-k] = 0\)</span> for all values of k. This implies that <span class="math inline">\(r[n] = 0\)</span> for <span class="math inline">\(n &lt; 0\)</span>.</p>
+<p>For <span class="math inline">\(n \ge 0\)</span>, he non-zero values of u[k] and u[n-k] overlap. This overlap begins with u[k] at k = 0 and ends with u[n-k] at k = n.&nbsp;Hence,</p>
+<p><span class="math display">\[
+r[n] = \sum_{k=0}^n u[k]u[n-k] = \sum_{k=0}^n (1) = n + 1
+\]</span></p>
+<p>Therefore (considering both <span class="math inline">\(n&lt;0\)</span> and <span class="math inline">\(n \ge 0\)</span>), <span class="math inline">\(r[n] = (n+1)u[n]\)</span>. This is the unit ramp sequence and is shown in (e).</p>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Plots</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">u</span>(k)<span class="op">=</span><span class="cf">begin</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> k <span class="op">&gt;=</span> <span class="fl">0</span> </span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>        <span class="fl">1</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> </span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>        <span class="fl">0</span> </span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span> </span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span> </span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="op">-</span><span class="fl">3</span> </span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>xs <span class="op">=</span> <span class="fu">collect</span>(<span class="op">-</span><span class="fl">10</span><span class="op">:</span><span class="fl">10</span>)</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>y_u_k <span class="op">=</span> <span class="fu">u</span>.(xs) </span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>y_minus_u_k <span class="op">=</span>  <span class="fu">u</span>.(<span class="fu">xs*</span>(<span class="op">-</span><span class="fl">1</span>)) </span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="co">#n &lt; 0 </span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>y_n_minus_k <span class="op">=</span> <span class="fu">u</span>.((xs <span class="op">.-</span> n)<span class="fu">*</span>(<span class="op">-</span><span class="fl">1</span>))</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>u_k <span class="op">=</span> <span class="fu">plot</span>(xs,y_u_k,seriestype<span class="op">=:</span>sticks,markershape<span class="op">=:</span>circle, ylimit<span class="op">=</span>[<span class="fl">0</span>,<span class="fl">2</span>],legend<span class="op">=</span><span class="cn">false</span>,title<span class="op">=</span><span class="st">"u(k) --- (a)"</span>) </span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>u_minus_k <span class="op">=</span> <span class="fu">plot</span>(xs,y_minus_u_k,seriestype<span class="op">=:</span>sticks,markershape<span class="op">=:</span>circle, ylimit<span class="op">=</span>[<span class="fl">0</span>,<span class="fl">2</span>],legend<span class="op">=</span><span class="cn">false</span>,title<span class="op">=</span><span class="st">"u(-k) --- (b)"</span>) </span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>u_n_minus_k <span class="op">=</span> <span class="fu">plot</span>(xs,y_n_minus_k,seriestype<span class="op">=:</span>sticks,markershape<span class="op">=:</span>circle, ylimit<span class="op">=</span>[<span class="fl">0</span>,<span class="fl">2</span>],legend<span class="op">=</span><span class="cn">false</span>,title<span class="op">=</span><span class="st">"u(n-k) n&lt;0 --- (c)"</span>) </span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="fl">3</span> </span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a><span class="co"># n &gt; 0 </span></span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>y_n_minus_k <span class="op">=</span> <span class="fu">u</span>.((xs <span class="op">.-</span> n)<span class="fu">*</span>(<span class="op">-</span><span class="fl">1</span>))</span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>u_n_minus_k_n_gt_0 <span class="op">=</span> <span class="fu">plot</span>(xs,y_n_minus_k,seriestype<span class="op">=:</span>sticks,markershape<span class="op">=:</span>circle, ylimit<span class="op">=</span>[<span class="fl">0</span>,<span class="fl">2</span>],legend<span class="op">=</span><span class="cn">false</span>,title<span class="op">=</span><span class="st">"u(n-k) n&gt;=0 --- (d)"</span>) </span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a><span class="fu">r</span>(k) <span class="op">=</span> <span class="fu">u</span>(k)<span class="fu">*</span>(k<span class="op">+</span><span class="fl">1</span>)</span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>r_sequence <span class="op">=</span> <span class="fu">r</span>.(xs) </span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>r_n <span class="op">=</span> <span class="fu">plot</span>(xs,r_sequence,seriestype<span class="op">=:</span>sticks,markershape<span class="op">=:</span>circle, ylimit<span class="op">=</span>[<span class="fl">0</span>,<span class="fl">12</span>],legend<span class="op">=</span><span class="cn">false</span>,title<span class="op">=</span><span class="st">"r(n) --- (e)"</span>) </span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(u_k,u_minus_k,u_n_minus_k,u_n_minus_k_n_gt_0,r_n,layout<span class="op">=</span>(<span class="fl">3</span>,<span class="fl">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="71">
+<div id="fig-discrete-convolution-ex" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="index_files/figure-html/fig-discrete-convolution-ex-output-1.svg" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;7: discrete convolution example</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="block-diagram-of-discrete-convolution-properties" class="level2">
+<h2 class="anchored" data-anchor-id="block-diagram-of-discrete-convolution-properties">2.7 Block diagram of discrete convolution properties</h2>
+<p>The commutative property</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR 
+subgraph g1[1]
+    direction LR    
+    x["x[n]" ]--&gt;h["h[n]" ]--&gt;y["y[n]"];
+    style x stroke-width:0px
+    style y stroke-width:0px
+end 
+
+subgraph g2[2]
+    direction LR 
+    h1["h[n]" ]--&gt;x1["x[n]" ]--&gt;y1["y[n]"];
+    style h1 stroke-width:0px
+    style y1 stroke-width:0px
+end 
+
+g1-.-|equals|g2
+</pre>
+</div>
+</div>
+</div>
+</div>
+<p>The associative property</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR 
+subgraph g1[1]
+    direction LR    
+    x["x[n]" ]--&gt;h1["h1[n]" ]--&gt;h2["h2[n]" ]--&gt;y["y[n]"];
+    style x stroke-width:0px
+    style y stroke-width:0px
+end 
+
+subgraph g2[2]
+    direction LR 
+    xx["x[n]" ]--&gt;convolution["h1[n]*h2[n]" ]--&gt;yy["y[n]"];
+    style xx stroke-width:0px
+    style yy stroke-width:0px
+end 
+
+g1-.-|equals|g2
+</pre>
+</div>
+</div>
+</div>
+</div>
+<p>The distributive property</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR 
+subgraph g1[1]
+    direction LR    
+    x["x[n]"]--&gt;h1["h1[n]"] &amp; h2["h2[n]"] 
+    h1--&gt;y["y(t)"] 
+    h2--&gt;y 
+    style x stroke-width:0px
+    style y stroke-width:0px
+end 
+
+subgraph g2[2]
+    direction LR 
+    xx["x[n]" ]--&gt;addition["h1[n]+h2[n]" ]--&gt;yy["y[n]"];
+    style xx stroke-width:0px
+    style yy stroke-width:0px
+end 
+
+g1-.-|equals|g2
+</pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="deconvolution" class="level2">
+<h2 class="anchored" data-anchor-id="deconvolution">2.8 Deconvolution</h2>
 
 
 </section>
