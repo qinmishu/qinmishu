@@ -32,7 +32,7 @@
     "href": "posts/arm-assembly/index.html",
     "title": "ARM汇编语言编程",
     "section": "",
-    "text": "以下内容为学习https://thinkingeek.com/2013/01/27/arm-assembler-raspberry-pi-chapter-8/的摘录.\n\n\nThese sets of allowed operands in instructions are collectively called indexing modes.\n\n\n\nAn array is a sequence of items of the same kind in memory."
+    "text": "ARM assembler in Raspberry Pi"
   },
   {
     "objectID": "posts/arm-assembly/index.html#chap7-数组和结构体",
@@ -52,8 +52,8 @@
     "objectID": "posts/arm-assembly/index.html#数组和结构体",
     "href": "posts/arm-assembly/index.html#数组和结构体",
     "title": "ARM汇编语言编程",
-    "section": "",
-    "text": "以下内容为学习https://thinkingeek.com/2013/01/27/arm-assembler-raspberry-pi-chapter-8/的摘录.\n\n\nThese sets of allowed operands in instructions are collectively called indexing modes.\n\n\n\nAn array is a sequence of items of the same kind in memory."
+    "section": "08-数组和结构体",
+    "text": "08-数组和结构体\n以下内容为学习https://thinkingeek.com/2013/01/27/arm-assembler-raspberry-pi-chapter-8/的摘录.\n\n索引模式的定义\nThese sets of allowed operands in instructions are collectively called indexing modes.\n\n\n什么是数组\nAn array is a sequence of items of the same kind in memory."
   },
   {
     "objectID": "posts/arm-assembly/index.html#函数",
@@ -166,5 +166,61 @@
     "title": "Signal and System a Primer",
     "section": "2.8 Deconvolution",
     "text": "2.8 Deconvolution"
+  },
+  {
+    "objectID": "posts/arm-assembly/index.html#first-arm-assembly-program",
+    "href": "posts/arm-assembly/index.html#first-arm-assembly-program",
+    "title": "ARM汇编语言编程",
+    "section": "01 - first arm assembly program",
+    "text": "01 - first arm assembly program\nfirst.s\n.global main \n\nmain: \n    mov r0, #3 /* r0 is a register, #3 is an immediate value */\n    bx lr /*branch and exchange, link register*/"
+  },
+  {
+    "objectID": "posts/arm-assembly/index.html#registers-and-basic-arithmetic",
+    "href": "posts/arm-assembly/index.html#registers-and-basic-arithmetic",
+    "title": "ARM汇编语言编程",
+    "section": "02 - Registers and basic arithmetic",
+    "text": "02 - Registers and basic arithmetic\nsum01.s\n/* \n    Registers and basic arithmetic \n    \n    r0 - r15, 32 bits integer registers in Raspberry PI; \n    \n    32 floating point registers; \n    \n    A program to add r1 and r2 and put the result to r0; \n    \n    A program to add r0 and r1 and put the result to r0; \n\n*/ \n\n.global main \n\nmain: \n    mov r1, #3\n    mov r2, #4 \n    add r0, r1, r2 \n    bx lr /* link register */\nsum02.s\n\n/* \n    Registers and basic arithmetic \n    \n    r0 - r15, 32 bits integer registers in Raspberry PI; \n    \n    32 floating point registers; \n    \n    A program to add r1 and r2 and put the result to r0; \n    \n    A program to add r0 and r1 and put the result to r0; \n\n*/ \n\n.global main \n\nmain: \n    mov r0, #4\n    mov r1, #5\n    add r0, r0, r1\n    bx lr /* link register */"
+  },
+  {
+    "objectID": "posts/arm-assembly/index.html#memory-addresses.-load-and-store.",
+    "href": "posts/arm-assembly/index.html#memory-addresses.-load-and-store.",
+    "title": "ARM汇编语言编程",
+    "section": "03 - Memory, addresses. Load and store.",
+    "text": "03 - Memory, addresses. Load and store.\nload01.s\n/*\n    Memory, addresses. Load and store.\n    \n    Difference between x86 and ARM(Advanced RISC Machines)  \n    \n    ldr: load to register \n    str: store from register \n    \n    Address, Labels \n    \n    Code, Data \n    \n    .balign byte align \n    .word \n    \n    Sections: .text, .data \n    \n    load01.s & store01.s \n*/\n\n.data \n\n.balign 4 \nvar1: \n    .word 3 \n    \n.balign 4   \nvar2:\n    .word 6 \n\n.text \n.balign 4 \n.global main \nmain: \n    ldr r1, addr_var1\n    ldr r1,[r1]\n    \n    ldr r2, addr_var2\n    ldr r2,[r2]\n    \n    add r0,r1,r2 \n    bx lr \n    \n    \naddr_var1: \n    .word var1 \naddr_var2: \n    .word var2  \nstore01.s\n/*\n    Memory, addresses. Load and store.\n    \n    Difference between x86 and ARM(Advanced RISC Machines)  \n    \n    ldr: load to register \n    str: store from register \n    \n    Address, Labels \n    \n    Code, Data \n    \n    .balign byte align \n    .word \n    \n    Sections: .text, .data \n    \n    load01.s & store01.s \n*/\n\n.data \n\n.balign 4 \nvar1: \n    .word 0 \n    \n.balign 4   \nvar2:\n    .word 0  \n\n.text \n.balign 4 \n.global main \nmain: \n    mov r3, #6\n    \n    ldr r1, addr_var1\n    str r3, [r1]\n    \n    mov r3, #9\n    \n    ldr r1, addr_var2\n    str r3, [r1]\n\n    ldr r1, addr_var1\n    ldr r1,[r1]\n    \n    ldr r2, addr_var2\n    ldr r2,[r2]\n    \n    add r0,r1,r2 \n    bx lr \n    \n    \naddr_var1: \n    .word var1 \naddr_var2: \n    .word var2"
+  },
+  {
+    "objectID": "posts/arm-assembly/index.html#gdb",
+    "href": "posts/arm-assembly/index.html#gdb",
+    "title": "ARM汇编语言编程",
+    "section": "04 - GDB",
+    "text": "04 - GDB\nstart\nstepi\ninfo registers\ncontinue\nprint\ndisassemble"
+  },
+  {
+    "objectID": "posts/arm-assembly/index.html#branches",
+    "href": "posts/arm-assembly/index.html#branches",
+    "title": "ARM汇编语言编程",
+    "section": "05 - Branches",
+    "text": "05 - Branches\nbranch01.s\n/*\nr0 - r15 \nr13: sp, stack pointer  \nr14: link register \nr15: pc, program counter, IP, instruction pointer \nb: branch \ncmp: compare \ncpsr: current progrm status register \nN (negative), Z (zero), C (carry) and V (overflow)\n*/\n\n.text \n.global main \nmain: \n    mov r0, #2\n    b end \n    mov r0, #3 \nend:\n    bx lr \ncompare00.s\n/*\ndemonstrate how subtract operation affects the Carry bit of cpsr \n*/\n.text \n.global main \nmain: \n    mov r1, #2 \n    mov r2, #1 \n    cmp r1, r2 \n    mov r0, #0 \n    bx lr \ncompare01.s\n/*\n*/\n.text \n.global main \nmain: \n    mov r1, #3 \n    mov r2, #2 \n    cmp r1, r2 \n    beq case_eq\ncase_neq: \n    mov r0, #6  \n    b end \ncase_eq: \n    mov r0, #5\nend: \n    bx lr \ncpsr_decode.py\ncpsr = 0x20000010\n#cpsr is an integer \ndef cpsr_decode(cpsr):\n    bit_names = {} \n    bit_names[\"n_bit\"] = 0x80_00_00_00 #negative\n    bit_names[\"z_bit\"] = 0x40_00_00_00 #zero \n    bit_names[\"c_bit\"] = 0x20_00_00_00 #carry \n    bit_names[\"v_bit\"] = 0x10_00_00_00 #overflow\n    \n    for name,bit in bit_names.items():\n        if cpsr & bit != 0:\n            print(name,\"is set\")\n        else:\n            print(name,\"is not set\")\n\ncpsr_decode(cpsr)"
+  },
+  {
+    "objectID": "posts/arm-assembly/index.html#control-structures",
+    "href": "posts/arm-assembly/index.html#control-structures",
+    "title": "ARM汇编语言编程",
+    "section": "06 - Control structures",
+    "text": "06 - Control structures\nif01.s\n.text \n.global main \n/* check if the number in r1 is odd or even*/\nmain:\n    mov r1, #2022\n\nif:\n    tst r1, #1 /* cpsr: current program status register*/\n    bne else\nthen: /* r1 is even */\n    mov r0, #2\n    b end_if \nelse: /* r1 is odd */ \n    mov r0, #1\nend_if:\n    bx lr \nloop01.s\n.text \n.global main\n/* calculate the sum 1..22 */ \nmain: \n    mov r1, #0 /* store sum */ \n    mov r2, #1 /* counter */ \nloop: \n    cmp r2, #22 /* cpsr updated */ \n    bgt end_loop \n    add r1, r1, r2 \n    add r2, r2, #1 \n    b loop \nend_loop:\n    mov r0, r1 \n    bx lr"
+  },
+  {
+    "objectID": "posts/arm-assembly/index.html#indexing-modes",
+    "href": "posts/arm-assembly/index.html#indexing-modes",
+    "title": "ARM汇编语言编程",
+    "section": "07 - Indexing modes",
+    "text": "07 - Indexing modes\nshift01.s\n/*\nARM assembler in Raspberry Pi\n\n07 Indexing modes: \nAllowed operands in instructions are collectively called indexing modes \n\n\nshifted operand \n\noperator/operand \n\nldr, str, bxx \n\nmov\n\nadd, sub, rsb, cmp, and, tst\n\nregister/immediate values \n\nSyntax of most of the ARM instructions:\ninstruction Rdest, Rsource1, source2\n\nsource2 is either a register or an immediate value\n\nWhen source2 is a register, we can combine it with a shift operation. \n\nLSL #n\nLSL Rsource3 \n\nLSR #n\nLSR Rsource3 \n\nASR #n\nASR Rsource3 \n\nROR #n \nROR Rsource3 \n\n#n can be 1..31. shift is an operation instead of an instruction. shift operation can be used to perform multiplication and division. \n*/\n\n.text \n.global main \nmain: \n    mov r0,#2\n    /*add r0, r0, r0, lsl #1*/\n    mov r0,r0,lsl #2\n    bx lr"
+  },
+  {
+    "objectID": "posts/arm-assembly/index.html#reference",
+    "href": "posts/arm-assembly/index.html#reference",
+    "title": "ARM汇编语言编程",
+    "section": "",
+    "text": "ARM assembler in Raspberry Pi"
   }
 ]

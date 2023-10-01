@@ -11,6 +11,390 @@ editor: visual
 jupyter: julia-1.8
 ---
 
+## Reference 
+
+[ARM assembler in Raspberry Pi](https://thinkingeek.com/arm-assembler-raspberry-pi/)
+
+## 01 - first arm assembly program 
+
+first.s
+```asm
+.global main 
+
+main: 
+	mov r0, #3 /* r0 is a register, #3 is an immediate value */
+	bx lr /*branch and exchange, link register*/
+```
+
+## 02 - Registers and basic arithmetic 
+
+sum01.s 
+```asm
+/* 
+	Registers and basic arithmetic 
+	
+	r0 - r15, 32 bits integer registers in Raspberry PI; 
+	
+	32 floating point registers; 
+	
+	A program to add r1 and r2 and put the result to r0; 
+	
+	A program to add r0 and r1 and put the result to r0; 
+
+*/ 
+
+.global main 
+
+main: 
+	mov r1, #3
+	mov r2, #4 
+	add r0, r1, r2 
+	bx lr /* link register */
+```
+
+sum02.s 
+```asm
+
+/* 
+	Registers and basic arithmetic 
+	
+	r0 - r15, 32 bits integer registers in Raspberry PI; 
+	
+	32 floating point registers; 
+	
+	A program to add r1 and r2 and put the result to r0; 
+	
+	A program to add r0 and r1 and put the result to r0; 
+
+*/ 
+
+.global main 
+
+main: 
+	mov r0, #4
+	mov r1, #5
+	add r0, r0, r1
+	bx lr /* link register */
+```
+
+## 03 - Memory, addresses. Load and store.
+
+load01.s 
+```asm 
+/*
+	Memory, addresses. Load and store.
+	
+	Difference between x86 and ARM(Advanced RISC Machines)  
+	
+	ldr: load to register 
+	str: store from register 
+	
+	Address, Labels 
+	
+	Code, Data 
+	
+	.balign byte align 
+	.word 
+	
+	Sections: .text, .data 
+	
+	load01.s & store01.s 
+*/
+
+.data 
+
+.balign 4 
+var1: 
+	.word 3 
+	
+.balign 4 	
+var2:
+	.word 6 
+
+.text 
+.balign 4 
+.global main 
+main: 
+	ldr r1, addr_var1
+	ldr r1,[r1]
+	
+	ldr r2, addr_var2
+	ldr r2,[r2]
+	
+	add r0,r1,r2 
+	bx lr 
+	
+	
+addr_var1: 
+	.word var1 
+addr_var2: 
+	.word var2 	
+
+```
+
+store01.s 
+```asm 
+/*
+	Memory, addresses. Load and store.
+	
+	Difference between x86 and ARM(Advanced RISC Machines)  
+	
+	ldr: load to register 
+	str: store from register 
+	
+	Address, Labels 
+	
+	Code, Data 
+	
+	.balign byte align 
+	.word 
+	
+	Sections: .text, .data 
+	
+	load01.s & store01.s 
+*/
+
+.data 
+
+.balign 4 
+var1: 
+	.word 0 
+	
+.balign 4 	
+var2:
+	.word 0  
+
+.text 
+.balign 4 
+.global main 
+main: 
+	mov r3, #6
+	
+	ldr r1, addr_var1
+	str r3, [r1]
+	
+	mov r3, #9
+	
+	ldr r1, addr_var2
+	str r3, [r1]
+
+	ldr r1, addr_var1
+	ldr r1,[r1]
+	
+	ldr r2, addr_var2
+	ldr r2,[r2]
+	
+	add r0,r1,r2 
+	bx lr 
+	
+	
+addr_var1: 
+	.word var1 
+addr_var2: 
+	.word var2 	
+
+```
+
+## 04 - GDB 
+
+start
+
+stepi 
+
+info registers 
+
+continue 
+
+print 
+
+disassemble 
+
+## 05 - Branches 
+
+branch01.s 
+
+```asm 
+/*
+r0 - r15 
+r13: sp, stack pointer  
+r14: link register 
+r15: pc, program counter, IP, instruction pointer 
+b: branch 
+cmp: compare 
+cpsr: current progrm status register 
+N (negative), Z (zero), C (carry) and V (overflow)
+*/
+
+.text 
+.global main 
+main: 
+	mov r0, #2
+	b end 
+	mov r0, #3 
+end:
+	bx lr 
+
+```
+
+compare00.s 
+
+```asm 
+/*
+demonstrate how subtract operation affects the Carry bit of cpsr 
+*/
+.text 
+.global main 
+main: 
+	mov r1, #2 
+	mov r2, #1 
+	cmp r1, r2 
+	mov r0, #0 
+	bx lr 
+```
+
+compare01.s 
+
+```asm
+/*
+*/
+.text 
+.global main 
+main: 
+	mov r1, #3 
+	mov r2, #2 
+	cmp r1, r2 
+	beq case_eq
+case_neq: 
+	mov r0, #6  
+	b end 
+case_eq: 
+	mov r0, #5
+end: 
+	bx lr 
+
+```
+
+cpsr_decode.py 
+
+```Python 
+cpsr = 0x20000010
+#cpsr is an integer 
+def cpsr_decode(cpsr):
+    bit_names = {} 
+    bit_names["n_bit"] = 0x80_00_00_00 #negative
+    bit_names["z_bit"] = 0x40_00_00_00 #zero 
+    bit_names["c_bit"] = 0x20_00_00_00 #carry 
+    bit_names["v_bit"] = 0x10_00_00_00 #overflow
+    
+    for name,bit in bit_names.items():
+        if cpsr & bit != 0:
+            print(name,"is set")
+        else:
+            print(name,"is not set")
+
+cpsr_decode(cpsr) 
+```
+
+## 06 - Control structures
+
+if01.s
+
+```asm 
+.text 
+.global main 
+/* check if the number in r1 is odd or even*/
+main:
+    mov r1, #2022
+
+if:
+    tst r1, #1 /* cpsr: current program status register*/
+    bne else
+then: /* r1 is even */
+    mov r0, #2
+    b end_if 
+else: /* r1 is odd */ 
+    mov r0, #1
+end_if:
+    bx lr 
+
+```
+
+loop01.s
+
+```asm
+.text 
+.global main
+/* calculate the sum 1..22 */ 
+main: 
+    mov r1, #0 /* store sum */ 
+    mov r2, #1 /* counter */ 
+loop: 
+    cmp r2, #22 /* cpsr updated */ 
+    bgt end_loop 
+    add r1, r1, r2 
+    add r2, r2, #1 
+    b loop 
+end_loop:
+    mov r0, r1 
+    bx lr 
+
+``` 
+
+## 07 - Indexing modes
+
+shift01.s
+
+```asm
+/*
+ARM assembler in Raspberry Pi
+
+07 Indexing modes: 
+Allowed operands in instructions are collectively called indexing modes 
+
+
+shifted operand 
+
+operator/operand 
+
+ldr, str, bxx 
+
+mov
+
+add, sub, rsb, cmp, and, tst
+
+register/immediate values 
+
+Syntax of most of the ARM instructions:
+instruction Rdest, Rsource1, source2
+
+source2 is either a register or an immediate value
+
+When source2 is a register, we can combine it with a shift operation. 
+
+LSL #n
+LSL Rsource3 
+
+LSR #n
+LSR Rsource3 
+
+ASR #n
+ASR Rsource3 
+
+ROR #n 
+ROR Rsource3 
+
+#n can be 1..31. shift is an operation instead of an instruction. shift operation can be used to perform multiplication and division. 
+*/
+
+.text 
+.global main 
+main: 
+    mov r0,#2
+    /*add r0, r0, r0, lsl #1*/
+    mov r0,r0,lsl #2
+    bx lr 
+```
+
 ## 08-数组和结构体
 
 以下内容为学习<https://thinkingeek.com/2013/01/27/arm-assembler-raspberry-pi-chapter-8/>的摘录.
@@ -82,7 +466,7 @@ Functions must use r0 for data that fits in 32 bit (or less). This is, C types c
 
 ### Hello world (puts)
 
-```
+```asm
 /* -- hello01.s */
 .data
 
@@ -117,7 +501,7 @@ address_of_return: .word return
 
 ### Interaction (scanf, printf)
 
-```
+```asm
 /* -- printf01.s */
 .data
 
@@ -178,7 +562,7 @@ address_of_return : .word return
 
 ### First function (multiply by 5) 
 
-```
+```asm
 /* -- printf02.s */
 .data
 
