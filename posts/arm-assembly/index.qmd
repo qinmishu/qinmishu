@@ -7,6 +7,7 @@ image: "image.jpg"
 format: 
   html:
     toc: true 
+    toc-depth: 7 
 editor: visual
 jupyter: julia-1.8
 ---
@@ -197,17 +198,47 @@ addr_var2:
 
 ## 04 - GDB 
 
+```bash 
+# get help 
+help 
+
+# get help of a command 
+help disassemble 
+
+help breakpoints 
+
 start
 
 stepi 
 
 info registers 
 
+# continue to run to the next breakpoint or the end 
 continue 
 
-print 
+# print the addr of a 
+print &a 
+
+# print the value of a with casting 
+print (int)a 
+
+# examine 10 decimal values starting from the address &a 
+x/10d &a
 
 disassemble 
+
+# disassemble instructions from 0x000103d0 to the addr with offset +40 bytes 
+disassemble 0x000103d0,+40 
+
+# set breakpoints at the address 
+break *0x000103f0
+
+# query the current breakpoints 
+i b 
+
+# delete the 3rd breakpoint 
+delete 3 
+```
 
 ## 05 - Branches 
 
@@ -405,7 +436,164 @@ These sets of allowed operands in instructions are collectively called indexing 
 
 ### 什么是数组
 
-An array is a sequence of items of the same kind in memory.
+An array is a sequence of items of the same kind in memory. 
+
+```C
+int a[100];
+```
+
+### 什么是结构体 
+A structure (or record or tuple) is a sequence of items of possibly diferent kind.
+
+```C 
+struct my_struct
+{
+  char f0;
+  int f1;
+} b;
+```
+
+### Naive approach without indexing modes  
+
+array01.s, a program to set initial values 0..9 to a 10 elements array
+
+```asm 
+.data 
+.balign 4 
+a: .skip 40 
+
+.text 
+.global main 
+main: 
+    ldr r0, addr_a 
+
+    mov r1, #0 
+
+loop: 
+    cmp r1, #10 
+    beq loop_end 
+    add r2, r0, r1, lsl #2  
+    str r1, [r2] 
+    add r1, r1, #1 
+    b loop 
+loop_end: 
+    bx lr 
+addr_a: .word a 
+``` 
+
+### Indexing modes 
+
+#### Non updating indexing modes 
+1. immediate value. The immediate cannot be larger than 12 bits(0..4096)
+```asm 
+[Rsource1, #+immediate] 
+[Rsource1, #-immediate]
+
+mov r2, #3
+str r2, [r1, #+12] 
+```
+
+2. register 
+```asm 
+[Rsource1, +Rsource2] 
+[Rsource1, -Rsource2]
+
+mov r2, #3         /* r2 ← 3 */
+mov r3, #12        /* r3 ← 12 */
+str r2, [r1,+r3]   /* *(r1 + r3) ← r2 */
+```
+
+3. register with shift operation 
+```asm 
+[Rsource1, +Rsource2, shift_operation #immediate]
+[Rsource1, -Rsource2, shift_operation #immediate]
+
+str r2, [r1, +r2, LSL #2]
+```
+
+#### Updating indexing modes 
+In these indexing modes the Rsource1 register is updated with the address synthesized by the load or store instruction. 
+
+##### Post-indexing modes 
+
+4. The value of Rsource1 is used as the address for the load or store. Then Rsource1 is updated with the value of immediate after adding (or subtracting) it to Rsource1.
+
+```asm 
+[Rsource1], #+immediate
+[Rsource1], #-immediate
+
+str r2, [r1], #4        /* *r1 ← r2 then r1 ← r1 + 4 */
+```
+
+5. register
+
+```asm 
+[Rsource1], +Rsource2
+[Rsource1], -Rsource2
+
+```
+
+6. register with shift operation 
+
+```asm 
+[Rsource1], +Rsource2, shift_operation #immediate 
+[Rsource1], -Rsource2, shift_operation #immediate
+```
+
+##### Pre-indexing modes 
+
+7. immediate 
+
+```asm 
+[Rsource1, #+immediate]! 
+[Rsource1, #-immediate]!
+
+ldr r2, [r1, #+12]!  /* r1 ← r1 + 12 then r2 ← *r1 */
+```
+
+8. register 
+
+```asm 
+[Rsource1, +Rsource2]! 
+[Rsource1, +Rsource2]!
+```
+
+9. register with shift operation 
+```asm 
+[Rsource1, +Rsource2, shift_operation #immediate]! 
+[Rsource1, -Rsource2, shift_operation #immediate]!
+```
+
+###  approach using indexing modes  
+
+array02.s, a program to set initial values 0..9 to a 10 elements array, using indexing modes 
+
+```asm 
+.data 
+.balign 4 
+a: .skip 40 
+
+.text 
+.global main 
+main: 
+    ldr r0, addr_a 
+
+    mov r1, #0 
+
+loop: 
+    cmp r1, #10 
+    beq loop_end 
+    /*add r2, r0, r1, lsl #2 */
+    str r1, [r0, r1, lsl #2] 
+    add r1, r1, #1 
+    b loop 
+loop_end: 
+    bx lr 
+addr_a: .word a 
+
+```
+### 结构体
+略
 
 ## 09-函数
 
