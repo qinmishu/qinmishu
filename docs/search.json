@@ -222,5 +222,12 @@
     "title": "ARM汇编语言编程",
     "section": "",
     "text": "ARM assembler in Raspberry Pi"
+  },
+  {
+    "objectID": "posts/arm-assembly/index.html#functions.-the-stack",
+    "href": "posts/arm-assembly/index.html#functions.-the-stack",
+    "title": "ARM汇编语言编程",
+    "section": "10 Functions. The stack",
+    "text": "10 Functions. The stack\nstmia, stmib, stmda, stmdb, ldmia, ldmib, ldmda, ldmdb\npush, pop"
   }
 ]

@@ -10,6 +10,7 @@ format:
     toc-depth: 7 
 editor: visual
 jupyter: julia-1.8
+code-line-numbers: true
 ---
 
 ## Reference 
@@ -827,3 +828,10 @@ address_of_return : .word return
 .global printf
 .global scanf
 ```
+
+## 10 Functions. The stack 
+
+stmia, stmib, stmda, stmdb, ldmia, ldmib, ldmda, ldmdb 
+
+push, pop 
+
