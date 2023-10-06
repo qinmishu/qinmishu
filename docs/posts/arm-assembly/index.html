@@ -95,6 +95,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
@@ -215,7 +217,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#interaction-scanf-printf" id="toc-interaction-scanf-printf" class="nav-link" data-scroll-target="#interaction-scanf-printf">Interaction (scanf, printf)</a></li>
   <li><a href="#first-function-multiply-by-5" id="toc-first-function-multiply-by-5" class="nav-link" data-scroll-target="#first-function-multiply-by-5">First function (multiply by 5)</a></li>
   </ul></li>
-  <li><a href="#functions.-the-stack" id="toc-functions.-the-stack" class="nav-link" data-scroll-target="#functions.-the-stack">10 Functions. The stack</a></li>
+  <li><a href="#functions.-the-stack" id="toc-functions.-the-stack" class="nav-link" data-scroll-target="#functions.-the-stack">10 Functions. The stack</a>
+  <ul>
+  <li><a href="#dynamic-activation" id="toc-dynamic-activation" class="nav-link" data-scroll-target="#dynamic-activation">Dynamic activation</a></li>
+  <li><a href="#the-stack" id="toc-the-stack" class="nav-link" data-scroll-target="#the-stack">The stack</a></li>
+  <li><a href="#first-approach-to-implement-the-factorial-function" id="toc-first-approach-to-implement-the-factorial-function" class="nav-link" data-scroll-target="#first-approach-to-implement-the-factorial-function">First approach to implement the factorial function</a></li>
+  <li><a href="#do-it-better-using-ldm-and-stm" id="toc-do-it-better-using-ldm-and-stm" class="nav-link" data-scroll-target="#do-it-better-using-ldm-and-stm">Do it better using <code>ldm</code> and <code>stm</code></a></li>
+  <li><a href="#factorial-again-using-stm-or-push-and-ldm-or-pop" id="toc-factorial-again-using-stm-or-push-and-ldm-or-pop" class="nav-link" data-scroll-target="#factorial-again-using-stm-or-push-and-ldm-or-pop">Factorial again using <code>stm or push</code> and <code>ldm or pop</code></a></li>
+  </ul></li>
+  <li><a href="#predication" id="toc-predication" class="nav-link" data-scroll-target="#predication">11 Predication</a></li>
   </ul>
 </nav>
     </div>
@@ -225,6 +235,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
+<p>This is a note while studing <a href="https://thinkingeek.com/arm-assembler-raspberry-pi/">ARM assembler in Raspberry Pi</a>. Most contents are copied from there to remember where I read to. You should read the original copy from the author.</p>
 <section id="reference" class="level2">
 <h2 class="anchored" data-anchor-id="reference">Reference</h2>
 <p><a href="https://thinkingeek.com/arm-assembler-raspberry-pi/">ARM assembler in Raspberry Pi</a></p>
@@ -987,8 +998,233 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="functions.-the-stack" class="level2">
 <h2 class="anchored" data-anchor-id="functions.-the-stack">10 Functions. The stack</h2>
-<p>stmia, stmib, stmda, stmdb, ldmia, ldmib, ldmda, ldmdb</p>
-<p>push, pop</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb32-1"><a href="#cb32-1"></a>// stm <span class="op">--</span> store multiple<span class="op">,</span> i <span class="op">--</span> increase<span class="op">,</span> a <span class="op">--</span> after<span class="op">,</span> d <span class="op">--</span> decrease<span class="op">,</span> b <span class="op">--</span> before </span>
+<span id="cb32-2"><a href="#cb32-2"></a>stmia<span class="op">,</span> stmib<span class="op">,</span> stmda<span class="op">,</span> stmdb<span class="op">,</span> ldmia<span class="op">,</span> ldmib<span class="op">,</span> ldmda<span class="op">,</span> ldmdb </span>
+<span id="cb32-3"><a href="#cb32-3"></a></span>
+<span id="cb32-4"><a href="#cb32-4"></a>// </span>
+<span id="cb32-5"><a href="#cb32-5"></a><span class="bu">push</span><span class="op">,</span> pop </span>
+<span id="cb32-6"><a href="#cb32-6"></a></span>
+<span id="cb32-7"><a href="#cb32-7"></a>// multiplication instruction </span>
+<span id="cb32-8"><a href="#cb32-8"></a><span class="bu">mul</span> Rdest<span class="op">,</span> Rsource1<span class="op">,</span> Rsource2<span class="op">.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="dynamic-activation" class="level3">
+<h3 class="anchored" data-anchor-id="dynamic-activation">Dynamic activation</h3>
+<p>One of the benefits of functions is being able to call them more than once. A function may call itself.</p>
+<p>A function is dynamically activated each time it is called. The span of a dynamic activation goes from the point where the function is called until it returns. At a given time, more than one function is dynamically activated. The whole dynamic activation set of functions includes the current function and the dynamic activation set of the function that called it (the current function).</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb33-1"><a href="#cb33-1"></a><span class="co">//Example recursive function that calls itself </span></span>
+<span id="cb33-2"><a href="#cb33-2"></a><span class="dt">int</span> factorial<span class="op">(</span><span class="dt">int</span> n<span class="op">)</span></span>
+<span id="cb33-3"><a href="#cb33-3"></a><span class="op">{</span></span>
+<span id="cb33-4"><a href="#cb33-4"></a>   <span class="cf">if</span> <span class="op">(</span>n <span class="op">==</span> <span class="dv">0</span><span class="op">)</span></span>
+<span id="cb33-5"><a href="#cb33-5"></a>      <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb33-6"><a href="#cb33-6"></a>   <span class="cf">else</span></span>
+<span id="cb33-7"><a href="#cb33-7"></a>      <span class="cf">return</span> n <span class="op">*</span> factorial<span class="op">(</span>n<span class="op">-</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb33-8"><a href="#cb33-8"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Well behaved functions(Refer to Chap9), a brief recall:</p>
+<ul>
+<li>Only r0, r1, r2 and r3 can be freely modified.</li>
+<li>lr(r14) value at the entry of the function must be kept somewhere because we will need it to leave the function (to return to the caller).</li>
+<li>All other registers r4 to r11 and sp(r13) can be modified but they must be restored to their original values upon leaving the function.</li>
+</ul>
+<p>Note: pc register is r15. TBD: What’s the function of r12 function? Why is it not mentioned here?</p>
+<p>we need some way to keep at least the value of lr per each dynamic activation. And not only lr, if we wanted to use registers from r4 to r11 we also need to keep somehow per each dynamic activation, a global variable would not be enough either. This is where the stack comes into play.</p>
+</section>
+<section id="the-stack" class="level3">
+<h3 class="anchored" data-anchor-id="the-stack">The stack</h3>
+<p>In computing, a stack is a data structure (a way to organize data that provides some interesting properties). A stack typically has three operations: access the top of the stack, push onto the top, pop from the top. Dependening on the context you can only access the top of the stack, in our case we will be able to access more elements than just the top.</p>
+<p>But, what is the stack? I already said in chaper 9 that the stack is a region of memory owned solely by the function. We can now reword this a bit better: the stack is a region of memory owned solely by the current dynamic activation. register sp stands for stack pointer. This register will contain the top of the stack. The region of memory owned by the dynamic activation is the extent of bytes contained between the current value of sp and the initial value that sp had at the beginning of the function. We will call that region the local memory of a function (more precisely, of a dynamic activation of it). We will put there whatever has to be saved at the beginning of a function and restored before leaving. We will also keep there the local variables of a function (dynamic activation).</p>
+<p>Our function also has to adhere to some rules when handling the stack.</p>
+<ul>
+<li>The stack pointer (sp) is always 4 byte aligned. This is absolutely mandatory. However, due to the Procedure Call Standard for the ARM architecture (AAPCS), the stack pointer will have to be 8 byte aligned, otherwise funny things may happen when we call what the AAPCS calls as public interfaces (this is, code written by other people). (Note: It means we can persist in 4 byte aligned if the function we are written is only called by ourself, and we won’t call functions written by other persons; otherwise, we should persist in 8 byte algined.)<br>
+</li>
+<li>The value of sp when leaving the function should be the same value it had upon entering the function.</li>
+</ul>
+<p>It is a convention how the stack, and thus the local memory, has its size defined. The stack can grow upwards or downwards. If it grows upwards it means that we have to increase the value of the sp register in order to enlarge the local memory. If it grows downwards we have to do the opposite, the value of the sp register must be subtracted as many bytes as the size of the local storage. In Linux ARM, the stack grows downwards, towards zero (although it never should reach zero). Addresses of local variables have very large values in the 32 bit range. They are usually close to <span class="math inline">\(2^{32}\)</span>.</p>
+<p>Another convention when using the stack concerns whether the sp register contains the address of the top of the stack or some bytes above. In Linux ARM the sp register directly points to the top of the stack: in the memory addressed by sp there is useful information.</p>
+<p>Example snippets of keep <code>lr</code> register and restore <code>lr</code> register. (Note: We can use add and sub to operate sp, we may also use push and pop or stmxx and ldmxx instructions.)</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb34-1"><a href="#cb34-1"></a><span class="bu">sub</span> <span class="kw">sp</span><span class="op">,</span> <span class="kw">sp</span><span class="op">,</span> <span class="op">#</span><span class="dv">8</span>  <span class="op">/*</span> <span class="kw">sp</span> ← <span class="kw">sp</span> <span class="op">-</span> <span class="fl">8.</span> This enlarges the stack by <span class="dv">8</span> bytes <span class="op">*/</span></span>
+<span id="cb34-2"><a href="#cb34-2"></a><span class="bu">str</span> lr<span class="op">,</span> <span class="op">[</span><span class="kw">sp</span><span class="op">]</span>    <span class="op">/*</span> <span class="op">*</span><span class="kw">sp</span> ← lr <span class="op">*/</span></span>
+<span id="cb34-3"><a href="#cb34-3"></a>... // Code of the function</span>
+<span id="cb34-4"><a href="#cb34-4"></a>ldr lr<span class="op">,</span> <span class="op">[</span><span class="kw">sp</span><span class="op">]</span>    <span class="op">/*</span> lr ← <span class="op">*</span><span class="kw">sp</span> <span class="op">*/</span></span>
+<span id="cb34-5"><a href="#cb34-5"></a><span class="bu">add</span> <span class="kw">sp</span><span class="op">,</span> <span class="kw">sp</span><span class="op">,</span> <span class="op">#</span><span class="dv">8</span>  <span class="op">/*</span> <span class="kw">sp</span> ← <span class="kw">sp</span> <span class="op">+</span> <span class="fl">8.</span> <span class="op">/*</span> This reduces the stack by <span class="dv">8</span> bytes</span>
+<span id="cb34-6"><a href="#cb34-6"></a>                                effectively restoring the stack </span>
+<span id="cb34-7"><a href="#cb34-7"></a>                                pointer to its original value <span class="op">*/</span></span>
+<span id="cb34-8"><a href="#cb34-8"></a>bx lr</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Shortened snippets of keep <code>lr</code> and restore <code>lr</code>, making use of indexing modes.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb35-1"><a href="#cb35-1"></a><span class="bu">str</span> lr<span class="op">,</span> <span class="op">[</span><span class="kw">sp</span><span class="op">,</span> <span class="op">#-</span><span class="dv">8</span><span class="op">]!</span>  <span class="op">/*</span> preindex<span class="op">:</span> <span class="kw">sp</span> ← <span class="kw">sp</span> <span class="op">-</span> <span class="dv">8</span><span class="co">; *sp ← lr */</span></span>
+<span id="cb35-2"><a href="#cb35-2"></a>... // Code of the function</span>
+<span id="cb35-3"><a href="#cb35-3"></a>ldr lr<span class="op">,</span> <span class="op">[</span><span class="kw">sp</span><span class="op">],</span> <span class="op">#+</span><span class="dv">8</span>   <span class="op">/*</span> postindex<span class="co">; lr ← *sp; sp ← sp + 8 */</span></span>
+<span id="cb35-4"><a href="#cb35-4"></a>bx lr</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="first-approach-to-implement-the-factorial-function" class="level3">
+<h3 class="anchored" data-anchor-id="first-approach-to-implement-the-factorial-function">First approach to implement the factorial function</h3>
+<p>It uses the <code>mul Rdest, Rsource1, Rsource2</code> instruction.</p>
+<p>This instruction only computes the lower 32 bits. Because we are not going to use 64 bit values in this example, the maximum factorial we will be able to compute is 12! (13! is bigger than <span class="math inline">\(2^{32}\)</span>).</p>
+<p>This approach directly operates on the <code>sp</code> register.</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb36-1"><a href="#cb36-1"></a>/* -- factorial01<span class="op">.</span>s <span class="op">*/</span></span>
+<span id="cb36-2"><a href="#cb36-2"></a>.<span class="bu">data</span></span>
+<span id="cb36-3"><a href="#cb36-3"></a></span>
+<span id="cb36-4"><a href="#cb36-4"></a><span class="fu">message1:</span> .asciz <span class="st">"Type a number: "</span></span>
+<span id="cb36-5"><a href="#cb36-5"></a><span class="fu">format:</span>   .asciz <span class="st">"%d"</span></span>
+<span id="cb36-6"><a href="#cb36-6"></a><span class="fu">message2:</span> .asciz <span class="st">"The factorial of %d is %d\n"</span></span>
+<span id="cb36-7"><a href="#cb36-7"></a></span>
+<span id="cb36-8"><a href="#cb36-8"></a>.text</span>
+<span id="cb36-9"><a href="#cb36-9"></a></span>
+<span id="cb36-10"><a href="#cb36-10"></a><span class="fu">factorial:</span></span>
+<span id="cb36-11"><a href="#cb36-11"></a>    <span class="bu">str</span> lr<span class="op">,</span> <span class="op">[</span><span class="kw">sp</span><span class="op">,#-</span><span class="dv">4</span><span class="op">]!</span>  <span class="op">/*</span> Push lr onto the top of the stack <span class="op">*/</span></span>
+<span id="cb36-12"><a href="#cb36-12"></a>    <span class="bu">str</span> r0<span class="op">,</span> <span class="op">[</span><span class="kw">sp</span><span class="op">,#-</span><span class="dv">4</span><span class="op">]!</span>  <span class="op">/*</span> Push r0 onto the top of the stack <span class="op">*/</span></span>
+<span id="cb36-13"><a href="#cb36-13"></a>                       /* Note that after that<span class="op">,</span> <span class="kw">sp</span> is <span class="dv">8</span> <span class="dt">byte</span> aligned <span class="op">*/</span></span>
+<span id="cb36-14"><a href="#cb36-14"></a>    <span class="bu">cmp</span> r0<span class="op">,</span> <span class="op">#</span><span class="dv">0</span>         <span class="op">/*</span> compare r0 <span class="op">and</span> <span class="dv">0</span> <span class="op">*/</span></span>
+<span id="cb36-15"><a href="#cb36-15"></a>    bne is_nonzero     <span class="op">/*</span> if r0 <span class="op">!=</span> <span class="dv">0</span> then branch <span class="op">*/</span></span>
+<span id="cb36-16"><a href="#cb36-16"></a>    <span class="bu">mov</span> r0<span class="op">,</span> <span class="op">#</span><span class="dv">1</span>         <span class="op">/*</span> r0 ← <span class="fl">1.</span> This is the return <span class="op">*/</span></span>
+<span id="cb36-17"><a href="#cb36-17"></a>    b end</span>
+<span id="cb36-18"><a href="#cb36-18"></a><span class="fu">is_nonzero:</span></span>
+<span id="cb36-19"><a href="#cb36-19"></a>                       /* Prepare the call to factorial<span class="op">(</span>n<span class="op">-</span><span class="dv">1</span><span class="op">)</span> <span class="op">*/</span></span>
+<span id="cb36-20"><a href="#cb36-20"></a>    <span class="bu">sub</span> r0<span class="op">,</span> r0<span class="op">,</span> <span class="op">#</span><span class="dv">1</span>     <span class="op">/*</span> r0 ← r0 <span class="op">-</span> <span class="dv">1</span> <span class="op">*/</span></span>
+<span id="cb36-21"><a href="#cb36-21"></a>    bl factorial</span>
+<span id="cb36-22"><a href="#cb36-22"></a>                       /* After the call r0 contains factorial<span class="op">(</span>n<span class="op">-</span><span class="dv">1</span><span class="op">)</span> <span class="op">*/</span></span>
+<span id="cb36-23"><a href="#cb36-23"></a>                       /* <span class="bu">Load</span> r0 <span class="op">(</span>that we kept in th stack<span class="op">)</span> into r1 <span class="op">*/</span></span>
+<span id="cb36-24"><a href="#cb36-24"></a>    ldr r1<span class="op">,</span> <span class="op">[</span><span class="kw">sp</span><span class="op">]</span>       <span class="op">/*</span> r1 ← <span class="op">*</span><span class="kw">sp</span> <span class="op">*/</span></span>
+<span id="cb36-25"><a href="#cb36-25"></a>    <span class="bu">mul</span> r0<span class="op">,</span> r0<span class="op">,</span> r1     <span class="op">/*</span> r0 ← r0 <span class="op">*</span> r1 <span class="op">*/</span></span>
+<span id="cb36-26"><a href="#cb36-26"></a>    </span>
+<span id="cb36-27"><a href="#cb36-27"></a><span class="fu">end:</span></span>
+<span id="cb36-28"><a href="#cb36-28"></a>    <span class="bu">add</span> <span class="kw">sp</span><span class="op">,</span> <span class="kw">sp</span><span class="op">,</span> <span class="op">#+</span><span class="dv">4</span>    <span class="op">/*</span> Discard the r0 we kept in the stack <span class="op">*/</span></span>
+<span id="cb36-29"><a href="#cb36-29"></a>    ldr lr<span class="op">,</span> <span class="op">[</span><span class="kw">sp</span><span class="op">],</span> <span class="op">#+</span><span class="dv">4</span>  <span class="op">/*</span> Pop the top of the stack <span class="op">and</span> put it in lr <span class="op">*/</span></span>
+<span id="cb36-30"><a href="#cb36-30"></a>    bx lr              <span class="op">/*</span> Leave factorial <span class="op">*/</span></span>
+<span id="cb36-31"><a href="#cb36-31"></a></span>
+<span id="cb36-32"><a href="#cb36-32"></a>.global main</span>
+<span id="cb36-33"><a href="#cb36-33"></a><span class="fu">main:</span></span>
+<span id="cb36-34"><a href="#cb36-34"></a>    <span class="bu">str</span> lr<span class="op">,</span> <span class="op">[</span><span class="kw">sp</span><span class="op">,#-</span><span class="dv">4</span><span class="op">]!</span>            <span class="op">/*</span> Push lr onto the top of the stack <span class="op">*/</span></span>
+<span id="cb36-35"><a href="#cb36-35"></a>    <span class="bu">sub</span> <span class="kw">sp</span><span class="op">,</span> <span class="kw">sp</span><span class="op">,</span> <span class="op">#</span><span class="dv">4</span>               <span class="op">/*</span> Make room for one <span class="dv">4</span> <span class="dt">byte</span> integer in the stack <span class="op">*/</span></span>
+<span id="cb36-36"><a href="#cb36-36"></a>                                 /* <span class="bu">In</span> these <span class="dv">4</span> bytes we will keep the number <span class="op">*/</span></span>
+<span id="cb36-37"><a href="#cb36-37"></a>                                 /* entered by the user <span class="op">*/</span></span>
+<span id="cb36-38"><a href="#cb36-38"></a>                                 /* Note that after that the stack is <span class="dv">8</span><span class="op">-</span><span class="dt">byte</span> aligned <span class="op">*/</span></span>
+<span id="cb36-39"><a href="#cb36-39"></a>    ldr r0<span class="op">,</span> address_of_message1  <span class="op">/*</span> Set <span class="op">&amp;</span>message1 as the first parameter of printf <span class="op">*/</span></span>
+<span id="cb36-40"><a href="#cb36-40"></a>    bl printf                    <span class="op">/*</span> Call printf <span class="op">*/</span></span>
+<span id="cb36-41"><a href="#cb36-41"></a></span>
+<span id="cb36-42"><a href="#cb36-42"></a>    ldr r0<span class="op">,</span> address_of_format    <span class="op">/*</span> Set <span class="op">&amp;</span>format as the first parameter of scanf <span class="op">*/</span></span>
+<span id="cb36-43"><a href="#cb36-43"></a>    <span class="bu">mov</span> r1<span class="op">,</span> <span class="kw">sp</span>                   <span class="op">/*</span> Set the top of the stack as the second parameter <span class="op">*/</span></span>
+<span id="cb36-44"><a href="#cb36-44"></a>                                 /* of scanf <span class="op">*/</span></span>
+<span id="cb36-45"><a href="#cb36-45"></a>    bl scanf                     <span class="op">/*</span> Call scanf <span class="op">*/</span></span>
+<span id="cb36-46"><a href="#cb36-46"></a></span>
+<span id="cb36-47"><a href="#cb36-47"></a>    ldr r0<span class="op">,</span> <span class="op">[</span><span class="kw">sp</span><span class="op">]</span>                 <span class="op">/*</span> Load the integer read by scanf into r0 <span class="op">*/</span></span>
+<span id="cb36-48"><a href="#cb36-48"></a>                                 /* So we set it as the first parameter of factorial <span class="op">*/</span></span>
+<span id="cb36-49"><a href="#cb36-49"></a>    bl factorial                 <span class="op">/*</span> Call factorial <span class="op">*/</span></span>
+<span id="cb36-50"><a href="#cb36-50"></a></span>
+<span id="cb36-51"><a href="#cb36-51"></a>    <span class="bu">mov</span> r2<span class="op">,</span> r0                   <span class="op">/*</span> Get the result of factorial <span class="op">and</span> move it to r2 <span class="op">*/</span></span>
+<span id="cb36-52"><a href="#cb36-52"></a>                                 /* So we set it as the third parameter of printf <span class="op">*/</span></span>
+<span id="cb36-53"><a href="#cb36-53"></a>    ldr r1<span class="op">,</span> <span class="op">[</span><span class="kw">sp</span><span class="op">]</span>                 <span class="op">/*</span> Load the integer read by scanf into r1 <span class="op">*/</span></span>
+<span id="cb36-54"><a href="#cb36-54"></a>                                 /* So we set it as the second parameter of printf <span class="op">*/</span></span>
+<span id="cb36-55"><a href="#cb36-55"></a>    ldr r0<span class="op">,</span> address_of_message2  <span class="op">/*</span> Set <span class="op">&amp;</span>message2 as the first parameter of printf <span class="op">*/</span></span>
+<span id="cb36-56"><a href="#cb36-56"></a>    bl printf                    <span class="op">/*</span> Call printf <span class="op">*/</span></span>
+<span id="cb36-57"><a href="#cb36-57"></a></span>
+<span id="cb36-58"><a href="#cb36-58"></a></span>
+<span id="cb36-59"><a href="#cb36-59"></a>    <span class="bu">add</span> <span class="kw">sp</span><span class="op">,</span> <span class="kw">sp</span><span class="op">,</span> <span class="op">#+</span><span class="dv">4</span>              <span class="op">/*</span> Discard the integer read by scanf <span class="op">*/</span></span>
+<span id="cb36-60"><a href="#cb36-60"></a>    ldr lr<span class="op">,</span> <span class="op">[</span><span class="kw">sp</span><span class="op">],</span> <span class="op">#+</span><span class="dv">4</span>            <span class="op">/*</span> Pop the top of the stack <span class="op">and</span> put it in lr <span class="op">*/</span></span>
+<span id="cb36-61"><a href="#cb36-61"></a>    bx lr                        <span class="op">/*</span> Leave main <span class="op">*/</span></span>
+<span id="cb36-62"><a href="#cb36-62"></a></span>
+<span id="cb36-63"><a href="#cb36-63"></a><span class="fu">address_of_message1:</span> .<span class="dt">word</span> message1</span>
+<span id="cb36-64"><a href="#cb36-64"></a><span class="fu">address_of_message2:</span> .<span class="dt">word</span> message2</span>
+<span id="cb36-65"><a href="#cb36-65"></a><span class="fu">address_of_format:</span> .<span class="dt">word</span> format</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="do-it-better-using-ldm-and-stm" class="level3">
+<h3 class="anchored" data-anchor-id="do-it-better-using-ldm-and-stm">Do it better using <code>ldm</code> and <code>stm</code></h3>
+<p>Note that the number of instructions that we need to push and pop data to and from the stack grows linearly with respect to the number of data items. Since ARM was designed for embedded systems, ARM designers devised a way to reduce the number of instructions we need for the «bookkeeping» of the stack. These instructions are load multiple, ldm, and store multiple, stm.</p>
+<p>These two instructions are rather powerful and allow in a single instruction perform a lot of things. Their syntax is shown as follows. Elements enclosed in curly braces { and } may be omitted from the syntax (the effect of the instruction will vary, though).</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb37-1"><a href="#cb37-1"></a>ldm addressing<span class="op">-</span>mode Rbase<span class="op">{!},</span> register<span class="op">-</span>set</span>
+<span id="cb37-2"><a href="#cb37-2"></a>stm addressing<span class="op">-</span>mode Rbase<span class="op">{!},</span> register<span class="op">-</span>set</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We will consider addressing-mode later. Rbase is the base address used to load to or store from the register-set. All 16 ARM registers may be specified in register-set (except pc in stm). A set of addresses is generated when executing these instructions. One address per register in the register-set. Then, each register, in ascending order, is paired with each of these addresses, also in ascending order. This way the lowest-numbered register gets the lowest memory address, and the highest-numbered register gets the highest memory address. Each pair register-address is then used to perform the memory operation: load or store. Specifying ! means that Rbase will be updated. The updated value depends on addressing-mode.</p>
+<p>Note that, if the registers are paired with addresses depending on their register number, it seems that they will always be loaded and stored in the same way. For instance a register-set containing r4, r5 and r6 will always store r4 in the lowest address generated by the instruction and r6 in the highest one(Note: Since it is a set, the order does not matter. <code>r4, r5, r6</code> and <code>r4, r6, r5</code> mean the same thing in a set). We can, though, specify what is considered the lowest address or the highest address. So, is Rbase actually the highest address or the lowest address of the multiple load/store? This is one of the two aspects that is controlled by addressing-mode. The second aspect relates to when the address of the memory operation changes between each memory operation.</p>
+<p>If the value in Rbase is to be considered the the highest address it means that we should first decrease Rbase as many bytes as required by the number of registers in the register-set (this is 4 times the number of registers) to form the lowest address. Then we can load or store each register consecutively starting from that lowest address, always in ascending order of the register number. This addressing mode is called decreasing and is specified using a <code>d</code>. Conversely, if Rbase is to be considered the lowest address, then this is a bit easier as we can use its value as the lowest address already. We proceed as usual, loading or storing each register in ascending order of their register number. This addressing mode is called increasing and is specified using an <code>i</code>.</p>
+<p>At each load or store, the address generated for the memory operation may be updated after or before the memory operation itself. We can specify this using <code>a</code> or <code>b</code>, respectively.</p>
+<p>If we specify !, after the instruction, Rbase will have the highest address generated in the increasing mode and the lowest address generated in the decreasing mode. The final value of Rbase will include the final addition or subtraction if we use a mode that updates after (an a mode).</p>
+<p>So we have four addressing modes, namely: ia, ib, da and db. These addressing modes are specified as suffixes of the stm and ldm instructions. So the full set of names is stmia, stmib, stmda, stmdb, ldmia, ldmib, ldmda, ldmdb. Now you may think that this is overly complicated, but we need not use all the eight modes. Only two of them are of interest to us now.</p>
+<p>When we push something onto the stack we actually decrease the stack pointer (because in Linux the stack grows downwards). More precisely, we first decrease the stack pointer as many bytes as needed before doing the actual store on that just computed stack pointer. So the appropiate addressing-mode when pushing onto the stack is stmdb. Conversely when popping from the stack we will use ldmia: we increment the stack pointer after we have performed the load.</p>
+</section>
+<section id="factorial-again-using-stm-or-push-and-ldm-or-pop" class="level3">
+<h3 class="anchored" data-anchor-id="factorial-again-using-stm-or-push-and-ldm-or-pop">Factorial again using <code>stm or push</code> and <code>ldm or pop</code></h3>
+<p>Before illustrating these two instructions, we will first slightly rewrite our factorial.</p>
+<p>If you go back to the code of our factorial, there is a moment, when computing n * factorial(n-1), where the initial value of r0 is required. The value of n was in r0 at the beginning of the function, but r0 can be freely modified by called functions.</p>
+<p>In our second version of factorial, we will keep a copy of the initial value of r0 into r4. But r4 is a register the value of which must be restored upon leaving a function. So we will keep the value of r4 at the entry of the function in the stack. At the end we will restore it back from the stack. This way we can use r4 without breaking the rules of well-behaved functions.</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb38-1"><a href="#cb38-1"></a><span class="fu">factorial:</span></span>
+<span id="cb38-2"><a href="#cb38-2"></a>    <span class="bu">str</span> lr<span class="op">,</span> <span class="op">[</span><span class="kw">sp</span><span class="op">,#-</span><span class="dv">4</span><span class="op">]!</span>  <span class="op">/*</span> Push lr onto the top of the stack <span class="op">*/</span></span>
+<span id="cb38-3"><a href="#cb38-3"></a>    <span class="bu">str</span> r4<span class="op">,</span> <span class="op">[</span><span class="kw">sp</span><span class="op">,#-</span><span class="dv">4</span><span class="op">]!</span>  <span class="op">/*</span> Push r4 onto the top of the stack <span class="op">*/</span></span>
+<span id="cb38-4"><a href="#cb38-4"></a>                       /* The stack is now <span class="dv">8</span> <span class="dt">byte</span> aligned <span class="op">*/</span></span>
+<span id="cb38-5"><a href="#cb38-5"></a>    <span class="bu">mov</span> r4<span class="op">,</span> r0         <span class="op">/*</span> Keep a copy of the initial value of r0 in r4 <span class="op">*/</span></span>
+<span id="cb38-6"><a href="#cb38-6"></a></span>
+<span id="cb38-7"><a href="#cb38-7"></a></span>
+<span id="cb38-8"><a href="#cb38-8"></a>    <span class="bu">cmp</span> r0<span class="op">,</span> <span class="op">#</span><span class="dv">0</span>         <span class="op">/*</span> compare r0 <span class="op">and</span> <span class="dv">0</span> <span class="op">*/</span></span>
+<span id="cb38-9"><a href="#cb38-9"></a>    bne is_nonzero     <span class="op">/*</span> if r0 <span class="op">!=</span> <span class="dv">0</span> then branch <span class="op">*/</span></span>
+<span id="cb38-10"><a href="#cb38-10"></a>    <span class="bu">mov</span> r0<span class="op">,</span> <span class="op">#</span><span class="dv">1</span>         <span class="op">/*</span> r0 ← <span class="fl">1.</span> This is the return <span class="op">*/</span></span>
+<span id="cb38-11"><a href="#cb38-11"></a>    b end</span>
+<span id="cb38-12"><a href="#cb38-12"></a><span class="fu">is_nonzero:</span></span>
+<span id="cb38-13"><a href="#cb38-13"></a>                       /* Prepare the call to factorial<span class="op">(</span>n<span class="op">-</span><span class="dv">1</span><span class="op">)</span> <span class="op">*/</span></span>
+<span id="cb38-14"><a href="#cb38-14"></a>    <span class="bu">sub</span> r0<span class="op">,</span> r0<span class="op">,</span> <span class="op">#</span><span class="dv">1</span>     <span class="op">/*</span> r0 ← r0 <span class="op">-</span> <span class="dv">1</span> <span class="op">*/</span></span>
+<span id="cb38-15"><a href="#cb38-15"></a>    bl factorial</span>
+<span id="cb38-16"><a href="#cb38-16"></a>                       /* After the call r0 contains factorial<span class="op">(</span>n<span class="op">-</span><span class="dv">1</span><span class="op">)</span> <span class="op">*/</span></span>
+<span id="cb38-17"><a href="#cb38-17"></a>                       /* <span class="bu">Load</span> initial value of r0 <span class="op">(</span>that we kept in r4<span class="op">)</span> into r1 <span class="op">*/</span></span>
+<span id="cb38-18"><a href="#cb38-18"></a>    <span class="bu">mov</span> r1<span class="op">,</span> r4         <span class="op">/*</span> r1 ← r4 <span class="op">*/</span></span>
+<span id="cb38-19"><a href="#cb38-19"></a>    <span class="bu">mul</span> r0<span class="op">,</span> r0<span class="op">,</span> r1     <span class="op">/*</span> r0 ← r0 <span class="op">*</span> r1 <span class="op">*/</span></span>
+<span id="cb38-20"><a href="#cb38-20"></a></span>
+<span id="cb38-21"><a href="#cb38-21"></a><span class="fu">end:</span></span>
+<span id="cb38-22"><a href="#cb38-22"></a>    ldr r4<span class="op">,</span> <span class="op">[</span><span class="kw">sp</span><span class="op">],</span> <span class="op">#+</span><span class="dv">4</span>  <span class="op">/*</span> Pop the top of the stack <span class="op">and</span> put it in r4 <span class="op">*/</span></span>
+<span id="cb38-23"><a href="#cb38-23"></a>    ldr lr<span class="op">,</span> <span class="op">[</span><span class="kw">sp</span><span class="op">],</span> <span class="op">#+</span><span class="dv">4</span>  <span class="op">/*</span> Pop the top of the stack <span class="op">and</span> put it in lr <span class="op">*/</span></span>
+<span id="cb38-24"><a href="#cb38-24"></a>    bx lr              <span class="op">/*</span> Leave factorial <span class="op">*/</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The above program can be improved via <code>stmdb</code> and <code>ldmia</code> as below:</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb39-1"><a href="#cb39-1"></a><span class="fu">factorial:</span></span>
+<span id="cb39-2"><a href="#cb39-2"></a>    stmdb <span class="kw">sp</span><span class="op">!,</span> <span class="op">{</span>r4<span class="op">,</span> lr<span class="op">}</span> <span class="op">/*</span> Push r4 <span class="op">and</span> lr onto the stack <span class="op">*/</span></span>
+<span id="cb39-3"><a href="#cb39-3"></a>     </span>
+<span id="cb39-4"><a href="#cb39-4"></a>                       /* The stack is now <span class="dv">8</span> <span class="dt">byte</span> aligned <span class="op">*/</span></span>
+<span id="cb39-5"><a href="#cb39-5"></a>    <span class="bu">mov</span> r4<span class="op">,</span> r0         <span class="op">/*</span> Keep a copy of the initial value of r0 in r4 <span class="op">*/</span></span>
+<span id="cb39-6"><a href="#cb39-6"></a></span>
+<span id="cb39-7"><a href="#cb39-7"></a></span>
+<span id="cb39-8"><a href="#cb39-8"></a>    <span class="bu">cmp</span> r0<span class="op">,</span> <span class="op">#</span><span class="dv">0</span>         <span class="op">/*</span> compare r0 <span class="op">and</span> <span class="dv">0</span> <span class="op">*/</span></span>
+<span id="cb39-9"><a href="#cb39-9"></a>    bne is_nonzero     <span class="op">/*</span> if r0 <span class="op">!=</span> <span class="dv">0</span> then branch <span class="op">*/</span></span>
+<span id="cb39-10"><a href="#cb39-10"></a>    <span class="bu">mov</span> r0<span class="op">,</span> <span class="op">#</span><span class="dv">1</span>         <span class="op">/*</span> r0 ← <span class="fl">1.</span> This is the return <span class="op">*/</span></span>
+<span id="cb39-11"><a href="#cb39-11"></a>    b end</span>
+<span id="cb39-12"><a href="#cb39-12"></a><span class="fu">is_nonzero:</span></span>
+<span id="cb39-13"><a href="#cb39-13"></a>                       /* Prepare the call to factorial<span class="op">(</span>n<span class="op">-</span><span class="dv">1</span><span class="op">)</span> <span class="op">*/</span></span>
+<span id="cb39-14"><a href="#cb39-14"></a>    <span class="bu">sub</span> r0<span class="op">,</span> r0<span class="op">,</span> <span class="op">#</span><span class="dv">1</span>     <span class="op">/*</span> r0 ← r0 <span class="op">-</span> <span class="dv">1</span> <span class="op">*/</span></span>
+<span id="cb39-15"><a href="#cb39-15"></a>    bl factorial</span>
+<span id="cb39-16"><a href="#cb39-16"></a>                       /* After the call r0 contains factorial<span class="op">(</span>n<span class="op">-</span><span class="dv">1</span><span class="op">)</span> <span class="op">*/</span></span>
+<span id="cb39-17"><a href="#cb39-17"></a>                       /* <span class="bu">Load</span> initial value of r0 <span class="op">(</span>that we kept in r4<span class="op">)</span> into r1 <span class="op">*/</span></span>
+<span id="cb39-18"><a href="#cb39-18"></a>    <span class="bu">mov</span> r1<span class="op">,</span> r4         <span class="op">/*</span> r1 ← r4 <span class="op">*/</span></span>
+<span id="cb39-19"><a href="#cb39-19"></a>    <span class="bu">mul</span> r0<span class="op">,</span> r0<span class="op">,</span> r1     <span class="op">/*</span> r0 ← r0 <span class="op">*</span> r1 <span class="op">*/</span></span>
+<span id="cb39-20"><a href="#cb39-20"></a></span>
+<span id="cb39-21"><a href="#cb39-21"></a><span class="fu">end:</span></span>
+<span id="cb39-22"><a href="#cb39-22"></a>    ldmia <span class="kw">sp</span><span class="op">!,</span> <span class="op">{</span>r4<span class="op">,</span> lr<span class="op">}</span>    <span class="op">/*</span> Pop lr <span class="op">and</span> r4 from the stack <span class="op">*/</span></span>
+<span id="cb39-23"><a href="#cb39-23"></a>    bx lr              <span class="op">/*</span> Leave factorial <span class="op">*/</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Note that the order of the registers in the set of registers is not relevant(the order of elements in a set does not matter), but the processor will handle them in ascending order, so we should write them in ascending order. GNU assembler will emit a warning otherwise. Since lr is actually r14 it must go after r4. This means that our code is 100% equivalent to the previous one since <strong>r4 will end in a lower address than lr</strong>: remember our stack grows toward lower addresses, thus r4 which is in the top of the stack in factorial has the lowest address.</p>
+<p>Remembering stmdb sp! and ldmia sp! may be a bit hard. Also, given that these two instructions will be relatively common when entering and leaving functions, GNU assembler provides two mnemonics push and pop for stmdb sp! and ldmia sp!, respectively. Note that these are not ARM instructions actually, just convenience names that are easier to remember.</p>
+<p>The above program can be improved via <code>push</code> and <code>pop</code> as below:</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb40-1"><a href="#cb40-1"></a><span class="fu">factorial:</span></span>
+<span id="cb40-2"><a href="#cb40-2"></a>    <span class="bu">push</span> <span class="op">{</span>r4<span class="op">,</span> lr<span class="op">}</span> <span class="op">/*</span> Push r4 <span class="op">and</span> lr onto the stack <span class="op">*/</span></span>
+<span id="cb40-3"><a href="#cb40-3"></a>     </span>
+<span id="cb40-4"><a href="#cb40-4"></a>                       /* The stack is now <span class="dv">8</span> <span class="dt">byte</span> aligned <span class="op">*/</span></span>
+<span id="cb40-5"><a href="#cb40-5"></a>    <span class="bu">mov</span> r4<span class="op">,</span> r0         <span class="op">/*</span> Keep a copy of the initial value of r0 in r4 <span class="op">*/</span></span>
+<span id="cb40-6"><a href="#cb40-6"></a></span>
+<span id="cb40-7"><a href="#cb40-7"></a></span>
+<span id="cb40-8"><a href="#cb40-8"></a>    <span class="bu">cmp</span> r0<span class="op">,</span> <span class="op">#</span><span class="dv">0</span>         <span class="op">/*</span> compare r0 <span class="op">and</span> <span class="dv">0</span> <span class="op">*/</span></span>
+<span id="cb40-9"><a href="#cb40-9"></a>    bne is_nonzero     <span class="op">/*</span> if r0 <span class="op">!=</span> <span class="dv">0</span> then branch <span class="op">*/</span></span>
+<span id="cb40-10"><a href="#cb40-10"></a>    <span class="bu">mov</span> r0<span class="op">,</span> <span class="op">#</span><span class="dv">1</span>         <span class="op">/*</span> r0 ← <span class="fl">1.</span> This is the return <span class="op">*/</span></span>
+<span id="cb40-11"><a href="#cb40-11"></a>    b end</span>
+<span id="cb40-12"><a href="#cb40-12"></a><span class="fu">is_nonzero:</span></span>
+<span id="cb40-13"><a href="#cb40-13"></a>                       /* Prepare the call to factorial<span class="op">(</span>n<span class="op">-</span><span class="dv">1</span><span class="op">)</span> <span class="op">*/</span></span>
+<span id="cb40-14"><a href="#cb40-14"></a>    <span class="bu">sub</span> r0<span class="op">,</span> r0<span class="op">,</span> <span class="op">#</span><span class="dv">1</span>     <span class="op">/*</span> r0 ← r0 <span class="op">-</span> <span class="dv">1</span> <span class="op">*/</span></span>
+<span id="cb40-15"><a href="#cb40-15"></a>    bl factorial</span>
+<span id="cb40-16"><a href="#cb40-16"></a>                       /* After the call r0 contains factorial<span class="op">(</span>n<span class="op">-</span><span class="dv">1</span><span class="op">)</span> <span class="op">*/</span></span>
+<span id="cb40-17"><a href="#cb40-17"></a>                       /* <span class="bu">Load</span> initial value of r0 <span class="op">(</span>that we kept in r4<span class="op">)</span> into r1 <span class="op">*/</span></span>
+<span id="cb40-18"><a href="#cb40-18"></a>    <span class="bu">mov</span> r1<span class="op">,</span> r4         <span class="op">/*</span> r1 ← r4 <span class="op">*/</span></span>
+<span id="cb40-19"><a href="#cb40-19"></a>    <span class="bu">mul</span> r0<span class="op">,</span> r0<span class="op">,</span> r1     <span class="op">/*</span> r0 ← r0 <span class="op">*</span> r1 <span class="op">*/</span></span>
+<span id="cb40-20"><a href="#cb40-20"></a></span>
+<span id="cb40-21"><a href="#cb40-21"></a><span class="fu">end:</span></span>
+<span id="cb40-22"><a href="#cb40-22"></a>    <span class="bu">pop</span> <span class="op">{</span>r4<span class="op">,</span> lr<span class="op">}</span>    <span class="op">/*</span> Pop lr <span class="op">and</span> r4 from the stack <span class="op">*/</span></span>
+<span id="cb40-23"><a href="#cb40-23"></a>    bx lr              <span class="op">/*</span> Leave factorial <span class="op">*/</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="predication" class="level2">
+<h2 class="anchored" data-anchor-id="predication">11 Predication</h2>
+<p><a href="https://en.wikipedia.org/wiki/Predication_(computer_architecture)">Predication on wikipedia</a></p>
+<p>Instruction suffix</p>
+<p>eq, neq, le, lt, ge, gt, al(always, can be omitted)</p>
 
 
 </section>
