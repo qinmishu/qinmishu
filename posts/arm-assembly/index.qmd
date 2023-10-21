@@ -838,7 +838,7 @@ address_of_return : .word return
 stmia, stmib, stmda, stmdb, ldmia, ldmib, ldmda, ldmdb 
 
 // push is equivalent to stmdb, pop is equivalent to ldmia when operating on sp 
-push, pop 
+push, pop
 
 // multiplication instruction 
 mul Rdest, Rsource1, Rsource2.
@@ -1110,3 +1110,18 @@ Instruction suffix
 
 eq, neq, le, lt, ge, gt, al(always, can be omitted) 
 
+## 12 loops and the status register 
+
+adds(add and update the cpsr)
+
+subs
+
+bpl(branch if plus, branch if the negative flag is clear) 
+
+### Operating 64 bit numbers 
+
+adcs(add with carry, update the cpsr)
+
+sbc(subtract with carry)
+
+multiplication 

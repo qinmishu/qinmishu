@@ -226,6 +226,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#factorial-again-using-stm-or-push-and-ldm-or-pop" id="toc-factorial-again-using-stm-or-push-and-ldm-or-pop" class="nav-link" data-scroll-target="#factorial-again-using-stm-or-push-and-ldm-or-pop">Factorial again using <code>stm or push</code> and <code>ldm or pop</code></a></li>
   </ul></li>
   <li><a href="#predication" id="toc-predication" class="nav-link" data-scroll-target="#predication">11 Predication</a></li>
+  <li><a href="#loops-and-the-status-register" id="toc-loops-and-the-status-register" class="nav-link" data-scroll-target="#loops-and-the-status-register">12 loops and the status register</a>
+  <ul>
+  <li><a href="#operating-64-bit-numbers" id="toc-operating-64-bit-numbers" class="nav-link" data-scroll-target="#operating-64-bit-numbers">Operating 64 bit numbers</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -1001,8 +1005,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode" id="cb32"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb32-1"><a href="#cb32-1"></a>// stm <span class="op">--</span> store multiple<span class="op">,</span> i <span class="op">--</span> increase<span class="op">,</span> a <span class="op">--</span> after<span class="op">,</span> d <span class="op">--</span> decrease<span class="op">,</span> b <span class="op">--</span> before </span>
 <span id="cb32-2"><a href="#cb32-2"></a>stmia<span class="op">,</span> stmib<span class="op">,</span> stmda<span class="op">,</span> stmdb<span class="op">,</span> ldmia<span class="op">,</span> ldmib<span class="op">,</span> ldmda<span class="op">,</span> ldmdb </span>
 <span id="cb32-3"><a href="#cb32-3"></a></span>
-<span id="cb32-4"><a href="#cb32-4"></a>// </span>
-<span id="cb32-5"><a href="#cb32-5"></a><span class="bu">push</span><span class="op">,</span> pop </span>
+<span id="cb32-4"><a href="#cb32-4"></a>// <span class="bu">push</span> is equivalent to stmdb<span class="op">,</span> pop is equivalent to ldmia when operating on <span class="kw">sp</span> </span>
+<span id="cb32-5"><a href="#cb32-5"></a><span class="bu">push</span><span class="op">,</span> pop</span>
 <span id="cb32-6"><a href="#cb32-6"></a></span>
 <span id="cb32-7"><a href="#cb32-7"></a>// multiplication instruction </span>
 <span id="cb32-8"><a href="#cb32-8"></a><span class="bu">mul</span> Rdest<span class="op">,</span> Rsource1<span class="op">,</span> Rsource2<span class="op">.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1225,8 +1229,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><a href="https://en.wikipedia.org/wiki/Predication_(computer_architecture)">Predication on wikipedia</a></p>
 <p>Instruction suffix</p>
 <p>eq, neq, le, lt, ge, gt, al(always, can be omitted)</p>
+</section>
+<section id="loops-and-the-status-register" class="level2">
+<h2 class="anchored" data-anchor-id="loops-and-the-status-register">12 loops and the status register</h2>
+<p>adds(add and update the cpsr)</p>
+<p>subs</p>
+<p>bpl(branch if plus, branch if the negative flag is clear)</p>
+<section id="operating-64-bit-numbers" class="level3">
+<h3 class="anchored" data-anchor-id="operating-64-bit-numbers">Operating 64 bit numbers</h3>
+<p>adcs(add with carry, update the cpsr)</p>
+<p>sbc(subtract with carry)</p>
+<p>multiplication</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
