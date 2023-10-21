@@ -11,7 +11,7 @@
     "href": "index.html",
     "title": "亲密数",
     "section": "",
-    "text": "欢迎来到亲密数频道!\n\n\n\n\n\n\n\n\n  \n\n\n\n\nSignal and System a Primer\n\n\n\n\n\n\n\ntelecom\n\n\n\n\n\n\n\n\n\n\n\nSep 10, 2023\n\n\n秦米书\n\n\n\n\n\n\n  \n\n\n\n\nARM汇编语言编程\n\n\n\n\n\n\n\narm\n\n\nassembly\n\n\nraspberry-pi\n\n\n\n\n\n\n\n\n\n\n\nApr 6, 2023\n\n\n秦米书\n\n\n\n\n\n\n  \n\n\n\n\nPost With Code\n\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\n\n\nApr 6, 2023\n\n\n秦米书\n\n\n\n\n\n\n  \n\n\n\n\n欢迎来到我的博客\n\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\n\n\nApr 3, 2023\n\n\n秦米书\n\n\n\n\n\n\nNo matching items"
+    "text": "欢迎来到亲密数频道!\n\n\n\n\n\n\n\n\n  \n\n\n\n\nx86-64汇编语言编程\n\n\n\n\n\n\n\nx86-64\n\n\nassembly\n\n\nlinux\n\n\n\n\n\n\n\n\n\n\n\nOct 21, 2023\n\n\n秦米书\n\n\n\n\n\n\n  \n\n\n\n\nSignal and System a Primer\n\n\n\n\n\n\n\ntelecom\n\n\n\n\n\n\n\n\n\n\n\nSep 10, 2023\n\n\n秦米书\n\n\n\n\n\n\n  \n\n\n\n\nARM汇编语言编程\n\n\n\n\n\n\n\narm\n\n\nassembly\n\n\nraspberry-pi\n\n\n\n\n\n\n\n\n\n\n\nApr 6, 2023\n\n\n秦米书\n\n\n\n\n\n\n  \n\n\n\n\nPost With Code\n\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\n\n\nApr 6, 2023\n\n\n秦米书\n\n\n\n\n\n\n  \n\n\n\n\n欢迎来到我的博客\n\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\n\n\nApr 3, 2023\n\n\n秦米书\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/post-with-code/index.html",
@@ -243,5 +243,26 @@
     "title": "ARM汇编语言编程",
     "section": "12 loops and the status register",
     "text": "12 loops and the status register\nadds(add and update the cpsr)\nsubs\nbpl(branch if plus, branch if the negative flag is clear)\n\nOperating 64 bit numbers\nadcs(add with carry, update the cpsr)\nsbc(subtract with carry)\nmultiplication"
+  },
+  {
+    "objectID": "posts/x86-64-assembly/index.html",
+    "href": "posts/x86-64-assembly/index.html",
+    "title": "x86-64汇编语言编程",
+    "section": "",
+    "text": "This is a note while studying x86-64 assembler."
+  },
+  {
+    "objectID": "posts/x86-64-assembly/index.html#hello-world-program",
+    "href": "posts/x86-64-assembly/index.html#hello-world-program",
+    "title": "x86-64汇编语言编程",
+    "section": "Hello world program",
+    "text": "Hello world program\nThe program is copied from x86-64 Assembly on youtube, from Mike Shah\nIn intel format.\n/*first.s*/\n.intel_syntax noprefix\n.global _start \n.hello.str: \n    .ascii \"12345678\\n\" \n\n.text \n\n_start: \n    movq rbp, rsp \n    movq rax, 1  \n    movq rdi, 1  \n    leaq rsi, .hello.str  \n    movq rdx, 9  \n    syscall \n    \n    movq rax, 60  \n    movq rdi, 0  \n    syscall \n    \n    pop rbp \nTo build it.\nas -o first.o first.s \nld -o first first.o \nIn AT&T format.\n/*first.s*/\n\n.global _start \n.hello.str: \n    .ascii \"12345678\\n\" \n\n.text \n\n_start: \n    movq %rsp, %rbp \n    movq $1, %rax    \n    movq $1, %rdi   \n    leaq .hello.str, %rsi    \n    movq $9, %rdx  \n    syscall \n    \n    movq $60, %rax  \n    movq $0, %rdi   \n    syscall \n    \n    pop %rbp \nTo build it. The below 2 ways are both OK.\nas -o first.o first.s \nld -o first first.o \n\ngcc -c first.s -o first.o \nld -o first first.o"
+  },
+  {
+    "objectID": "posts/x86-64-assembly/index.html#call",
+    "href": "posts/x86-64-assembly/index.html#call",
+    "title": "x86-64汇编语言编程",
+    "section": "call",
+    "text": "call\n/*first.s*/\n\n.data \n.hello.str: \n    .ascii \"12345678\\n\" \n\n.text \n\n_write_str: \n    movq %rsp, %rbp \n    movq $1, %rax    \n    movq $1, %rdi   \n    leaq .hello.str, %rsi    \n    movq $9, %rdx  \n    syscall \n_exit:\n    movq $60, %rax  \n    movq $0, %rdi   \n    syscall \n\n.global _start \n_start: \n    call _write_str \n    call _exit \n    pop %rbp"
   }
 ]

@@ -1,0 +1,11 @@
+{
+  "hash": "f0eec99877b643f843fd40258e307533",
+  "result": {
+    "markdown": "---\ntitle: x86-64汇编语言编程\nauthor: 秦米书\ndate: '2023-10-21'\ncategories:\n  - x86-64\n  - assembly\n  - linux\nimage: image.jpg\nformat:\n  html:\n    toc: true\n    toc-depth: 7\ncode-line-numbers: true\n---\n\nThis is a note while studying x86-64 assembler.\n\n# Notes\n\nGCC(Gnu Compiler Collection) is a front end. It will call `as` and `ld`. The process can be viewed if we use `-v` argument of gcc. \n\n## Hello world program \n\nThe program is copied from [x86-64 Assembly on youtube, from Mike Shah](https://www.youtube.com/watch?v=3nYHV5zIQGA&list=PLvv0ScY6vfd9BSBznpARlKGziF1xrlU54&index=1)\n\nIn intel format. \n```ASM\n/*first.s*/\n.intel_syntax noprefix\n.global _start \n.hello.str: \n\t.ascii \"12345678\\n\" \n\n.text \n\n_start: \n\tmovq rbp, rsp \n\tmovq rax, 1  \n\tmovq rdi, 1  \n\tleaq rsi, .hello.str  \n\tmovq rdx, 9  \n\tsyscall \n\t\n\tmovq rax, 60  \n\tmovq rdi, 0  \n\tsyscall \n\t\n\tpop rbp \n```\n\nTo build it. \n\n```bash \nas -o first.o first.s \nld -o first first.o \n```\n\nIn AT&T format. \n```ASM \n/*first.s*/\n\n.global _start \n.hello.str: \n\t.ascii \"12345678\\n\" \n\n.text \n\n_start: \n\tmovq %rsp, %rbp \n\tmovq $1, %rax    \n\tmovq $1, %rdi   \n\tleaq .hello.str, %rsi    \n\tmovq $9, %rdx  \n\tsyscall \n\t\n\tmovq $60, %rax  \n\tmovq $0, %rdi   \n\tsyscall \n\t\n\tpop %rbp \n```\n\nTo build it. The below 2 ways are both OK. \n```bash\nas -o first.o first.s \nld -o first first.o \n\ngcc -c first.s -o first.o \nld -o first first.o \n```\n\n## call \n\n```ASM\n/*first.s*/\n\n.data \n.hello.str: \n\t.ascii \"12345678\\n\" \n\n.text \n\n_write_str: \n\tmovq %rsp, %rbp \n\tmovq $1, %rax    \n\tmovq $1, %rdi   \n\tleaq .hello.str, %rsi    \n\tmovq $9, %rdx  \n\tsyscall \n_exit:\n\tmovq $60, %rax  \n\tmovq $0, %rdi   \n\tsyscall \n\n.global _start \n_start: \n\tcall _write_str \n\tcall _exit \n\tpop %rbp \n```\n\n",
+    "supporting": [
+      "index_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}

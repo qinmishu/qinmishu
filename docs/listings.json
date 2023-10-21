@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/x86-64-assembly/index.html",
       "/posts/signal-and-system/index.html",
       "/posts/arm-assembly/index.html",
       "/posts/post-with-code/index.html",

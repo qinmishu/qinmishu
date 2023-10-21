@@ -1,0 +1,120 @@
+---
+title: "x86-64汇编语言编程"
+author: "秦米书"
+date: "2023-10-21"
+categories: [x86-64, assembly, linux]
+image: "image.jpg"
+format: 
+  html:
+    toc: true 
+    toc-depth: 7 
+
+jupyter: julia-1.8
+code-line-numbers: true
+---
+
+This is a note while studying x86-64 assembler.
+
+# Notes
+
+GCC(Gnu Compiler Collection) is a front end. It will call `as` and `ld`. The process can be viewed if we use `-v` argument of gcc. 
+
+## Hello world program 
+
+The program is copied from [x86-64 Assembly on youtube, from Mike Shah](https://www.youtube.com/watch?v=3nYHV5zIQGA&list=PLvv0ScY6vfd9BSBznpARlKGziF1xrlU54&index=1)
+
+In intel format. 
+```ASM
+/*first.s*/
+.intel_syntax noprefix
+.global _start 
+.hello.str: 
+	.ascii "12345678\n" 
+
+.text 
+
+_start: 
+	movq rbp, rsp 
+	movq rax, 1  
+	movq rdi, 1  
+	leaq rsi, .hello.str  
+	movq rdx, 9  
+	syscall 
+	
+	movq rax, 60  
+	movq rdi, 0  
+	syscall 
+	
+	pop rbp 
+```
+
+To build it. 
+
+```bash 
+as -o first.o first.s 
+ld -o first first.o 
+```
+
+In AT&T format. 
+```ASM 
+/*first.s*/
+
+.global _start 
+.hello.str: 
+	.ascii "12345678\n" 
+
+.text 
+
+_start: 
+	movq %rsp, %rbp 
+	movq $1, %rax    
+	movq $1, %rdi   
+	leaq .hello.str, %rsi    
+	movq $9, %rdx  
+	syscall 
+	
+	movq $60, %rax  
+	movq $0, %rdi   
+	syscall 
+	
+	pop %rbp 
+```
+
+To build it. The below 2 ways are both OK. 
+```bash
+as -o first.o first.s 
+ld -o first first.o 
+
+gcc -c first.s -o first.o 
+ld -o first first.o 
+```
+
+## call 
+
+```ASM
+/*first.s*/
+
+.data 
+.hello.str: 
+	.ascii "12345678\n" 
+
+.text 
+
+_write_str: 
+	movq %rsp, %rbp 
+	movq $1, %rax    
+	movq $1, %rdi   
+	leaq .hello.str, %rsi    
+	movq $9, %rdx  
+	syscall 
+_exit:
+	movq $60, %rax  
+	movq $0, %rdi   
+	syscall 
+
+.global _start 
+_start: 
+	call _write_str 
+	call _exit 
+	pop %rbp 
+```
