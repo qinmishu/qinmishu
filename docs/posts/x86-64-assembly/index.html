@@ -179,7 +179,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#notes" id="toc-notes" class="nav-link active" data-scroll-target="#notes">Notes</a>
+  <li><a href="#references" id="toc-references" class="nav-link active" data-scroll-target="#references">References</a></li>
+  <li><a href="#notes" id="toc-notes" class="nav-link" data-scroll-target="#notes">Notes</a>
   <ul>
   <li><a href="#hello-world-program" id="toc-hello-world-program" class="nav-link" data-scroll-target="#hello-world-program">Hello world program</a></li>
   <li><a href="#call" id="toc-call" class="nav-link" data-scroll-target="#call">call</a></li>
@@ -194,12 +195,50 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>This is a note while studying x86-64 assembler.</p>
+<section id="references" class="level1">
+<h1>References</h1>
+<p><a href="https://filippo.io/linux-syscall-table/">linux syscall table</a></p>
+<p><a href="https://www.asciitable.com/">ascii table</a></p>
+<p><a href="https://ftp.gnu.org/old-gnu/Manuals/gas-2.9.1/html_chapter/as_7.html">gnu assembler, or gas, or as</a></p>
+</section>
 <section id="notes" class="level1">
 <h1>Notes</h1>
 <p>GCC(Gnu Compiler Collection) is a front end. It will call <code>as</code> and <code>ld</code>. The process can be viewed if we use <code>-v</code> argument of gcc.</p>
+<p>Using <code>-g</code> argument will embed debug info in the object file. E.g. <code>gcc -c first.s -o first.o -g</code>. After that, we are able to use <code>list</code> in GDB to view the source code.</p>
+<p>Below table lists the size of x86-64 memory/registers. Some is different from ARM. For example, in ARM, A <code>.word</code> means 32 bits.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>term</th>
+<th>size (bits)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>byte</td>
+<td>8</td>
+</tr>
+<tr class="even">
+<td>word</td>
+<td>16</td>
+</tr>
+<tr class="odd">
+<td>dword</td>
+<td>32</td>
+</tr>
+<tr class="even">
+<td>qword</td>
+<td>64</td>
+</tr>
+</tbody>
+</table>
+<p>In x86-64, use <code>.long</code> or <code>.int</code> to specify 64 bits integer. In ARM, use <code>.word</code> to specify 32 bits integer. Note, <code>.word</code> or <code>.short</code> may have different lengths in different machine. They are machine dependent.</p>
+<p>STDIN file descriptor is 0. STDOUT file descriptor is 1. STDERR file descriptor is 2.</p>
+<p>The labels in the assembly program begins with <code>_</code>, e.g.&nbsp;<code>_start</code>, is due to the convention of C compiler. It is the simple name mangaling. <code>C++</code> has more complex name mangling.</p>
 <section id="hello-world-program" class="level2">
 <h2 class="anchored" data-anchor-id="hello-world-program">Hello world program</h2>
 <p>The program is copied from <a href="https://www.youtube.com/watch?v=3nYHV5zIQGA&amp;list=PLvv0ScY6vfd9BSBznpARlKGziF1xrlU54&amp;index=1">x86-64 Assembly on youtube, from Mike Shah</a></p>
+<p>It refers to the <a href="https://filippo.io/linux-syscall-table/">linux syscall table</a></p>
 <p>In intel format.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb1-1"><a href="#cb1-1"></a>/*first<span class="op">.</span>s<span class="op">*/</span></span>
 <span id="cb1-2"><a href="#cb1-2"></a>.intel_syntax noprefix</span>
@@ -257,7 +296,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="call" class="level2">
 <h2 class="anchored" data-anchor-id="call">call</h2>
 <div class="sourceCode" id="cb5"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb5-1"><a href="#cb5-1"></a>/*first<span class="op">.</span>s<span class="op">*/</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a></span>
+<span id="cb5-2"><a href="#cb5-2"></a># there is also <span class="op">.</span>bss segment for <span class="op">not</span> initialized global data </span>
 <span id="cb5-3"><a href="#cb5-3"></a>.<span class="bu">data</span> </span>
 <span id="cb5-4"><a href="#cb5-4"></a><span class="fu">.hello.str:</span> </span>
 <span id="cb5-5"><a href="#cb5-5"></a>    .ascii <span class="st">"12345678\n"</span> </span>
@@ -271,16 +310,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-13"><a href="#cb5-13"></a>    leaq <span class="op">.</span>hello<span class="op">.</span>str<span class="op">,</span> <span class="op">%</span><span class="kw">rsi</span>    </span>
 <span id="cb5-14"><a href="#cb5-14"></a>    <span class="bu">movq</span> <span class="op">$</span><span class="bn">9</span><span class="op">,</span> <span class="op">%</span><span class="kw">rdx</span>  </span>
 <span id="cb5-15"><a href="#cb5-15"></a>    <span class="cf">syscall</span> </span>
-<span id="cb5-16"><a href="#cb5-16"></a><span class="fu">_exit:</span></span>
-<span id="cb5-17"><a href="#cb5-17"></a>    <span class="bu">movq</span> <span class="op">$</span><span class="bn">60</span><span class="op">,</span> <span class="op">%</span><span class="kw">rax</span>  </span>
-<span id="cb5-18"><a href="#cb5-18"></a>    <span class="bu">movq</span> <span class="op">$</span><span class="bn">0</span><span class="op">,</span> <span class="op">%</span><span class="kw">rdi</span>   </span>
-<span id="cb5-19"><a href="#cb5-19"></a>    <span class="cf">syscall</span> </span>
-<span id="cb5-20"><a href="#cb5-20"></a></span>
-<span id="cb5-21"><a href="#cb5-21"></a>.global _start </span>
-<span id="cb5-22"><a href="#cb5-22"></a><span class="fu">_start:</span> </span>
-<span id="cb5-23"><a href="#cb5-23"></a>    <span class="cf">call</span> _write_str </span>
-<span id="cb5-24"><a href="#cb5-24"></a>    <span class="cf">call</span> _exit </span>
-<span id="cb5-25"><a href="#cb5-25"></a>    <span class="bu">pop</span> <span class="op">%</span><span class="kw">rbp</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-16"><a href="#cb5-16"></a>    <span class="cf">ret</span> </span>
+<span id="cb5-17"><a href="#cb5-17"></a><span class="fu">_exit:</span></span>
+<span id="cb5-18"><a href="#cb5-18"></a>    <span class="bu">movq</span> <span class="op">$</span><span class="bn">60</span><span class="op">,</span> <span class="op">%</span><span class="kw">rax</span>  </span>
+<span id="cb5-19"><a href="#cb5-19"></a>    <span class="bu">movq</span> <span class="op">$</span><span class="bn">0</span><span class="op">,</span> <span class="op">%</span><span class="kw">rdi</span>   </span>
+<span id="cb5-20"><a href="#cb5-20"></a>    <span class="cf">syscall</span> </span>
+<span id="cb5-21"><a href="#cb5-21"></a>    <span class="cf">ret</span> </span>
+<span id="cb5-22"><a href="#cb5-22"></a></span>
+<span id="cb5-23"><a href="#cb5-23"></a>.global _start </span>
+<span id="cb5-24"><a href="#cb5-24"></a><span class="fu">_start:</span> </span>
+<span id="cb5-25"><a href="#cb5-25"></a>    <span class="cf">call</span> _write_str </span>
+<span id="cb5-26"><a href="#cb5-26"></a>    <span class="cf">call</span> _exit </span>
+<span id="cb5-27"><a href="#cb5-27"></a>    <span class="bu">pop</span> <span class="op">%</span><span class="kw">rbp</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
 </section>

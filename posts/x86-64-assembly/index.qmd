@@ -15,13 +15,40 @@ code-line-numbers: true
 
 This is a note while studying x86-64 assembler.
 
+# References 
+
+[linux syscall table](https://filippo.io/linux-syscall-table/) 
+
+[ascii table](https://www.asciitable.com/)
+
+[gnu assembler, or gas, or as](https://ftp.gnu.org/old-gnu/Manuals/gas-2.9.1/html_chapter/as_7.html)
+
 # Notes
 
 GCC(Gnu Compiler Collection) is a front end. It will call `as` and `ld`. The process can be viewed if we use `-v` argument of gcc. 
 
+Using `-g` argument will embed debug info in the object file. E.g. `gcc -c first.s -o first.o -g`. After that, we are able to use `list` in GDB to view the source code. 
+
+Below table lists the size of x86-64 memory/registers. Some is different from ARM. For example, in ARM, A `.word` means 32 bits. 
+
+| term | size (bits) |
+|------|------|
+| byte     |  8    |
+| word     |  16    |
+| dword     | 32     |
+| qword     | 64     |
+
+In x86-64, use `.long` or `.int` to specify 64 bits integer. In ARM, use `.word` to specify 32 bits integer. Note, `.word` or `.short` may have different lengths in different machine. They are machine dependent. 
+
+STDIN file descriptor is 0. STDOUT file descriptor is 1.  STDERR file descriptor is 2. 
+
+The labels in the assembly program begins with `_`, e.g. `_start`, is due to the convention of C compiler. It is the simple name mangaling. `C++` has more complex name mangling.  
+
 ## Hello world program 
 
 The program is copied from [x86-64 Assembly on youtube, from Mike Shah](https://www.youtube.com/watch?v=3nYHV5zIQGA&list=PLvv0ScY6vfd9BSBznpARlKGziF1xrlU54&index=1)
+
+It refers to the [linux syscall table](https://filippo.io/linux-syscall-table/)
 
 In intel format. 
 ```ASM
@@ -93,7 +120,7 @@ ld -o first first.o
 
 ```ASM
 /*first.s*/
-
+# there is also .bss segment for not initialized global data 
 .data 
 .hello.str: 
 	.ascii "12345678\n" 
@@ -107,10 +134,12 @@ _write_str:
 	leaq .hello.str, %rsi    
 	movq $9, %rdx  
 	syscall 
+	ret 
 _exit:
 	movq $60, %rax  
 	movq $0, %rdi   
 	syscall 
+	ret 
 
 .global _start 
 _start: 

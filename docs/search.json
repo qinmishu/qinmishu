@@ -256,13 +256,13 @@
     "href": "posts/x86-64-assembly/index.html#hello-world-program",
     "title": "x86-64汇编语言编程",
     "section": "Hello world program",
-    "text": "Hello world program\nThe program is copied from x86-64 Assembly on youtube, from Mike Shah\nIn intel format.\n/*first.s*/\n.intel_syntax noprefix\n.global _start \n.hello.str: \n    .ascii \"12345678\\n\" \n\n.text \n\n_start: \n    movq rbp, rsp \n    movq rax, 1  \n    movq rdi, 1  \n    leaq rsi, .hello.str  \n    movq rdx, 9  \n    syscall \n    \n    movq rax, 60  \n    movq rdi, 0  \n    syscall \n    \n    pop rbp \nTo build it.\nas -o first.o first.s \nld -o first first.o \nIn AT&T format.\n/*first.s*/\n\n.global _start \n.hello.str: \n    .ascii \"12345678\\n\" \n\n.text \n\n_start: \n    movq %rsp, %rbp \n    movq $1, %rax    \n    movq $1, %rdi   \n    leaq .hello.str, %rsi    \n    movq $9, %rdx  \n    syscall \n    \n    movq $60, %rax  \n    movq $0, %rdi   \n    syscall \n    \n    pop %rbp \nTo build it. The below 2 ways are both OK.\nas -o first.o first.s \nld -o first first.o \n\ngcc -c first.s -o first.o \nld -o first first.o"
+    "text": "Hello world program\nThe program is copied from x86-64 Assembly on youtube, from Mike Shah\nIt refers to the linux syscall table\nIn intel format.\n/*first.s*/\n.intel_syntax noprefix\n.global _start \n.hello.str: \n    .ascii \"12345678\\n\" \n\n.text \n\n_start: \n    movq rbp, rsp \n    movq rax, 1  \n    movq rdi, 1  \n    leaq rsi, .hello.str  \n    movq rdx, 9  \n    syscall \n    \n    movq rax, 60  \n    movq rdi, 0  \n    syscall \n    \n    pop rbp \nTo build it.\nas -o first.o first.s \nld -o first first.o \nIn AT&T format.\n/*first.s*/\n\n.global _start \n.hello.str: \n    .ascii \"12345678\\n\" \n\n.text \n\n_start: \n    movq %rsp, %rbp \n    movq $1, %rax    \n    movq $1, %rdi   \n    leaq .hello.str, %rsi    \n    movq $9, %rdx  \n    syscall \n    \n    movq $60, %rax  \n    movq $0, %rdi   \n    syscall \n    \n    pop %rbp \nTo build it. The below 2 ways are both OK.\nas -o first.o first.s \nld -o first first.o \n\ngcc -c first.s -o first.o \nld -o first first.o"
   },
   {
     "objectID": "posts/x86-64-assembly/index.html#call",
     "href": "posts/x86-64-assembly/index.html#call",
     "title": "x86-64汇编语言编程",
     "section": "call",
-    "text": "call\n/*first.s*/\n\n.data \n.hello.str: \n    .ascii \"12345678\\n\" \n\n.text \n\n_write_str: \n    movq %rsp, %rbp \n    movq $1, %rax    \n    movq $1, %rdi   \n    leaq .hello.str, %rsi    \n    movq $9, %rdx  \n    syscall \n_exit:\n    movq $60, %rax  \n    movq $0, %rdi   \n    syscall \n\n.global _start \n_start: \n    call _write_str \n    call _exit \n    pop %rbp"
+    "text": "call\n/*first.s*/\n# there is also .bss segment for not initialized global data \n.data \n.hello.str: \n    .ascii \"12345678\\n\" \n\n.text \n\n_write_str: \n    movq %rsp, %rbp \n    movq $1, %rax    \n    movq $1, %rdi   \n    leaq .hello.str, %rsi    \n    movq $9, %rdx  \n    syscall \n    ret \n_exit:\n    movq $60, %rax  \n    movq $0, %rdi   \n    syscall \n    ret \n\n.global _start \n_start: \n    call _write_str \n    call _exit \n    pop %rbp"
   }
 ]
