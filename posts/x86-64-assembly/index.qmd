@@ -147,3 +147,38 @@ _start:
 	call _exit 
 	pop %rbp 
 ```
+
+# Book X64 Assembly Language Step by Step 
+
+## Chap1 It's all in the Plan: Understanding What Computers Really Do 
+
+A computer program is a list of steps and tests, nothing more. 
+
+A test is the sort of either/or decision we make. 
+- First, you take a look at sth that can go one of two way. 
+- Then you do one of two things, depending on what you saw when you took a look. 
+
+## Chap2 Allien Bases: Getting Your Arms Around Binary and Hexadecimal 
+
+octal 
+
+hexadecimal 
+
+binary 
+
+## Chap3 Lifting the Hood: Discovering What Computers Actually Are 
+
+A bit is a single binary digit, either 1 or 0. 
+
+A byte is eight bits. 
+
+Two bytes side by side are called a word. 
+
+Two words side by side are called a double word. 
+
+A quad word consists of two double words. 
+
+A group of four bits is called a nybble. 
+
+## Chap4 Location: Registers, Memory Addressing, and Knowing Where Things Are 
+
