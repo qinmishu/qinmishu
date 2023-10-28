@@ -149,6 +149,7 @@ _start:
 ```
 
 # Book X64 Assembly Language Step by Step 
+Notes while I read the book. 
 
 ## Chap1 It's all in the Plan: Understanding What Computers Really Do 
 
@@ -182,3 +183,89 @@ A group of four bits is called a nybble.
 
 ## Chap4 Location: Registers, Memory Addressing, and Knowing Where Things Are 
 
+The skill of assembly language consists of a deep comprehension of memory addressing. Everything else is details -- and easy details, at that. 
+
+There are a fair number of different ways to address memory in the Intel/AMD CPU family. Each of these ways is called a Memory Model. There are 3 major memory models that you can use with the more recent members of the Intel family, and a number of minor variations on those three, especially the one in the middle. 
+
+Real mode flat model. 
+
+Real mode segmented model. 
+
+Protected-mode flat model(32-bit and 64-bit). 
+
+The 8080 was an 8-bit CPU(its general-purpose registers have 8-bits), meaning that it processed 8 bits of information at a time. However, it had 16 address lines coming out of it(it will address 64KB). 
+
+The 8080 memory-addressing scheme was very simple. You put a 16-bit address out on the address lines, and you got back the 8-bit value that was stored at that address. 
+
+The 8086 comes after 8080. It is 16-bit CPU. It has 20 address lines.
+
+The 8080 is used a lot. Intel wanted to make it easy for people to translate older software from the 8080 to 8086. One way to do this was to make sure that a 16-bit addressing system such as that of the 8080 still worked.  Even though the 8086 could address 16 times as much memory as the 8080(16x64KB=1MB), Intel setup the 8086 so that a program could take some 64 KB segment within that megabyte of memory and run entirely inside it, just as though it were the smaller 8080 memory system. This was done by the use of segment registers. 
+
+Speaking of the 8086 and 8088, there are 4 segment registers(CS, DS, ...). 
+
+This was very wise short-term thinking and catastrophically bad long-term thinking. Programs that needed more than 64KB of memory at a time had to use memory in 64KB chunks, switching between chunks by switching values into and out of segment registers. 
+
+To maintain backward compatibility with the ancient 8086 and 8088, newer CPUs were given the power to limit themselves to what the older chips could address and execute. When a Pentium-class or better CPU needs to run software written for the real-mode segmented model, it pulls a neat trick that, temporarily, make it become an 8086. This was called virtual-86 mode, and it provided excellent backward compatibility for DOS software. 
+
+A segment may start every 16 bytes throughout the full megabyte of real memory. 
+
+CS, DS, SS, ES, FS, GS: Segment registers. All segment registers are 16 bits in size, irrespective of the CPU. FS and GS exist only in the 386 and later Intel x86 32-bit CPUs. 
+
+CS: Code Segment 
+
+DS: Data Segment 
+
+SS: Stack Segment 
+
+ES: Extra segment 
+
+FS, GS: Clones of ES 
+
+Segment registers become useless in application programming in X86-64. Operating systems use two of them for special purposes. 
+
+Do Intel's x86-64 CPUs have 64 address lines? No (48 or 52). 
+
+In the x86-64 world, CPUs have 14 general purpose 64-bit registers, plus SP and BP. 
+
+There are eight 16-bit general-purpose registers: AX, BX, CX, DX, BP, SI, DI, SP (8086, 8088, 80186 and 80286). 
+
+EAX, EBX, ECX, EDX, EBP, ESI, EDI, ESP. (32 bitS)
+
+RAX, RBX, RCX, RDX, RBP, RSI, RDI, RSP. R8 to R15. (64 BITS)
+
+RAX(EAX(AX(AH,AL)))
+
+RBX(EBX(BX(BH,BL)))
+
+RCX(ECX(CX(CH,CL)))
+
+RDX(EDX(DX(DH,DL)))
+
+RSI(ESI(SI(SIL))) and so on for RDI, RSP. 
+
+RIP, EIP, IP 
+
+The new x64 registers R8-R15 can be addressed as 64 bits, 32 bits, 16 bits, and 8 bits. However, the AH/AL scheme for the low 16 bits is a trick reserved for only RAX-RDX. The naming scheme for the R registers provides a mnemonic: D for double word, W for word, and B for byte. For example, if you want to deal with the lowest 8 bits of R8, you use the name R8B. Don’t make the beginner’s mistake of assuming that R8, R8D, R8W, and R8B are four separate and independent registers! A better metaphor is to think of the register names as country/state/county/city. 
+
+IP register. 
+
+While executing a program, the CPU uses IP to keep track of where it is in the current code segment. Instructions come in different sizes, ranging typically from 1 to 15 bytes. The CPU knows the size of each instruction it executes.
+
+IP is notable in being the only register that can neither be read nor written to directly.
+
+Flags register. 
+
+RFLAGS, EFLAGS, FLAGS. When the flag’s value is 1, we say that the flag is set. When the flag’s value is 0, we say that the flag is cleared.
+
+Math Coprocessors and Their Registers (may be 128 bits or 256 bits)
+
+Real-Mode Flat Model 
+
+Real-Mode Segmented Model 
+
+32-bit Protected Mode Flat Model 
+
+64-bit Long Mode 
+
+## Chap5 The Right to Assemble: The Process of Creating Assembly Language Programs 
+page 103 

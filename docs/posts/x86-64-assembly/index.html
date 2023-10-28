@@ -191,6 +191,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#chap2-allien-bases-getting-your-arms-around-binary-and-hexadecimal" id="toc-chap2-allien-bases-getting-your-arms-around-binary-and-hexadecimal" class="nav-link" data-scroll-target="#chap2-allien-bases-getting-your-arms-around-binary-and-hexadecimal">Chap2 Allien Bases: Getting Your Arms Around Binary and Hexadecimal</a></li>
   <li><a href="#chap3-lifting-the-hood-discovering-what-computers-actually-are" id="toc-chap3-lifting-the-hood-discovering-what-computers-actually-are" class="nav-link" data-scroll-target="#chap3-lifting-the-hood-discovering-what-computers-actually-are">Chap3 Lifting the Hood: Discovering What Computers Actually Are</a></li>
   <li><a href="#chap4-location-registers-memory-addressing-and-knowing-where-things-are" id="toc-chap4-location-registers-memory-addressing-and-knowing-where-things-are" class="nav-link" data-scroll-target="#chap4-location-registers-memory-addressing-and-knowing-where-things-are">Chap4 Location: Registers, Memory Addressing, and Knowing Where Things Are</a></li>
+  <li><a href="#chap5-the-right-to-assemble-the-process-of-creating-assembly-language-programs" id="toc-chap5-the-right-to-assemble-the-process-of-creating-assembly-language-programs" class="nav-link" data-scroll-target="#chap5-the-right-to-assemble-the-process-of-creating-assembly-language-programs">Chap5 The Right to Assemble: The Process of Creating Assembly Language Programs</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -333,6 +334,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="book-x64-assembly-language-step-by-step" class="level1">
 <h1>Book X64 Assembly Language Step by Step</h1>
+<p>Notes while I read the book.</p>
 <section id="chap1-its-all-in-the-plan-understanding-what-computers-really-do" class="level2">
 <h2 class="anchored" data-anchor-id="chap1-its-all-in-the-plan-understanding-what-computers-really-do">Chap1 It’s all in the Plan: Understanding What Computers Really Do</h2>
 <p>A computer program is a list of steps and tests, nothing more.</p>
@@ -355,6 +357,52 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="chap4-location-registers-memory-addressing-and-knowing-where-things-are" class="level2">
 <h2 class="anchored" data-anchor-id="chap4-location-registers-memory-addressing-and-knowing-where-things-are">Chap4 Location: Registers, Memory Addressing, and Knowing Where Things Are</h2>
+<p>The skill of assembly language consists of a deep comprehension of memory addressing. Everything else is details – and easy details, at that.</p>
+<p>There are a fair number of different ways to address memory in the Intel/AMD CPU family. Each of these ways is called a Memory Model. There are 3 major memory models that you can use with the more recent members of the Intel family, and a number of minor variations on those three, especially the one in the middle.</p>
+<p>Real mode flat model.</p>
+<p>Real mode segmented model.</p>
+<p>Protected-mode flat model(32-bit and 64-bit).</p>
+<p>The 8080 was an 8-bit CPU(its general-purpose registers have 8-bits), meaning that it processed 8 bits of information at a time. However, it had 16 address lines coming out of it(it will address 64KB).</p>
+<p>The 8080 memory-addressing scheme was very simple. You put a 16-bit address out on the address lines, and you got back the 8-bit value that was stored at that address.</p>
+<p>The 8086 comes after 8080. It is 16-bit CPU. It has 20 address lines.</p>
+<p>The 8080 is used a lot. Intel wanted to make it easy for people to translate older software from the 8080 to 8086. One way to do this was to make sure that a 16-bit addressing system such as that of the 8080 still worked. Even though the 8086 could address 16 times as much memory as the 8080(16x64KB=1MB), Intel setup the 8086 so that a program could take some 64 KB segment within that megabyte of memory and run entirely inside it, just as though it were the smaller 8080 memory system. This was done by the use of segment registers.</p>
+<p>Speaking of the 8086 and 8088, there are 4 segment registers(CS, DS, …).</p>
+<p>This was very wise short-term thinking and catastrophically bad long-term thinking. Programs that needed more than 64KB of memory at a time had to use memory in 64KB chunks, switching between chunks by switching values into and out of segment registers.</p>
+<p>To maintain backward compatibility with the ancient 8086 and 8088, newer CPUs were given the power to limit themselves to what the older chips could address and execute. When a Pentium-class or better CPU needs to run software written for the real-mode segmented model, it pulls a neat trick that, temporarily, make it become an 8086. This was called virtual-86 mode, and it provided excellent backward compatibility for DOS software.</p>
+<p>A segment may start every 16 bytes throughout the full megabyte of real memory.</p>
+<p>CS, DS, SS, ES, FS, GS: Segment registers. All segment registers are 16 bits in size, irrespective of the CPU. FS and GS exist only in the 386 and later Intel x86 32-bit CPUs.</p>
+<p>CS: Code Segment</p>
+<p>DS: Data Segment</p>
+<p>SS: Stack Segment</p>
+<p>ES: Extra segment</p>
+<p>FS, GS: Clones of ES</p>
+<p>Segment registers become useless in application programming in X86-64. Operating systems use two of them for special purposes.</p>
+<p>Do Intel’s x86-64 CPUs have 64 address lines? No (48 or 52).</p>
+<p>In the x86-64 world, CPUs have 14 general purpose 64-bit registers, plus SP and BP.</p>
+<p>There are eight 16-bit general-purpose registers: AX, BX, CX, DX, BP, SI, DI, SP (8086, 8088, 80186 and 80286).</p>
+<p>EAX, EBX, ECX, EDX, EBP, ESI, EDI, ESP. (32 bitS)</p>
+<p>RAX, RBX, RCX, RDX, RBP, RSI, RDI, RSP. R8 to R15. (64 BITS)</p>
+<p>RAX(EAX(AX(AH,AL)))</p>
+<p>RBX(EBX(BX(BH,BL)))</p>
+<p>RCX(ECX(CX(CH,CL)))</p>
+<p>RDX(EDX(DX(DH,DL)))</p>
+<p>RSI(ESI(SI(SIL))) and so on for RDI, RSP.</p>
+<p>RIP, EIP, IP</p>
+<p>The new x64 registers R8-R15 can be addressed as 64 bits, 32 bits, 16 bits, and 8 bits. However, the AH/AL scheme for the low 16 bits is a trick reserved for only RAX-RDX. The naming scheme for the R registers provides a mnemonic: D for double word, W for word, and B for byte. For example, if you want to deal with the lowest 8 bits of R8, you use the name R8B. Don’t make the beginner’s mistake of assuming that R8, R8D, R8W, and R8B are four separate and independent registers! A better metaphor is to think of the register names as country/state/county/city.</p>
+<p>IP register.</p>
+<p>While executing a program, the CPU uses IP to keep track of where it is in the current code segment. Instructions come in different sizes, ranging typically from 1 to 15 bytes. The CPU knows the size of each instruction it executes.</p>
+<p>IP is notable in being the only register that can neither be read nor written to directly.</p>
+<p>Flags register.</p>
+<p>RFLAGS, EFLAGS, FLAGS. When the flag’s value is 1, we say that the flag is set. When the flag’s value is 0, we say that the flag is cleared.</p>
+<p>Math Coprocessors and Their Registers (may be 128 bits or 256 bits)</p>
+<p>Real-Mode Flat Model</p>
+<p>Real-Mode Segmented Model</p>
+<p>32-bit Protected Mode Flat Model</p>
+<p>64-bit Long Mode</p>
+</section>
+<section id="chap5-the-right-to-assemble-the-process-of-creating-assembly-language-programs" class="level2">
+<h2 class="anchored" data-anchor-id="chap5-the-right-to-assemble-the-process-of-creating-assembly-language-programs">Chap5 The Right to Assemble: The Process of Creating Assembly Language Programs</h2>
+<p>page 103</p>
 
 
 </section>
