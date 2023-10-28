@@ -180,11 +180,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#references" id="toc-references" class="nav-link active" data-scroll-target="#references">References</a></li>
-  <li><a href="#notes" id="toc-notes" class="nav-link" data-scroll-target="#notes">Notes</a>
+  <li><a href="#general-notes" id="toc-general-notes" class="nav-link" data-scroll-target="#general-notes">General Notes</a>
   <ul>
+  <li><a href="#misc" id="toc-misc" class="nav-link" data-scroll-target="#misc">misc</a></li>
   <li><a href="#hello-world-program" id="toc-hello-world-program" class="nav-link" data-scroll-target="#hello-world-program">Hello world program</a></li>
-  <li><a href="#call" id="toc-call" class="nav-link" data-scroll-target="#call">call</a></li>
+  <li><a href="#call-instruction-to-call-a-function" id="toc-call-instruction-to-call-a-function" class="nav-link" data-scroll-target="#call-instruction-to-call-a-function">call instruction to call a function</a></li>
+  <li><a href="#the-64-bit-x86-c-calling-convention" id="toc-the-64-bit-x86-c-calling-convention" class="nav-link" data-scroll-target="#the-64-bit-x86-c-calling-convention">The 64 bit x86 C Calling Convention</a></li>
+  <li><a href="#the-32-bit-x86-c-calling-convention" id="toc-the-32-bit-x86-c-calling-convention" class="nav-link" data-scroll-target="#the-32-bit-x86-c-calling-convention">The 32 bit x86 C calling Convention</a></li>
   </ul></li>
+  <li><a href="#book-programming-from-the-ground-up-by-jonathan-bartlett-author" id="toc-book-programming-from-the-ground-up-by-jonathan-bartlett-author" class="nav-link" data-scroll-target="#book-programming-from-the-ground-up-by-jonathan-bartlett-author">Book Programming from the Ground Up by Jonathan Bartlett (Author)</a></li>
+  <li><a href="#book-professional-assembly-language-by-richard-blum-good" id="toc-book-professional-assembly-language-by-richard-blum-good" class="nav-link" data-scroll-target="#book-professional-assembly-language-by-richard-blum-good">Book Professional Assembly Language by Richard Blum (Good)</a></li>
+  <li><a href="#book-beginning-x64-assembly-programming-by-jo-van-hoey" id="toc-book-beginning-x64-assembly-programming-by-jo-van-hoey" class="nav-link" data-scroll-target="#book-beginning-x64-assembly-programming-by-jo-van-hoey">Book Beginning x64 Assembly Programming by Jo Van Hoey</a></li>
   <li><a href="#book-x64-assembly-language-step-by-step" id="toc-book-x64-assembly-language-step-by-step" class="nav-link" data-scroll-target="#book-x64-assembly-language-step-by-step">Book X64 Assembly Language Step by Step</a>
   <ul>
   <li><a href="#chap1-its-all-in-the-plan-understanding-what-computers-really-do" id="toc-chap1-its-all-in-the-plan-understanding-what-computers-really-do" class="nav-link" data-scroll-target="#chap1-its-all-in-the-plan-understanding-what-computers-really-do">Chap1 It’s all in the Plan: Understanding What Computers Really Do</a></li>
@@ -209,8 +215,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><a href="https://www.asciitable.com/">ascii table</a></p>
 <p><a href="https://ftp.gnu.org/old-gnu/Manuals/gas-2.9.1/html_chapter/as_7.html">gnu assembler, or gas, or as</a></p>
 </section>
-<section id="notes" class="level1">
-<h1>Notes</h1>
+<section id="general-notes" class="level1">
+<h1>General Notes</h1>
+<section id="misc" class="level2">
+<h2 class="anchored" data-anchor-id="misc">misc</h2>
 <p>GCC(Gnu Compiler Collection) is a front end. It will call <code>as</code> and <code>ld</code>. The process can be viewed if we use <code>-v</code> argument of gcc.</p>
 <p>Using <code>-g</code> argument will embed debug info in the object file. E.g. <code>gcc -c first.s -o first.o -g</code>. After that, we are able to use <code>list</code> in GDB to view the source code.</p>
 <p>Below table lists the size of x86-64 memory/registers. Some is different from ARM. For example, in ARM, A <code>.word</code> means 32 bits.</p>
@@ -243,6 +251,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>In x86-64, use <code>.long</code> or <code>.int</code> to specify 64 bits integer. In ARM, use <code>.word</code> to specify 32 bits integer. Note, <code>.word</code> or <code>.short</code> may have different lengths in different machine. They are machine dependent.</p>
 <p>STDIN file descriptor is 0. STDOUT file descriptor is 1. STDERR file descriptor is 2.</p>
 <p>The labels in the assembly program begins with <code>_</code>, e.g.&nbsp;<code>_start</code>, is due to the convention of C compiler. It is the simple name mangaling. <code>C++</code> has more complex name mangling.</p>
+</section>
 <section id="hello-world-program" class="level2">
 <h2 class="anchored" data-anchor-id="hello-world-program">Hello world program</h2>
 <p>The program is copied from <a href="https://www.youtube.com/watch?v=3nYHV5zIQGA&amp;list=PLvv0ScY6vfd9BSBznpARlKGziF1xrlU54&amp;index=1">x86-64 Assembly on youtube, from Mike Shah</a></p>
@@ -301,8 +310,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-4"><a href="#cb4-4"></a><span class="fu">gcc</span> <span class="at">-c</span> first.s <span class="at">-o</span> first.o </span>
 <span id="cb4-5"><a href="#cb4-5"></a><span class="fu">ld</span> <span class="at">-o</span> first first.o </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="call" class="level2">
-<h2 class="anchored" data-anchor-id="call">call</h2>
+<section id="call-instruction-to-call-a-function" class="level2">
+<h2 class="anchored" data-anchor-id="call-instruction-to-call-a-function">call instruction to call a function</h2>
 <div class="sourceCode" id="cb5"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb5-1"><a href="#cb5-1"></a>/*first<span class="op">.</span>s<span class="op">*/</span></span>
 <span id="cb5-2"><a href="#cb5-2"></a># there is also <span class="op">.</span>bss segment for <span class="op">not</span> initialized global data </span>
 <span id="cb5-3"><a href="#cb5-3"></a>.<span class="bu">data</span> </span>
@@ -331,6 +340,85 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-26"><a href="#cb5-26"></a>    <span class="cf">call</span> _exit </span>
 <span id="cb5-27"><a href="#cb5-27"></a>    <span class="bu">pop</span> <span class="op">%</span><span class="kw">rbp</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
+<section id="the-64-bit-x86-c-calling-convention" class="level2">
+<h2 class="anchored" data-anchor-id="the-64-bit-x86-c-calling-convention">The 64 bit x86 C Calling Convention</h2>
+<p>The section is copied from <a href="https://aaronbloomfield.github.io/pdr/book/x86-64bit-ccc-chapter.pdf">x86-64 call convention</a>. It is for Linux. Microsoft windows does not follow the same convention. Refer to <a href="https://learn.microsoft.com/en-us/cpp/build/x64-calling-convention?view=msvc-170">x64 calling convention, Microsoft</a>.</p>
+<p>pop, push, call, ret instructions.</p>
+<p>The caller’s rules:</p>
+<ol type="1">
+<li><p>Before calling a subroutine, the caller should save the contents of certain registers that are designated caller-saved. The caller-saved registers are r10, r11, and any registers that parameters are put into. If you want the contents of these registers to be preserved across the subroutine call, push them onto the stack.</p></li>
+<li><p>To pass parameters to the subroutine, we put up to six of them into registers (in order: rdi, rsi, rdx, rcx, r8, r9). If there are more than six parameters to the subroutine, then push the rest onto the stack in reverse order (i.e.&nbsp;last parameter first) – since the stack grows down, the first of the extra parameters (really the seventh parameter) parameter will be stored at the lowest address (this inversion of parameters was historically used to allow functions to be passed a variable number of parameters).</p></li>
+<li><p>To call the subroutine, use the <code>call</code> instruction. This instruction places the return address on top of the parameters on the stack, and branches to the subroutine code.</p></li>
+<li><p>After the subroutine returns, (i.e.&nbsp;immediately following the call instruction) the caller must remove any additional parameters (beyond the six stored in registers) from stack. This restores the stack to its state before the call was performed.</p></li>
+<li><p>The caller can expect to find the return value of the subroutine in the register RAX.</p></li>
+<li><p>The caller restores the contents of caller-saved registers (r10, r11, and any in the parameter passing registers) by popping them off of the stack. The caller can assume that no other registers were modified by the subroutine.</p></li>
+</ol>
+<p>The Callee’s Rules:</p>
+<ol type="1">
+<li><p>Allocate local variables by using registers or making space on the stack. Recall, the stack grows down, so to make space on the top of the stack, the stack pointer should be decremented. The amount by which the stack pointer is decremented depends on the number of local variables needed. For example, if a local float and a local long (12 bytes total) were required, the stack pointer would need to be decremented by 12 to make space for these local variables: <code>sub rsp, 12</code>. As with parameters, local variables will be located at known offsets from the stack pointer.</p></li>
+<li><p>Next, the values of any registers that are designated callee-saved that will be used by the function must be saved. To save registers, push them onto the stack. The callee-saved registers are RBX, RBP, and R12 through R15 (RSP will also be preserved by the call convention, but need not be pushed on the stack during this step). After these three actions are performed, the actual operation of the subroutine may proceed. When the subroutine is ready to return, the call convention rules continue.</p></li>
+<li><p>When the function is done, the return value for the function should be placed in RAX if it is not already there.</p></li>
+<li><p>The function must restore the old values of any callee-saved registers (RBX, RBP, and R12 through R15) that were modified. The register contents are restored by popping them from the stack. Note, the registers should be popped in the inverse order that they were pushed.</p></li>
+<li><p>Next, we deallocate local variables. The easiest way to do this is to add to RSP the same amount that was subtracted from it in step 1.</p></li>
+<li><p>Finally, we return to the caller by executing a ret instruction. This instruction will find and remove the appropriate return address from the stack.</p></li>
+</ol>
+<p>If you look at the assembly generated by some compilers, you will see a few extra commands in there in the callee’s prologue:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb6-1"><a href="#cb6-1"></a><span class="bu">push</span> <span class="kw">rbp</span> <span class="co">; at the start of the callee </span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="bu">mov</span> <span class="kw">rbp</span><span class="op">,</span> <span class="kw">rsp</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a>... </span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="bu">pop</span> <span class="kw">rbp</span> <span class="co">; just before the ending `ret` </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This code is unnecessary, and is a hold-over from the 32-bit calling convention. You can tell the compiler to not include this code by invoking it with the <code>-fomit-frame-pointer</code> flag.</p>
+<p>It might be noted that the callee’s rules fall cleanly into two halves that are basically mirror images of one another. The first half of the rules apply to the beginning of the function, and are therefor commonly said to define the prologue to the function. The latter half of the rules apply to the end of the function, and are thus commonly said to define the epilogue of the function.</p>
+</section>
+<section id="the-32-bit-x86-c-calling-convention" class="level2">
+<h2 class="anchored" data-anchor-id="the-32-bit-x86-c-calling-convention">The 32 bit x86 C calling Convention</h2>
+<p>The section is copied from <a href="https://aaronbloomfield.github.io/pdr/book/x86-32bit-ccc-chapter.pdf">x86 32 bit call convention</a>.</p>
+<p>The Caller’s Rules</p>
+<ol type="1">
+<li><p>Bfore calling a subroutine, the caller should save the contents of certain registers that are designated caller-saved. The caller-saved registers are EAX, ECX, EDX. If you want the contents of these registers to be preserved across the subroutine call, push them onto the stack</p></li>
+<li><p>To pass parameters to the subroutine, push them onto the stack before the call. The parameters should be pushed in inverted order (i.e.&nbsp;last parameter first) – since the stack grows down, the first parameter will be stored at the lowest address (this inversion of parameters was historically used to allow functions to be passed a variable number of parameters).</p></li>
+<li><p>To call the subroutine, use the call instruction. This instruction places the return address on top of the parameters on the stack, and branches to the subroutine code.</p></li>
+<li><p>After the subroutine returns, (i.e.&nbsp;immediately following the call instruction) the caller must remove the parameters from stack. This restores the stack to its state before the call was performed.</p></li>
+<li><p>The caller can expect to find the return value of the subroutine in the register EAX.</p></li>
+<li><p>The caller restores the contents of caller-saved registers (EAX, ECX, EDX) by popping them off of the stack. The caller can assume that no other registers were modified by the subroutine.</p></li>
+</ol>
+<p>The Callee’s Rules</p>
+<ol type="1">
+<li>At the beginning of the subroutine, the function should push the value of EBP onto the stack, and then copy the value of ESP into EBP using the following instructions:</li>
+</ol>
+<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb7-1"><a href="#cb7-1"></a><span class="bu">push</span> <span class="kw">ebp</span> </span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="bu">mov</span> <span class="kw">ebp</span><span class="op">,</span> <span class="kw">esp</span> <span class="co">;Intel style instead of AT&amp;T style </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The reason for this initial action is the maintenance of the base pointer, EBP. The base pointer is used by convention as a point of reference for finding parameters and local variables on the stack. Essentially, when any subroutine is executing, the base pointer is a “snapshot” of the stack pointer value from when the subroutine started executing. Parameters and local variables will always be located at known, constant offsets away from the base pointer value. We push the old base pointer value at the beginning of the subroutine so that we can later restore the appropriate base pointer value for the caller when the subroutine returns. Remember, the caller isn’t expecting the subroutine to change the value of the base pointer. We then move the stack pointer into EBP to obtain our point of reference for accessing parameters and local variables.</p>
+<ol start="2" type="1">
+<li>Next, allocate local variables by making space on the stack. Recall, the stack grows down, so to make space on the top of the stack, the stack pointer should be decremented. The amount by which the stack pointer is decremented depends on the number of local variables needed. For example, if 3 local integers (4 bytes each) were required, the stack pointer would need to be decremented by 12 to make space for these local variables. I.e.:</li>
+</ol>
+<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb8-1"><a href="#cb8-1"></a><span class="bu">sub</span> <span class="kw">esp</span><span class="op">,</span> <span class="dv">12</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>As with parameters, local variables will be located at known offsets from the base pointer.</p>
+<ol start="3" type="1">
+<li><p>Next, the values of any registers that are designated callee-saved that will be used by the function must be saved. To save registers, push them onto the stack. The callee-saved registers are EBX, EDI and ESI (ESP and EBP will also be preserved by the call convention, but need not be pushed on the stack during this step). After these three actions are performed, the actual operation of the subroutine may proceed. When the subroutine is ready to return, the call convention rules continue:</p></li>
+<li><p>When the function is done, the return value for the function should be placed in EAX if it is not already there.</p></li>
+<li><p>The function must restore the old values of any callee-saved registers (EBX, EDI and ESI) that were modified. The register contents are restored by popping them from the stack. Note, the registers should be popped in the inverse order that they were pushed.</p></li>
+<li><p>Next, we deallocate local variables. The obvious way to do this might be to add the appropriate value to the stack pointer (since the space was allocated by subtracting the needed amount from the stack pointer). In practice, a less error-prone way to deallocate the variables is to move the value in the base pointer into the stack pointer, i.e.:</p></li>
+</ol>
+<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb9-1"><a href="#cb9-1"></a><span class="bu">mov</span> <span class="kw">esp</span><span class="op">,</span> <span class="kw">ebp</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This trick works because the base pointer always contains the value that the stack pointer contained immediately prior to the allocation of the local variables.</p>
+<ol start="7" type="1">
+<li><p>Immediately before returning, we must restore the caller’s base pointer value by popping EBP off the stack. Remember, the first thing we did on entry to the subroutine was to push the base pointer to save its old value.</p></li>
+<li><p>Finally, we return to the caller by executing a ret instruction. This instruction will find and remove the appropriate return address from the stack.</p></li>
+</ol>
+</section>
+</section>
+<section id="book-programming-from-the-ground-up-by-jonathan-bartlett-author" class="level1">
+<h1>Book Programming from the Ground Up by Jonathan Bartlett (Author)</h1>
+<p>Programming from the Ground Up uses Linux assembly language to teach new programmers the most important concepts in programming.</p>
+</section>
+<section id="book-professional-assembly-language-by-richard-blum-good" class="level1">
+<h1>Book Professional Assembly Language by Richard Blum (Good)</h1>
+<p>It is said that it uses the AT&amp;T syntax. And uses the GNU AS assembler. But seems it is for 32 bit X86.</p>
+</section>
+<section id="book-beginning-x64-assembly-programming-by-jo-van-hoey" class="level1">
+<h1>Book Beginning x64 Assembly Programming by Jo Van Hoey</h1>
+<p>It includes introductions on asm on both Linux and Windows. It also include some advanced instructions for example AVX, SSE, etc.</p>
 </section>
 <section id="book-x64-assembly-language-step-by-step" class="level1">
 <h1>Book X64 Assembly Language Step by Step</h1>
