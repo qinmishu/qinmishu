@@ -320,7 +320,7 @@ Programming from the Ground Up uses Linux assembly language to teach new program
 
 # Book Professional Assembly Language by Richard Blum (Good)
  
-It is said that it uses the AT&T syntax. And uses the GNU AS assembler. But seems it is for 32 bit X86. 
+It is said that it uses the AT&T syntax. And uses the GNU AS assembler. But seems it is for 32 bit X86. After knowing the differences of call conventions between x86-64 and x86-32, it does not matter. Refer to [install a 32-bit ubuntu in a 64-bit host via virtual box](https://askubuntu.com/questions/344976/can-i-install-32-bit-ubuntu-in-a-64-bit-host-using-virtualbox)
 
 # Book Beginning x64 Assembly Programming by Jo Van Hoey
 It includes introductions on asm on both Linux and Windows. It also include some advanced instructions for example AVX, SSE, etc. 

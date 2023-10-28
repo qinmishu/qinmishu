@@ -2,7 +2,7 @@
 title: "Post With Code"
 author: "秦米书"
 date: "2023-04-06"
-categories: [news, code, analysis]
+categories: [algorithm, code, analysis]
 image: "image.jpg"
 jupyter: python3
 ---
@@ -12,3 +12,6 @@ jupyter: python3
 ```{python}
 1 + 1
 ```
+
+# Book 50 Algorithms Every Programmer Should Know: An unbeatable arsenal of algorithmic solutions for real-world problems
+N/A 
