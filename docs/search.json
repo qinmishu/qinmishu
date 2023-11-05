@@ -347,6 +347,13 @@
     "href": "posts/x86-64-assembly/index.html#chap6-linux-and-the-tools-that-shape-the-way-you-work",
     "title": "x86-64汇编语言编程",
     "section": "Chap6 Linux and the Tools That Shape the Way You Work",
-    "text": "Chap6 Linux and the Tools That Shape the Way You Work\npage 143"
+    "text": "Chap6 Linux and the Tools That Shape the Way You Work\nSASM: Simple ASM\nMake"
+  },
+  {
+    "objectID": "posts/x86-64-assembly/index.html#chap7-following-your-instructions-meeting-machine-instructions-up-close-and-personal",
+    "href": "posts/x86-64-assembly/index.html#chap7-following-your-instructions-meeting-machine-instructions-up-close-and-personal",
+    "title": "x86-64汇编语言编程",
+    "section": "Chap7 Following your instructions: Meeting Machine Instructions Up Close and Personal",
+    "text": "Chap7 Following your instructions: Meeting Machine Instructions Up Close and Personal\npage 175"
   }
 ]

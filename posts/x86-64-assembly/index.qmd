@@ -543,4 +543,13 @@ nasm -f elf64 -g -Fdwarf first.asm
 ``` 
 
 ## Chap6 Linux and the Tools That Shape the Way You Work 
-page 143 
+
+SASM: Simple ASM 
+
+Make 
+
+## Chap7 Following your instructions: Meeting Machine Instructions Up Close and Personal 
+
+page 175 
+
+
