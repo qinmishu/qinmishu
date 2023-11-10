@@ -46,6 +46,42 @@ STDIN file descriptor is 0. STDOUT file descriptor is 1.  STDERR file descriptor
 
 The labels in the assembly program begins with `_`, e.g. `_start`, is due to the convention of C compiler. It is the simple name mangaling. `C++` has more complex name mangling.  
 
+## Hello world program x86-64, position indepent code
+
+```ASM 
+//first.s 
+//pay attention to the `lea msg(%rip)` instruction 
+.data
+msg:
+    .asciz "Hello, world!\n"
+ 
+.extern printf
+.extern flush
+.text
+    .global main # entry point
+main:
+    movq %rsp, %rbp ;#for correct debugging
+    andq $-16, %rsp
+    lea msg(%rip), %rdi ;position independent code 
+    call printf
+    movq %rbp, %rsp
+    xorq %rax, %rax
+    ret
+``` 
+
+to build it. 
+
+```bash 
+gcc -c -g -o first.o first.s 
+gcc -o first first.o 
+```
+
+Refer to https://reverseengineering.stackexchange.com/questions/18007/disassembly-shows-lea-with-rip 
+
+Unlike 32bits modes instructions that were taken as absolute addresses (use 32-bit immediate offset addressing), the 64bits modes (a.k.a long-mode) are usually using 32-bit offset from the current RIP, not from 0x00000000 like before. That means that you don't have to know the absolute address of something you want to reference, you only need to know how far away it is from the currently executing instruction.
+
+There are very few addressing modes which use a full 64bit absolute address. Most addressing modes are 32bit offsets relative to one of the 64bit registers (usually RIP).
+
 ## Hello world program x86-64 
 
 The program is copied from [x86-64 Assembly on youtube, from Mike Shah](https://www.youtube.com/watch?v=3nYHV5zIQGA&list=PLvv0ScY6vfd9BSBznpARlKGziF1xrlU54&index=1)
@@ -550,6 +586,9 @@ Make
 
 ## Chap7 Following your instructions: Meeting Machine Instructions Up Close and Personal 
 
-page 175 
+instructions: xchg 
+
+page 184 memory data and effective address 
+
 
 
