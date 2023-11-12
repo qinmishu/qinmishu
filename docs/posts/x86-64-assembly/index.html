@@ -202,7 +202,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#chap5-the-right-to-assemble-the-process-of-creating-assembly-language-programs" id="toc-chap5-the-right-to-assemble-the-process-of-creating-assembly-language-programs" class="nav-link" data-scroll-target="#chap5-the-right-to-assemble-the-process-of-creating-assembly-language-programs">Chap5 The Right to Assemble: The Process of Creating Assembly Language Programs</a></li>
   <li><a href="#chap6-linux-and-the-tools-that-shape-the-way-you-work" id="toc-chap6-linux-and-the-tools-that-shape-the-way-you-work" class="nav-link" data-scroll-target="#chap6-linux-and-the-tools-that-shape-the-way-you-work">Chap6 Linux and the Tools That Shape the Way You Work</a></li>
   <li><a href="#chap7-following-your-instructions-meeting-machine-instructions-up-close-and-personal" id="toc-chap7-following-your-instructions-meeting-machine-instructions-up-close-and-personal" class="nav-link" data-scroll-target="#chap7-following-your-instructions-meeting-machine-instructions-up-close-and-personal">Chap7 Following your instructions: Meeting Machine Instructions Up Close and Personal</a></li>
+  <li><a href="#chap8-creating-programs-that-work" id="toc-chap8-creating-programs-that-work" class="nav-link" data-scroll-target="#chap8-creating-programs-that-work">Chap8 Creating programs that work</a></li>
   </ul></li>
+  <li><a href="#end" id="toc-end" class="nav-link" data-scroll-target="#end">end</a></li>
   </ul>
 </nav>
     </div>
@@ -593,7 +595,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="chap7-following-your-instructions-meeting-machine-instructions-up-close-and-personal" class="level2">
 <h2 class="anchored" data-anchor-id="chap7-following-your-instructions-meeting-machine-instructions-up-close-and-personal">Chap7 Following your instructions: Meeting Machine Instructions Up Close and Personal</h2>
-<p>instructions: xchg, inc, dec, jnz</p>
+<p>instructions: xchg, inc, dec, jnz, jmp, neg, movsx, mul, div, imul, idiv</p>
 <p>Immediate data is built right into its own machine instruction. Register data is stored in one of the CPU’s collection of internal registers. In contrast, memory data is stored somewhere in the silver of system memory “owned” by a program, at a 64-bit memory address.</p>
 <p>Only one of an instruction’s two operands may specify a memory location. You can’t move a memory value directly to another memory value. This is an inherent limitation of Intel CPUs of all generations.</p>
 <p>To specify that we want the data at the memory location contained in a register rather than the data in the register itself, we use square brackets around the name of the register.</p>
@@ -618,10 +620,93 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>AF: The Auxiliary Carry flag. used only for BCD arithmetic. These instructions are considered obsolete and are not present in x64.</p>
 <p>PF: The Parity flag PF indicates whether the number of set (1) bits in the low-order byte of a result is even or odd. For example, if the result is 0F2H, PF will be cleared because 0F2H (11110010) contains an odd number of 1 bits.</p>
 <p>CF: The Carry flag is used in unsigned arithmetic operations. If the result of an arithmetic or shift operation “carries out” a bit from the operand, CF becomes set. Otherwise, if nothing is carried out, CF is cleared.</p>
+<p>The highest bit in the most significant byte of a signed value is the sign bit. If the sign bit is a 1-bit, the number is negative.</p>
+<p>movsx: move with sign extension</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb17-1"><a href="#cb17-1"></a><span class="bu">xor</span> <span class="kw">rax</span><span class="op">,</span> <span class="kw">rax</span> </span>
+<span id="cb17-2"><a href="#cb17-2"></a><span class="bu">mov</span> <span class="kw">ax</span><span class="op">,</span> <span class="op">-</span><span class="dv">42</span> </span>
+<span id="cb17-3"><a href="#cb17-3"></a><span class="bu">movsx</span> <span class="kw">rbx</span><span class="op">,</span> <span class="kw">ax</span> <span class="co">;rbx will become -42 in two's complement </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>mul</code> instruction has implicit operand. Immediate values cannot be used as operands for <code>mul</code>. MUL very helpfully sets the Carry flag CF when the value of the product overflows the low-order register.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>explicit operand</th>
+<th>implicit operand</th>
+<th>implicit product</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>mul r/m8</td>
+<td>AL</td>
+<td>AX</td>
+</tr>
+<tr class="even">
+<td>mul r/m16</td>
+<td>AX</td>
+<td>DX:AX</td>
+</tr>
+<tr class="odd">
+<td>mul r/m32</td>
+<td>EAX</td>
+<td>EDX:EAX</td>
+</tr>
+<tr class="even">
+<td>mul r/m64</td>
+<td>RAX</td>
+<td>RDX:RAX</td>
+</tr>
+</tbody>
+</table>
+<table class="table">
+<thead>
+<tr class="header">
+<th>explicit operand</th>
+<th>implicit operand</th>
+<th>quotient</th>
+<th>remainder</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>div r/m8</td>
+<td>AX</td>
+<td>AL</td>
+<td>AH</td>
+</tr>
+<tr class="even">
+<td>div r/m16</td>
+<td>DX:AX</td>
+<td>AX</td>
+<td>DX</td>
+</tr>
+<tr class="odd">
+<td>div r/m32</td>
+<td>EDX:EAX</td>
+<td>EAX</td>
+<td>EDX</td>
+</tr>
+<tr class="even">
+<td>div r/m64</td>
+<td>RDX:RAX</td>
+<td>RAX</td>
+<td>RDX</td>
+</tr>
+</tbody>
+</table>
+<p>Note: r/m8 means 8bits register or memory</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb18-1"><a href="#cb18-1"></a><span class="bu">mov</span> <span class="kw">eax</span><span class="op">,</span><span class="dv">447</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="bu">mov</span> <span class="kw">ebx</span><span class="op">,</span><span class="dv">1739</span></span>
+<span id="cb18-3"><a href="#cb18-3"></a><span class="bu">mul</span> <span class="kw">ebx</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="chap8-creating-programs-that-work" class="level2">
+<h2 class="anchored" data-anchor-id="chap8-creating-programs-that-work">Chap8 Creating programs that work</h2>
+</section>
+</section>
+<section id="end" class="level1">
+<h1>end</h1>
 <p>page 191 INC, DEC</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

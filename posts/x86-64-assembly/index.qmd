@@ -586,7 +586,7 @@ Make
 
 ## Chap7 Following your instructions: Meeting Machine Instructions Up Close and Personal 
 
-instructions: xchg, inc, dec, jnz  
+instructions: xchg, inc, dec, jnz, jmp, neg, movsx, mul, div, imul, idiv      
 
 Immediate data is built right into its own machine instruction. Register data is stored in one of the CPU's collection of internal registers. In contrast, memory data is stored somewhere in the silver of system memory "owned" by a program, at a 64-bit memory address. 
 
@@ -674,6 +674,45 @@ be cleared because 0F2H (11110010) contains an odd number of 1 bits.
 CF: The Carry flag is used in unsigned arithmetic operations. If the result
 of an arithmetic or shift operation “carries out” a bit from the operand,
 CF becomes set. Otherwise, if nothing is carried out, CF is cleared. 
+
+The highest bit in the most significant byte of a signed value is the sign bit. If the sign bit is a 1-bit, the number is negative. 
+
+movsx: move with sign extension 
+
+```asm 
+xor rax, rax 
+mov ax, -42 
+movsx rbx, ax ;rbx will become -42 in two's complement 
+```
+
+`mul` instruction has implicit operand. Immediate values cannot be used as operands for `mul`. MUL very helpfully sets the Carry flag CF when the value of the product overflows the low-order register.
+
+
+|explicit operand|implicit operand   |implicit product   |
+|---|---|---|
+|mul r/m8|AL   |AX   |
+|mul r/m16|AX   |DX:AX   |
+|mul r/m32|EAX   |EDX:EAX   |
+|mul r/m64|RAX   |RDX:RAX   |
+
+|explicit operand|implicit operand   |quotient   |remainder|
+|---|---|---|---|
+|div r/m8|AX   |AL   |AH|
+|div r/m16|DX:AX   |AX   |DX|
+|div r/m32|EDX:EAX    |EAX  |EDX|
+|div r/m64|RDX:RAX   |RAX   |RDX|
+
+Note: r/m8 means 8bits register or memory 
+
+```asm 
+mov eax,447
+mov ebx,1739
+mul ebx
+```
+
+## Chap8 Creating programs that work 
+
+# end 
 
 page 191 INC, DEC 
 
