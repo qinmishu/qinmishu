@@ -134,6 +134,7 @@ In AT&T format.
 .text 
 
 _start: 
+	push %rbp 
 	movq %rsp, %rbp 
 	movq $1, %rax    
 	movq $1, %rdi   
@@ -163,6 +164,7 @@ The 32 bit hello world program and the 64 bit counterpart both use syscall to wr
 
 Refer to [32 bit syscall table](https://syscalls32.paolostivanin.com/). 
 
+Refer to [64 bit syscall table](https://hackeradam.com/x86-64-linux-syscalls/)
 
 In 32 bit, the EXIT syscall is 1, while in 64 bit it is 60. 
 
@@ -170,7 +172,7 @@ In 32 bit, the WRITE syscall is 4, while in 64 bit it is 1.
 
 In 32 bit, the EAX, EBX, ECX, EDX, ESI, EDI in sequence are used to specify the SYSCALL code and arguments. 
 
-In 64 bit, the RAX, RDI, RSI, RDX, RCX, R8, R9 in sequence are used to specify the SYSCALL code and arguments. 
+In 64 bit, the RAX, RDI, RSI, RDX, R10, R8, R9 in sequence are used to specify the SYSCALL code and arguments. [call convention](https://stackoverflow.com/questions/2535989/what-are-the-calling-conventions-for-unix-linux-system-calls-and-user-space-f)
 
 In 32 bit, the `syscall` instruction is not available. It will report illegal instruction if we use it. 
 
@@ -428,6 +430,8 @@ Vagrant.configure("2") do |config|
   config.vm.box_version = "0.0.1"
 end
 ```
+
+Read to the chapter Moving Data 
 
 # Book Beginning x64 Assembly Programming by Jo Van Hoey
 It includes introductions on asm on both Linux and Windows. It also include some advanced instructions for example AVX, SSE, etc. 
@@ -712,9 +716,164 @@ mul ebx
 
 ## Chap8 Creating programs that work 
 
+Ordinary user-space programs written in NASM for Linux are divided into 3 sections. The order in which these sections fall in your program really isn't important, but by convention the .data section comes first, followed by the .bass section and then the .text section. 
+
+.data section contains data definitions of initialized data items. 
+
+.bss Block/Buffer Start Symbol. Contains data items not having values before the program begins running. 
+
+Data items in the .data section add to the size of your executable file. Data items in the .bss section do not. A buffer that takes up 16,1000 bytes can be defined in .bss and add almost nothing( about 50 bytes for the desctiption) to the executable file size. This is possible because of the way the Linux loader brings the programs into memory. When you build your executable file, the Linux linker adds info to the file describing all the symbols you've defined, including symbols naming data items. The loader knows which data items do not have initial values, and it allocates space in momory for them when it brings the executable in from disk. Data items with initial values are read in along with their values. 
+
+The actual machine instructions that make up your program go into the .text section. The .text section contains symbols called labels that identify locations in the program code for jumps and calls. All global labels must be declared in the .text section, or the labels cannot be "seen" outside your program. 
+
+Refer to [compiler,linker,assembler,loader](https://www.baeldung.com/cs/compiler-linker-assembler-loader) 
+
+Linux Compiler: A compiler is a specialized system tool that translates a program written in a specific programming language into the assembly language code. 
+
+Linux Assembler: The assembler translates our assembly code to the machine code and then stores the result in an object file. Moving further, the assembler gives a memory location to each object and instruction in our code. The memory location can be physical as well as virtual. A virtual location is an offset that is relative to the base address of the first instruction.
+
+Linux Linker: The linker combines all external programs (such as libraries and other shared components) with our program to create a final executable.
+
+Linux Loader: The loader is a specialized operating system module. It loads the final executable code into memory. 
+
+Labels must begin with a letter or else with an underscore, period, or question mark. Theese last three have special meanings to the assembler, so don't use them until you know how NASM interprets them. 
+
+Labels must be followed by a colon when they are defined. 
+
+Labels are case sensitive. 
+
+PUSH: pushes a 16-bit or 64-bit register or memory value that is specified by you in your source code. Note that you can't push an 8-bit nore a 32-bit value onto the stack! You'll get an error if you try. 
+
+PUSHFQ: pushes the full 64-bit RFlags register onto the stack. The Q means quadword. 
+
+Any of the 16-bit and 64-bit general-purpose registers may be pushed individually onto the stack. You can't push AL or BH or any other of the 8-bit registers. 16bit and 64bit immediate data can be pushed onto the stack. User-space Linux programs cannot push the segment registers onto the stack under any circumstance. With x64, segment registers belong to the OS and are unavailable to user-space programs. As odd as it might seem, 32-bit values (including all 32-bit registers) may not be pushed onto the stack. 
+
+POP
+
+```asm 
+popfq ; pop 8bytes from the stack into RFlags 
+pop rcx 
+pop bx 
+pop [rbx] 
+``` 
+
+PUSHA, PUSHAD, POPA, POPAD are gone in x64, though they are available in x86-32. These instructions were used to push or pop all of the general-purpose registers at once. They are removed likely due to that there are a lot more general-purpose registers in x64. 
+
+ABI: Application Binary Interface. It defines a collection of fundamental callable functions, generally supplied by the operating system, as is done in Linux. This definition describes how to pass parameters to the many kernel service functions. An ABI also defines how linkers link compiled or assembled modules into a single executable binary program. 
+
+RDI, RSI, RDX, R10,R8,R9 specifies a system call's parameters. RAX is dedicated to the numeric code specifying the system call to be made. 
+
+The SYSCALL instruction itself makes use of RAX, RCX, and R11 internally. After the SYSCALL returns, you can't assume that RAX, RCX or R11 will have the same values they did before the SYSCALL. 
+
+How to reserve bytes in .bss section in NASM. How to do it in gas? 
+```asm 
+;nasm assembly 
+section .bss
+Buff resb 1
+```
+
+```asm
+;gas assembly 
+.bss 
+.lcomm buff1, 10 ;reserve length bytes for a local common denoted by symbol. Symbol is not declared global, so normally it is not visible to ld. 
+.comm buff2, 10 ;declares common symbol named symbol. 
+```
+
+jb and ja are for unsigned number, and jg and jl are for signed number 
+
+jb: jump if below 
+
+ja: jump if above 
+
+jg: jump if greater 
+
+jl: jump if lesser 
+
+```asm 
+# upper.s
+# a program to convert user inputted char from lower case to upper case
+.data
+
+.bss
+.lcomm char,1 #local common buffer, with the name `char`, 1 byte size
+
+.text
+.global _start
+
+_start:
+    push %rbp
+    mov %rsp, %rbp
+
+    #read a char
+    mov $0, %rax
+    mov $0, %rdi
+    lea char, %rsi
+    mov $1, %rdx
+    syscall
+
+    lea char, %rax #put the addr of char to %rax
+    movb (%rax),%bl #put the byte value pointed by %rax to %rbx
+    cmp $0x61, %bl #subtract 0x61 from %bl and without changing %rbx
+    jb do_not_change #jump if below. Note the diff between Intel and AT&T syntax
+    cmp $0x7a, %bl
+    ja do_not_change
+    # convert the char to upper case
+    sub $0x20, %bl
+    movb %bl, (%rax) #put the byte value in %bl to memory pointed by %rax
+do_not_change:
+
+    #write a char
+    mov $1, %rax
+    mov $1, %rdi
+    lea char, %rsi
+    mov $1, %rdx
+    syscall
+
+    #exit the program
+    mov $60, %rax #syscall number
+    mov $42, %rdi #exit code
+    syscall
+
+    pop %rbp
+```
+
+Use the commands below to build the above program. 
+
+```bash 
+as -g -o upper.o upper.s
+ld -o upper upper.o
+```
+
+In the above program, we should pay attention to the below facts. 
+
+- The way to declare buffer in .bss segment via `.lcomm` or `.comm` 
+- When using the `lea`, there is not `$` prefix in front of the label. When using the `mov`, there is `$` prefix. 
+- To refer to memory, put the memory address between parentheses `movl	0x20(%ebx),%eax` or `movl (%ebx),%eax`
+- When using the sub and cmp instructions, pay attention to the differences between AT&T syntax and Intel syntax. 
+- The AT&T syntax mnenomics have a suffix, movb, movw, movl, movq. 
+
+```asm
+movb %bl, %al 
+movw %bx, %ax 
+movl %ebx, %eax 
+movq %rbx, %rax 
+```
+
+## Chap9 Bits, Flags, Branches, and Tables, Easing Into Mainstream Assembly Coding 
+
 # end 
 
-page 191 INC, DEC 
+page 251 Chap9  
+
+ideas: 
+
+how to use `.equ . - MSGBEGIN` to define the message length, to be used in sys call. 
+
+how to zero a register. 
+
+Recursive function call after loop. 
+
+
 
 
 
