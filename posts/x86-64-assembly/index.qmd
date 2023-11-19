@@ -88,6 +88,8 @@ The program is copied from [x86-64 Assembly on youtube, from Mike Shah](https://
 
 It refers to the [linux syscall table](https://filippo.io/linux-syscall-table/)
 
+[another linux syscall table](https://hackeradam.com/x86-64-linux-syscalls/)
+
 In intel format. 
 ```ASM
 /*first.s*/
@@ -410,6 +412,43 @@ to save its old value.
 8. Finally, we return to the caller by executing a ret instruction. This instruction will find and remove
 the appropriate return address from the stack.
 
+## General purpose registers in X86-64 
+
+```default 
+rax eax ax al
+rbx ebx bx bl
+rcx ecx cx cl
+rdx edx dx dl
+rsi esi si sil
+rdi edi di dil
+rbp ebp bp bpl
+rsp esp sp spl
+r8 r8d r8w r8b
+r9 r9d r9w r9b
+r10 r10d r10w r10b
+r11 r11d r11w r11b
+r12 r12d r12w r12b
+r13 r13d r13w r13b
+r14 r14d r14w r14b
+r15 r15d r15w r15b
+``` 
+
+## AT&T Syntax 
+
+Refer to [AT&T assembly syntax](https://stackoverflow.com/questions/9223756/what-does-an-asterisk-before-an-address-mean-in-x86-64-att-assembly)
+
+It's AT&T assembly syntax:
+
+- source comes before destination
+- mnemonic suffixes indicate the size of the operands (q for quad, etc.)
+- registers are prefixed with % and immediate values with $
+- effective addresses are in the form DISP(BASE, INDEX SCALE) (DISP + BASE + INDEX * SCALE)
+- Indirect jump/call operands indicated with * (as opposed to direct).
+
+##  A comparison of GAS and NASM
+
+Refer to [Linux assemblers: A comparison of GAS and NASM](http://web.archive.org/web/20090215122116/http://www.ibm.com/developerworks/library/l-gas-nasm.html)
+
 # Book Programming from the Ground Up by Jonathan Bartlett (Author)
 Programming from the Ground Up uses Linux assembly language to teach new programmers the most important concepts in programming. 
 
@@ -716,7 +755,7 @@ mul ebx
 
 ## Chap8 Creating programs that work 
 
-Ordinary user-space programs written in NASM for Linux are divided into 3 sections. The order in which these sections fall in your program really isn't important, but by convention the .data section comes first, followed by the .bass section and then the .text section. 
+Ordinary user-space programs written in NASM for Linux are divided into 3 sections. The order in which these sections fall in your program really isn't important, but by convention the .data section comes first, followed by the .bss section and then the .text section. 
 
 .data section contains data definitions of initialized data items. 
 
@@ -742,7 +781,7 @@ Labels must be followed by a colon when they are defined.
 
 Labels are case sensitive. 
 
-PUSH: pushes a 16-bit or 64-bit register or memory value that is specified by you in your source code. Note that you can't push an 8-bit nore a 32-bit value onto the stack! You'll get an error if you try. 
+PUSH: pushes a 16-bit or 64-bit register or memory value that is specified by you in your source code. Note that you can't push an 8-bit nor a 32-bit value onto the stack! You'll get an error if you try. 
 
 PUSHFQ: pushes the full 64-bit RFlags register onto the stack. The Q means quadword. 
 
@@ -861,6 +900,84 @@ movq %rbx, %rax
 
 ## Chap9 Bits, Flags, Branches, and Tables, Easing Into Mainstream Assembly Coding 
 
+Instructions: SHL, SHR, ROL, ROR, RCL, RCR, AND, OR, XOR, NOT, JC, JNC, STC, CLC, JMP, JZ, JNZ, CMP, TEST, BT, JA, JAE, JB, JBE, JE, JNE, JG, JGE, JL, JLE, JNBE, JNLE, XLAT     
+
+Bits in assembly language are numbered, starting from 0. The least significant bit is the one with the least value in the binary number system. When you count bits, start with the bits on the right-hand end, and number them leftward from 0. 
+
+Note: CS, DS, SS, ES segment registers are not GP(general purpose) registers. 
+
+In x64, the shift instructions require ether a immediate value from 0-255 or CL(CL instead of CX, ECX, RCX). 
+
+Shifting by 0 is pointless but allowed. 
+
+You cannot shift more positions than the destination register has. In 64-bit long mode, you cannot shift more than 63 counts. Attempting to do so won't trigger an error. It just won't work. CPU masks the count value to the 6 lowest bits before the instruction is executed. 
+
+In 32-bit protected mode, CPU masks the count values to the 5 lowest bits. 
+
+Shifting a bit off the left end of a binary value doesn't exactly send that bit into cosmic nothingness. A bit shifted out of the left end of a binary value is bumped into a temporary bucket for bits called the CF(Carry Flag). We can test the state of the CF with a branching instruction(JC, JNC). 
+
+JC: Jump if Carry 
+
+JNC: Jump if Not Carry 
+
+JZ: Jump if Zero 
+
+JNZ: Jump if not Zero 
+
+JMP: Jump 
+
+If you shift a bit into the CF, and then immediately execute another shift operation, the bit bumped into the CF earlier will be bumped off the end of the world into cosmic nothingness.  
+
+If a bit's destiny is not to be lost in cosmic nothingness, you need to use the rotate instructions RCL(Rotate Carry Left), RCR(Rotate Carry Right), ROL(Rotate Left) and ROR(Rotate Right). A bit bumped off one end of the operand reappears at the opposite end of the operand. 
+
+STC: Set Carry bit 
+
+CLC: Clear Carry bit 
+
+CF, Carry Flag
+
+ZF, Zero Flag 
+
+SF, Sign Flag 
+
+DF, Direction Flag 
+
+OF, Overflow Flag 
+
+BT, Bit Test, it copies the specific bit in the first operand into the CF. 
+
+```asm 
+;intel syntax 
+;check the 4th bits of rax, counting from 0 
+bt rax,4
+jnc quit ; jump if the 4th bit is not 1 
+```
+
+X86-64 long mode memory addressing. 
+
+```asm 
+;BASE can be any GP register 
+;INDEX can be any GP register 
+;SCALE can be 1,2,4,8
+;DISP(displacement) can be any 32bit constant
+BASE + (INDEX * SCALE) + DISP
+;example in intel syntax 
+[rsi + rbp*4 + 9]
+;example in AT&T syntax 
+jmpq *0x402680(%rbp,%rax,8) 
+```
+
+LEA has a off-label purpose: doing fast math without shifts, adds or MUL. 
+
+```asm 
+;intex syntax 
+;multiply rdx by 3 
+lea rdx,[rdx*2+rdx]
+```
+
+## Chap10 Dividing and Conquering: Using procedures and macros to battle program complexity 
+page 299  
+
 # end 
 
 page 251 Chap9  
@@ -872,6 +989,8 @@ how to use `.equ . - MSGBEGIN` to define the message length, to be used in sys c
 how to zero a register. 
 
 Recursive function call after loop. 
+
+Use MUL and SHIFT operations for multiplication. 
 
 
 
