@@ -470,7 +470,86 @@ Vagrant.configure("2") do |config|
 end
 ```
 
-Read to the chapter Moving Data 
+## Chap5 Moving data
+
+The data section is declared using the .data directive. 
+
+There is another type of data section called .rodata. Any data elements defined in this section can only be accessed in readonly mode(thus the ro prefix).  
+
+Two statements are required to define a data element in the data section: a label and a directive. The label has no meaning to the processor; it is just a place for the assembler to reserve a specified amount of memory for the data element to be referenced by the label. 
+
+```default 
+directive, data type 
+
+.ascii, Text string 
+.asciz, Null terminated text string 
+.byte, Byte value 
+.double, Double precision floating-point number 
+.float, Single precision floating-point nuber 
+.int, 32-bit integer number 
+.long, 32-bit integer number 
+.octa, 16-byte integer number 
+.quad, 8-byte integer number 
+.short, 16-bit integer number 
+.single, single-precision floating pointer number(same as .float)
+```
+
+You are not limited to defining just one value on the directive statement line. You can define multiple values on the line, with each value being placed in memory in the order it appears in the directive. 
+
+```asm 
+sizes: .long 100,150,200,250,300
+```
+
+You can also declare static data symbols in the data section. The .equ directive is used to set a constant value to a symbol that can be used in the text section, as shown in the following examples: 
+
+```asm 
+.equ factor, 3 
+.equ LINUX_SYS_CALL, 0X60 
+```
+
+To reference the static data element, you must use a dollar sign before the label name. 
+
+```asm 
+movl $LINUX_SYS_CALL, %eax 
+``` 
+
+In BSS section, defining data elements is somewhat different from defining them in the data section. Instead of declaring specific data types, you just declare raw segments of memory that are reserved for whatever purpose you need them for. 
+
+The GNU assembler uses two directives to declare buffers, as shown in the following table. 
+
+```default 
+.comm, Declares a common memory area for data that is not initialized 
+.lcomm, Declares a local common memory area for data that is not initialized 
+```
+
+The local common memory area is reserved for data that will not be accessed outside of the local assembly code. 
+
+```asm 
+.comm symbol, length 
+.lcomm buffer, 10000 
+```
+
+Local common memory areas cannot be accessed by functions outside of where they were declared(They can't be used in .globl directives). 
+
+One benefit to declaring data in the bss section is that the data is not included in the executable program. 
+
+The .fill directive enables the assembler to automatically create the 10000 elements for you. The default is to create one byte per field, and fill it with zeros. 
+
+```asm 
+.section .data 
+buffer: 
+    .fill 10000 
+.section .text 
+.globl _start 
+_start: 
+    movl $1, %eax 
+    movl $0, $ebx 
+    int $0x80 
+``` 
+
+The GNU assembler adds another dimension to the MOV instruction, in that the size of the data element moved must be declared. The size is declared by adding an additional character to the MOV mnemonic. Thus the instruction becomes movx, where x can be l for a 32-bit long word value, w for a 16-bit word value, b for an 8-bit byte value, q for an 8-byte value. 
+
+Read to the chapter Moving Data, page 131, an example that shows how to use gdb to show data. 
 
 # Book Beginning x64 Assembly Programming by Jo Van Hoey
 It includes introductions on asm on both Linux and Windows. It also include some advanced instructions for example AVX, SSE, etc. 
