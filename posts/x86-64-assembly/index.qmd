@@ -549,7 +549,156 @@ _start:
 
 The GNU assembler adds another dimension to the MOV instruction, in that the size of the data element moved must be declared. The size is declared by adding an additional character to the MOV mnemonic. Thus the instruction becomes movx, where x can be l for a 32-bit long word value, w for a 16-bit word value, b for an 8-bit byte value, q for an 8-byte value. 
 
-Read to the chapter Moving Data, page 131, an example that shows how to use gdb to show data. 
+### moving data values from memory to a register 
+
+By my test in both 32 bit and 64 bit OS, `.int` and `.long` both have size 4 bytes. 
+
+By my test in both 32 bit and 64 bit OS(take 64 bits as an example), `movq (value), %rcx` and `movq value, %rcx` mean the same thing. After executation of the below 2 programs, the value of %rcx is 3, instead of the address of `value` in the .data section. 
+
+```asm 
+# movtest1.s 
+.section .data, first way 
+# define value with 8 bytes and value 3 
+value: .quad 3  
+
+.section .text 
+.globl _start 
+_start: 
+	nop 
+	movq value,%rcx 
+	movq $60, %rax 
+	movq $42, %rdi 
+	syscall 
+```
+
+```asm 
+# movtest1.s 
+.section .data, 2nd way 
+# define value with 8 bytes and value 3 
+value: .quad 3  
+
+.section .text 
+.globl _start 
+_start: 
+	nop 
+	movq value,%rcx 
+	movq $60, %rax 
+	movq $42, %rdi 
+	syscall 
+```
+
+Followed the steps to build and debug the program. 
+
+```bash
+[root@centos8 asm]# as -gstabs -o movtest1.o movtest1.s 
+[root@centos8 asm]# ld -o movtest1 movtest1.o 
+[root@centos8 asm]# gdb ./movtest1 
+(gdb) b *_start 
+Breakpoint 1 at 0x4000b0: file movtest1.s, line 8.
+(gdb) r
+Starting program: /root/tmp/asm/movtest1 
+
+Breakpoint 1, _start () at movtest1.s:8
+8		nop 
+(gdb) n
+9		movq (value),%rcx 
+(gdb) print/x $rcx 
+$1 = 0x0
+(gdb) n
+10		movq $60, %rax 
+(gdb) print/x $rcx 
+$2 = 0x3
+(gdb) 
+```
+
+But if we put the `$` prefix in mov instruction before `value`, it will mov the address instead of value as shown in the below program. 
+
+```asm 
+# movtest1, it will move the address instead of the value 
+.section .data 
+# define value with 8 bytes and value 3 
+value: .quad 3  
+
+.section .text 
+.globl _start 
+_start: 
+	nop 
+	movq $value,%rcx 
+	movq $60, %rax 
+	movq $42, %rdi 
+	syscall 
+```
+
+Followed the debug steps to demonstrate. 
+
+```bash 
+gdb ./movtest1 
+
+(gdb) b *_start 
+Breakpoint 1 at 0x4000b0: file movtest1.s, line 8.
+(gdb) r
+Starting program: /root/tmp/asm/movtest1 
+
+Breakpoint 1, _start () at movtest1.s:8
+8		nop 
+(gdb) n
+9		movq $value,%rcx 
+(gdb) print/x $rcx 
+$1 = 0x0
+(gdb) n
+10		movq $60, %rax 
+(gdb) print/x $rcx 
+$2 = 0x6000c8
+``` 
+
+### moving data values from a register to memory 
+
+```asm 
+.section .data 
+# define value with 8 bytes and value 3
+value: .quad 3  
+
+.section .text 
+.globl _start 
+_start: 
+	nop 
+	movq $100, %rcx 
+	movq %rcx, value 
+	
+	# exit the program with error code 42 
+	movq $60, %rax 
+	movq $42, %rdi 
+	syscall 
+```
+
+```bash 
+[root@centos8 asm]# as -gstabs -o movtest1.o movtest1.s 
+[root@centos8 asm]# ld -o movtest1 movtest1.o 
+[root@centos8 asm]# gdb -q ./movtest1
+Reading symbols from ./movtest1...done.
+(gdb) b *_start
+Breakpoint 1 at 0x4000b0: file movtest1.s, line 8.
+(gdb) r
+Starting program: /root/tmp/asm/movtest1 
+
+Breakpoint 1, _start () at movtest1.s:8
+8		nop 
+(gdb) x/d &value 
+0x6000d0:	3
+(gdb) n
+9		movq $100, %rcx 
+(gdb) n
+10		movq %rcx, value 
+(gdb) n
+13		movq $60, %rax 
+(gdb) x/d &value 
+0x6000d0:	100
+
+```
+
+### Using indexed memory locations 
+
+Read to  page 132
 
 # Book Beginning x64 Assembly Programming by Jo Van Hoey
 It includes introductions on asm on both Linux and Windows. It also include some advanced instructions for example AVX, SSE, etc. 
