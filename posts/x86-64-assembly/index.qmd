@@ -445,6 +445,16 @@ It's AT&T assembly syntax:
 - effective addresses are in the form DISP(BASE, INDEX SCALE) (DISP + BASE + INDEX * SCALE)
 - Indirect jump/call operands indicated with * (as opposed to direct).
 
+## add, sub, inc, dec 
+
+`inc` and `add 1` are different. 
+
+`dec` and `sub 1` are different. 
+
+`inc` and `dec` won't affect the carry flag, while `add` and `sub` will. 
+
+Refer to [inc, dec instructions](http://www.c-jump.com/CIS77/ASM/Flags/lecture.html#F77_0070_inc_dec)
+
 ##  A comparison of GAS and NASM
 
 Refer to [Linux assemblers: A comparison of GAS and NASM](http://web.archive.org/web/20090215122116/http://www.ibm.com/developerworks/library/l-gas-nasm.html)
@@ -1311,12 +1321,322 @@ LEA has a off-label purpose: doing fast math without shifts, adds or MUL.
 lea rdx,[rdx*2+rdx]
 ```
 
-## Chap10 Dividing and Conquering: Using procedures and macros to battle program complexity 
-page 299  
+## Chap10 Dividing and Conquering: Using procedures and macros to battle program complexity
 
+A procedure must begin with a label. 
+
+Somewhere within the procedure, there must be at least one `ret` instruction. 
+
+A procedure may use `call` to call another procedure. 
+
+CALL first push the address of the next instruction after itself onto the stack. Then CALL transfers the execution to the address represented by the label that names the procedure. The instructions contained in the procedure execute. The RET instruction pops the return address off the top of the stack and transfers execution to that address. Execution continues as though CALL had not changed the flow of instruction execution at all. 
+
+There is a convention for which registers must be preserved within a procedure and which do not. This convention is part of the x86-64 System V ABI(Application Binary Interface). Some registers are considered volatile, meaning that they can be changed by a procedure, and others are nonvolatile, which means they must be preserved. 
+
+Linux uses registers, too. It is serious knowing what registers are changed during system calls via the SYSCALL instruction. There is no simple answer. It depends completely on which system call you make. But first and above all, the SYSCALL instruction itself makes use of 2 registers: 
+
+SYSCALL stores return address in the RCX register. 
+
+SYSCALL stores RFlags in the R11 register. 
+
+Everytime you execute SYSCALL, RCS and R11 will be clobbered. 
+
+The system call number (in other words, which system call you’re calling) is always in RAX. A system call
+will accept up to six parameters. The registers used to pass parameters are in this order: RDI, RSI, RDX, R10, R8, and R9. In other words, the first parameter
+is passed in RDI. The second parameter is passed in RSI, and so on. No system call requires any parameters be passed to it on the stack.
+
+Note: Whether or not a register (like R9, say) is used to pass a parameter to a system call, that register is not preserved. Only seven registers are preserved by Linux across a system call: R12, R13, R14, R15, RBX, RSP, and RBP.
+
+After a SYSCALL, RAX will contain a return value. If RAX is negative, it indicates
+an error occurred during the call. For most system calls, a 0 value indicates
+success.
+
+Note: PUSHA, POPA, PUSHAD, POPAD are not available in x86-64. 
+
+Sooner or later, you are going to accidentally reuse a label. 
+
+This is a common enough problem  that NASM’s authors created a feature to deal with it: local labels.
+Local labels are based on the fact that nearly all labels in assembly work (outside
+of names of subroutines and major sections) are “local” in nature, by which I
+mean that they are only referenced by jump instructions that are very close to
+them—perhaps only two or three instructions away.
+
+Note: NASM and Gas may have different syntax for local labels. And it seems local labels and local symbols mean different things in GAS. Refer to [as symbol-names](https://sourceware.org/binutils/docs/as/Symbol-Names.html)
+
+For NASM: 
+Note that the label .modTest has a period in front of it. This period marks
+it as a local label. A local label is local to the first nonlocal label (that is, the first
+label not prefixed by a period; we call these global) that precedes it in the code.
+
+```asm 
+; Go through the buffer and convert binary byte values to hex digits:
+Scan:
+xor rax,rax ; Clear RAX to 0
+mov al,[Buff+rcx] ; Get a byte from the buffer into AL
+mov rdx,rsi ; Copy total counter into RDX
+and rdx,000000000000000Fh ; Mask out lowest 4 bits of char counter
+call DumpChar ; Call the char poke procedure
+; Bump the buffer pointer to the next char and see if buffer's done:
+inc rsi ; Increment total chars processed counter
+inc rcx ; Increment buffer pointer
+cmp rcx,r15 ; Compare with # of chars in buffer
+jb .modTest ; If we've processed all chars in buffer...
+call LoadBuff ; ...go fill the buffer again
+cmp r15,0 ; If r15=0, sys_read reached EOF on stdin
+jbe Done ; If we get EOF, we're done
+; See if we're at the end of a block of 16 and need to display a line:
+.modTest:
+test rsi,000000000000000Fh ; Test 4 lowest bits in counter for 0
+jnz Scan ; If counter is *not* modulo 16, loop back
+call PrintLine ; ...otherwise print the line
+call ClearLine ; Clear hex dump line to 0's
+jmp Scan ; Continue scanning the buffer
+```
+
+Local labels can also be called in the nested way as shown below in NASM. In a sense, under the covers, a local label is just the “tail” of a global label.
+
+```asm 
+jne Calc.modTest
+```
+
+For GAS: 
+Local labels are different from local symbols. Local labels help compilers and programmers use names temporarily. They create symbols which are guaranteed to be unique over the entire scope of the input source code and which can be referred to by a simple notation. To define a local label, write a label of the form ‘N:’ (where N represents any non-negative integer). To refer to the most recent previous definition of that label write ‘Nb’, using the same number as when you defined the label. To refer to the next definition of a local label, write ‘Nf’. The ‘b’ stands for “backwards” and the ‘f’ stands for “forwards”.
+
+```asm 
+Here is an example:
+
+1:        branch 1f
+2:        branch 1b
+1:        branch 2f
+2:        branch 1b
+Which is the equivalent of:
+
+label_1:  branch label_3
+label_2:  branch label_1
+label_3:  branch label_4
+label_4:  branch label_3
+```
+
+This is a real GAS example from [stackoverflow](https://stackoverflow.com/questions/63874455/how-to-translate-gas-1-in-nasm-assembly): 
+
+```asm 
+_pg_dir:
+startup_32:
+    movl $0x10,%eax
+    mov %ax,%ds
+    mov %ax,%es
+    mov %ax,%fs
+    mov %ax,%gs
+    lss _stack_start,%esp
+    call setup_idt
+    call setup_gdt
+    movl $0x10,%eax     # reload all the segment registers
+    mov %ax,%ds     # after changing gdt. CS was already
+    mov %ax,%es     # reloaded in 'setup_gdt'
+    mov %ax,%fs
+    mov %ax,%gs
+    lss _stack_start,%esp
+    xorl %eax,%eax
+1:  incl %eax       # check that A20 really IS enabled  ~~~
+    movl %eax,0x000000
+    cmpl %eax,0x100000
+    je 1b                                             ~~~
+    movl %cr0,%eax      # check math chip
+    andl $0x80000011,%eax   # Save PG,ET,PE
+    testl $0x10,%eax
+    jne 1f          # ET is set - 387 is present      ~~~
+    orl $4,%eax     # else set emulate bit
+1:  movl %eax,%cr0                                    ~~~
+jmp after_page_tables
+```
+
+short, near, far jumps: 
+
+A jump target that lies within 127 bytes of the conditional jump instruction
+is called a short jump. A jump target that is further away than 127 bytes but still
+within the current code segment is called a near jump.
+
+There is a third kind of jump called a far jump, which involves leaving the
+current code segment entirely for whatever reason. In the old DOS real‐mode
+world, this meant specifying both a segment address and an offset address for
+the jump target. Far jumps were not used very often. In the 32‐bit
+protected mode and 64‐bit
+long
+mode, far jumps are extremely rare and involve all sorts of operating system
+complexity that I can’t go into in this book.
+
+The problem really lies with the difference between short and near jumps.
+A short conditional jump instruction generates a short—and
+hence compact—binary
+opcode. Short jump opcodes are always two bytes in size, no more. Near
+jump opcodes are either four or six bytes in size, depending on various factors.
+
+```asm
+jne Scan ; Jump within 127 bytes in either direction
+jne near Scan ; Jump anywhere in the current code segment
+```
+
+Once you create library files containing procedures, there are two ways to use them:
+- A library file can be assembled separately to a .o file, which in turn can be linked by the Linux linker into other programs that you may write in
+the future.
+- A library file can be included in the source code file of the main program, using a directive called `%INCLUDE`.  This is what you must do to use libraries from programs written within SASM.
+
+The very heart of programming in modules is “putting off” resolution of addresses until link time.
+
+Declare a procedure external. 
+```asm 
+EXTERN myProc 
+```
+
+Over in the other module where procedure MyProc is actually defined, it isn’t
+enough just to define the procedure. An eyelet needs a hook. You have to warn
+the assembler that MyProc will be referenced from outside the module. The
+assembler needs to forge the hook that will hook into the eyelet. You forge the
+hook by declaring the procedure `global`, meaning that other modules anywhere
+else in the program may freely reference the procedure.
+
+```asm 
+GLOBAL myProc 
+``` 
+
+In GAS: 
+```asm 
+.exern myProc 
+.global myProc 
+```
+
+A procedure that is declared as GLOBAL where it is defined may be referenced from anywhere its label is declared as EXTERN.
+
+What works for procedures works for data as well, and it can work in either
+direction. Your program can declare any named variable as GLOBAL, and that
+variable may then be used by any module in which the same variable name is
+declared as external with the EXTERN directive.
+
+defining Macro in NASM: 
+
+```asm 
+%macro ExitProg 0
+mov rsp,rbp ; Stack alignment epilog
+pop rbp
+mov rax,60 ; 60 = exit the program
+mov rdi,0 ; Return value in rdi 0 = nothing to return
+syscall ; Call syscall sys_exit to return to Linux
+%endmacro
+``` 
+
+Macros with parameters. 
+```asm
+%macro WriteCtr 3 ; %1 = row; %2 = String addr; %3 = String length
+push rbx ; Save caller's RBX
+push rdx ; Save caller's RDX
+mov rdx,%3 ; Load string length into RDX
+xor rbx,rbx ; Zero RBX
+mov bl,SCRWIDTH ; Load the screen width value to BL
+sub bl,dl ; Calc diff. of screen width and string length
+shr bl,1 ; Divide difference by two for X value
+GotoXY bl,%1 ; Position the cursor for display
+WriteStr %2,%3 ; Write the string to the console
+pop rdx ; Restore caller's RDX
+pop rbx ; Restore caller's RBX
+%endmacro
+```
+Call a macro 
+```asm 
+WriteCtr al,AdMsg,ADLEN
+```
+
+All labels defined within a macro are considered local to the macro and are
+handled specially by the assembler. A label in a macro is made local by beginning it with two percent symbols: %%.
+
+```asm 
+%macro UpCase 2 ; %1 = Address of buffer; %2 = Chars in buffer
+mov rdx,%1 ; Place the offset of the buffer into rdx
+mov rcx,%2 ; Place the number of bytes in the buffer into rcx
+%%IsLC:cmp byte [rdx+rcx‐1],'
+a' ; Below 'a'?
+jb %%Bump ; Not lowercase. Skip
+cmp byte [rdx+rcx‐1],'
+z' ; Above 'z'?
+ja %%Bump ; Not lowercase. Skip
+sub byte [rdx+rcx‐1],
+20h ; Force byte in buffer to uppercase
+%%Bump:dec rcx ; Decrement character count
+jnz %%IsLC ; If more chars in the buffer, repeat
+%endmacro
+``` 
+
+GAS define macros, refer to [macros in GAS](https://ftp.gnu.org/old-gnu/Manuals/gas-2.9.1/html_node/as_107.html)
+
+```asm 
+.section .data
+
+   prompt_str:
+      .ascii "Enter Your Name: "
+   pstr_end:
+      .set STR_SIZE, pstr_end - prompt_str
+
+   greet_str:
+      .ascii "Hello "
+
+   gstr_end:
+      .set GSTR_SIZE, gstr_end - greet_str
+
+.section .bss
+
+// Reserve 32 bytes of memory
+   .lcomm  buff, 32
+
+// A macro with two parameters
+//  implements the write system call
+   .macro write str, str_size 
+      movl  $4, %eax
+      movl  $1, %ebx
+      movl  \str, %ecx
+      movl  \str_size, %edx
+      int   $0x80
+   .endm
+
+
+// Implements the read system call
+   .macro read buff, buff_size
+      movl  $3, %eax
+      movl  $0, %ebx
+      movl  \buff, %ecx
+      movl  \buff_size, %edx
+      int   $0x80
+   .endm
+
+
+.section .text
+
+   .globl _start
+
+   _start:
+      write $prompt_str, $STR_SIZE
+      read  $buff, $32
+
+// Read returns the length in eax
+      pushl %eax
+
+// Print the hello text
+      write $greet_str, $GSTR_SIZE
+
+      popl  %edx
+
+// edx = length returned by read
+   write $buff, %edx
+
+   _exit:
+      movl  $1, %eax
+      movl  $0, %ebx
+      int   $0x80
+```
+
+## Chap11, Strings and Things 
+page 377 
 # end 
 
-page 251 Chap9  
+ 
 
 ideas: 
 
@@ -1330,8 +1650,11 @@ Use MUL and SHIFT operations for multiplication.
 
 conditional move instructions 
 
+how to inline assembly in Free PASCAL and GCC? 
 
+using macros? 
 
+local labels? 
 
 
 
