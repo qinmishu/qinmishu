@@ -698,7 +698,115 @@ Breakpoint 1, _start () at movtest1.s:8
 
 ### Using indexed memory locations 
 
-Read to  page 132
+You can specify more than one value on a directive to place in memory: 
+
+```asm 
+values: .int 10, 15, 20, 25, 30 
+```
+
+When referencing data in the array, you must use an index system to determine which value you are accessing.  The way this id done is called "indexed memory mode". The memory location is determined by the following: 
+
+- A base address 
+- A offset address to add to the base address 
+- The size of the data element 
+- An index to determine which data element to select 
+
+The format of the expression is 
+
+```asm
+base_address(offset_address, index, size)
+```
+
+The data value retrieved is located at `base_address + offset_address + index * size`. 
+If any of the values are zero, they can be omitted(but the commas are still required as placeholders). The offset_address and index value must be registers, but the size value can be a numerical value. For ex, to reference the value 20 from the values array shown, you would use the following instructions: 
+
+```asm 
+movl $2, %edi 
+movl values(,%edi,4), %eax 
+``` 
+
+### Using indirect addressing with registers 
+Besides holding data, registers can also be used to hold memory addresses. When a register holds a memory address, it is referred to as a pointer. Accessing the data stored in the memory location using the pointer is called indirect addressing. 
+
+While using a label references the data value contained in the memory location, you can get the memory location address of the data value by placing a dollar sign `$` in front of the label in the instruction. 
+
+```asm 
+// move the memory address the `values` label references to the EDI register 
+movl $values, %edi 
+
+movl %edx, 4(%edi)
+
+movl %edx, -4(%edi)
+```
+
+### Conditional Move Instructions 
+The conditional move instruction can prevent the processor from implementing JMP instructions, which helps out the prefetch cache condition of the processor, usually speeding up the application. 
+
+`cmovx source, destimation` where x is a one or two letter code denoting the condition that will trigger the move action. The conditions are based on the current values in the RFLAGS register. 
+
+CF, Carry flag 
+
+OF, Overflow flag
+
+PF, Parity flag 
+
+SF, Sign flag 
+
+ZF, Zero flag 
+
+```asm 
+//conditional move instructions for unsigned values 
+cmova/cmovnbe, above/not below or equal 
+cmovae/cmovnb, above or equal/not below 
+cmovnc, not carry 
+cmovb/cmovnae, below/not above or equal 
+cmovc, carry 
+cmovbe/cmovna, below or equal/not above 
+cmove/cmovz, equal/zero 
+cmovne/cmovnz, not equal/not zero 
+cmovp/cmovpe, PF = 1, parity even 
+cmovnp/cmovpo, not parity/parity odd, PF=0 
+
+//conditional move instructions for signed values 
+cmovge/cmovnl, greater or equal/not less  
+cmovl/cmovnge, less/not greater or equal 
+cmovle/cmovng, less or equal/not greater 
+cmovo, overflow
+cmovno, not overflow  
+cmovs, sign 
+cmovns, not sign 
+``` 
+
+### Exchanging Data 
+One drawback to the MOV instructions is that it is difficult to switch the values of two registers without using a temporary intermediate register. 
+
+```asm 
+xchg, exchanges the values of two registers, or a register and a memory location 
+BSWAP, reverses the byte order in a 32-bit register 
+xadd, exchanges two values and stores the sum in the destination operand 
+cmpxchg, compares a value with an external value and exchanges it with another. 
+cmpxchg8b, compares two 64-bit values and exchanges it with another 
+```
+
+### Stack 
+
+```asm 
+pushl 
+pushw 
+pushq
+
+popl
+popw
+popq
+
+PUSHA/POPA    //not available in 64-bit 
+PUSHAD/POPAD  //not available in 64-bit 
+PUSHF/POPF
+PUSHFD/POPFD 
+``` 
+
+## Chap6 Controlling Execution Flow 
+Read to  page 158 
 
 # Book Beginning x64 Assembly Programming by Jo Van Hoey
 It includes introductions on asm on both Linux and Windows. It also include some advanced instructions for example AVX, SSE, etc. 
@@ -1219,6 +1327,8 @@ how to zero a register.
 Recursive function call after loop. 
 
 Use MUL and SHIFT operations for multiplication. 
+
+conditional move instructions 
 
 
 
