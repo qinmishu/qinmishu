@@ -1633,7 +1633,98 @@ GAS define macros, refer to [macros in GAS](https://ftp.gnu.org/old-gnu/Manuals/
 ```
 
 ## Chap11, Strings and Things 
-page 377 
+Any contiguous sequence of bytes or larger units in memory may be considered a string -- not simply sequences of human-readable characters. 
+
+The string instructions deal with these large sequences of bytes or larger units in an extraordinarily compact way: by executing an instruction loop entirely inside the CPU.
+
+Pascal treat strings as a separate data type, with a length counter at the start of the string to indicate how many bytes are in the string. In C, a string has no length byte in front of it. A C string is said to end when a byte with a binary value of 0 is encountered. 
+
+Assembly strings are just contiguous regions of memory. Assembly strings have no boundary values or length indicators. You should instead think of strings in terms of the register values that define them. 
+
+There are 2 kinds of strings in x64 assembly work. Source strings are strings that you read from. Destination strings are strings that you write to. 
+
+- A source string is pointed to by RSI. A destination string is pointed to by RDI. 
+- The length of both kinds of strings is the value you place in RCX. How this length is acted upon by the CPU depends on the specific instruction and how it's being used. 
+- Data coming from a source string or going to a destination string must begin the trip from, end the trip at, or pass through register RAX. 
+
+stosb instruction: STOre String by Byte 
+- RDI must be loaded with the address of the destination string. 
+- RCX must be loaded with the number of times the value in AL is to be stored into the string. 
+- AL must be loaded with the 8-bit value to be stored into the string. 
+- The direction flag DF must be set or cleared, depending on whether you want the search to be up-memory(cleared; use CLD) or down-memory(set; use STD). 
+
+Once you set up these three registers, you can safely execute a stosb instruction. This is what happens: 
+- The byte value in AL is copied to the memory address stored in RDI. 
+- RDI is incremented by 1, such that it now points to the next byte in memory following the one just written to. 
+
+RCX is not decremented by stosb. RCX is decremented automatically onlyif you put the REP prefix in front of stosb. Lacking the REP prefix, you have to do the decrementing yourself, either explicitly through DEC or through the LOOP instruction. 
+
+```asm 
+;intel syntax 
+cld 
+mov al, FILLCHR 
+mov rdi, VidBuff 
+mov rcx, COLS*ROWs 
+rep stosb 
+```
+
+When DF is set, STOSB and its fellow string instructions work downhill, from higher to lower addresses. When DF is cleared, STOSB and its siblings work uphill, from lower to higher addresses. When DF is set, RDI is decremented during string instruction execution. When DF is cleared, RDI is incremented. 
+
+Loop instruction: combines the decrementing of RCX with a test and jump based on ZF. When executed, the loop instruction first decrements RCX by 1. It then checks the Zero flag o see if the decrement operation forced RCX to 0. If so, it falls through to the next instruction. If not, loop branches to the label specified as its operand. 
+
+```asm 
+  mov al,30h
+dochar: 
+  stosb 
+  inc al 
+  loop dochar 
+```
+
+MUL, IMUL instructions: MUL treats its operand values as unsigned, where as IMUL treats them as signed. 
+
+STOSB, STOSW, STOSD, STOSQ instructions. RDI is changed according to the sizes of the quantity acted upon by the instruction. 
+
+X86-64 removed all BCD math instructions found in the x86 definition: AAA, DAA, DAS, AAS, AAM, AAD. 
+
+MOVSB,MOVSW,MOVSD,MOVSQ instructions. A block of memory data at the address stored in RSI is copied to the address stored in RDI. 
+
+JRCXZ instruction: Watches the RCX register. When it sees that RCX has just gone to zero, it jumps to the specified label. Note: there is not JRCXNZ instruction. 
+
+LOOP and LOOPNZ: LOOP watches the state of the RCX register, and closes the loop until RCX goes to 0. LOOPNZ watches both the state of the RCX register and the state of the zero flag ZF. 
+
+When one of your programs begins running, any command-line arguments that were entered when the program was launched are passed to the program on the Linux stack.
+
+SCASB instruction: Scan String by Byte. 
+- For up-memory searches, the CLD instruction is used to ensure that the DF is cleared. 
+- The address of the first byte of the string to be searched is placed in RDI. 
+- The value to be search for is placed in 8-bit register AL. 
+- The maximum count is placed in RCX. 
+
+The prefix may be REPE or REPNE. 
+
+```asm 
+REPNE SCANSB
+```
+
+Use REPNE: Repeat SCASB as long as the content pointed by RDI does not equal AL.
+
+Use REPE: Repeat SCASB as long as `[RDI]` equals AL. 
+
+Program Prologus and Epilogs. 
+```asm 
+;intel syntax 
+;prologue 
+push rbp 
+mov rbp, rsp 
+and rsp, -16 
+
+;epilogue 
+mov rsp, rbp 
+pop rbp 
+```
+
+## Chap12, Calling external functions written in the C language 
+
 # end 
 
  

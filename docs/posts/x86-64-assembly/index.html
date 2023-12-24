@@ -191,10 +191,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#the-32-bit-x86-c-calling-convention" id="toc-the-32-bit-x86-c-calling-convention" class="nav-link" data-scroll-target="#the-32-bit-x86-c-calling-convention">The 32 bit x86 C calling Convention</a></li>
   <li><a href="#general-purpose-registers-in-x86-64" id="toc-general-purpose-registers-in-x86-64" class="nav-link" data-scroll-target="#general-purpose-registers-in-x86-64">General purpose registers in X86-64</a></li>
   <li><a href="#att-syntax" id="toc-att-syntax" class="nav-link" data-scroll-target="#att-syntax">AT&amp;T Syntax</a></li>
+  <li><a href="#add-sub-inc-dec" id="toc-add-sub-inc-dec" class="nav-link" data-scroll-target="#add-sub-inc-dec">add, sub, inc, dec</a></li>
   <li><a href="#a-comparison-of-gas-and-nasm" id="toc-a-comparison-of-gas-and-nasm" class="nav-link" data-scroll-target="#a-comparison-of-gas-and-nasm">A comparison of GAS and NASM</a></li>
   </ul></li>
   <li><a href="#book-programming-from-the-ground-up-by-jonathan-bartlett-author" id="toc-book-programming-from-the-ground-up-by-jonathan-bartlett-author" class="nav-link" data-scroll-target="#book-programming-from-the-ground-up-by-jonathan-bartlett-author">Book Programming from the Ground Up by Jonathan Bartlett (Author)</a></li>
-  <li><a href="#book-professional-assembly-language-by-richard-blum-good" id="toc-book-professional-assembly-language-by-richard-blum-good" class="nav-link" data-scroll-target="#book-professional-assembly-language-by-richard-blum-good">Book Professional Assembly Language by Richard Blum (Good)</a></li>
+  <li><a href="#book-professional-assembly-language-by-richard-blum-good" id="toc-book-professional-assembly-language-by-richard-blum-good" class="nav-link" data-scroll-target="#book-professional-assembly-language-by-richard-blum-good">Book Professional Assembly Language by Richard Blum (Good)</a>
+  <ul>
+  <li><a href="#chap5-moving-data" id="toc-chap5-moving-data" class="nav-link" data-scroll-target="#chap5-moving-data">Chap5 Moving data</a>
+  <ul>
+  <li><a href="#moving-data-values-from-memory-to-a-register" id="toc-moving-data-values-from-memory-to-a-register" class="nav-link" data-scroll-target="#moving-data-values-from-memory-to-a-register">moving data values from memory to a register</a></li>
+  <li><a href="#moving-data-values-from-a-register-to-memory" id="toc-moving-data-values-from-a-register-to-memory" class="nav-link" data-scroll-target="#moving-data-values-from-a-register-to-memory">moving data values from a register to memory</a></li>
+  <li><a href="#using-indexed-memory-locations" id="toc-using-indexed-memory-locations" class="nav-link" data-scroll-target="#using-indexed-memory-locations">Using indexed memory locations</a></li>
+  <li><a href="#using-indirect-addressing-with-registers" id="toc-using-indirect-addressing-with-registers" class="nav-link" data-scroll-target="#using-indirect-addressing-with-registers">Using indirect addressing with registers</a></li>
+  <li><a href="#conditional-move-instructions" id="toc-conditional-move-instructions" class="nav-link" data-scroll-target="#conditional-move-instructions">Conditional Move Instructions</a></li>
+  <li><a href="#exchanging-data" id="toc-exchanging-data" class="nav-link" data-scroll-target="#exchanging-data">Exchanging Data</a></li>
+  <li><a href="#stack" id="toc-stack" class="nav-link" data-scroll-target="#stack">Stack</a></li>
+  </ul></li>
+  <li><a href="#chap6-controlling-execution-flow" id="toc-chap6-controlling-execution-flow" class="nav-link" data-scroll-target="#chap6-controlling-execution-flow">Chap6 Controlling Execution Flow</a></li>
+  </ul></li>
   <li><a href="#book-beginning-x64-assembly-programming-by-jo-van-hoey" id="toc-book-beginning-x64-assembly-programming-by-jo-van-hoey" class="nav-link" data-scroll-target="#book-beginning-x64-assembly-programming-by-jo-van-hoey">Book Beginning x64 Assembly Programming by Jo Van Hoey</a></li>
   <li><a href="#book-x64-assembly-language-step-by-step" id="toc-book-x64-assembly-language-step-by-step" class="nav-link" data-scroll-target="#book-x64-assembly-language-step-by-step">Book X64 Assembly Language Step by Step</a>
   <ul>
@@ -208,6 +222,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#chap8-creating-programs-that-work" id="toc-chap8-creating-programs-that-work" class="nav-link" data-scroll-target="#chap8-creating-programs-that-work">Chap8 Creating programs that work</a></li>
   <li><a href="#chap9-bits-flags-branches-and-tables-easing-into-mainstream-assembly-coding" id="toc-chap9-bits-flags-branches-and-tables-easing-into-mainstream-assembly-coding" class="nav-link" data-scroll-target="#chap9-bits-flags-branches-and-tables-easing-into-mainstream-assembly-coding">Chap9 Bits, Flags, Branches, and Tables, Easing Into Mainstream Assembly Coding</a></li>
   <li><a href="#chap10-dividing-and-conquering-using-procedures-and-macros-to-battle-program-complexity" id="toc-chap10-dividing-and-conquering-using-procedures-and-macros-to-battle-program-complexity" class="nav-link" data-scroll-target="#chap10-dividing-and-conquering-using-procedures-and-macros-to-battle-program-complexity">Chap10 Dividing and Conquering: Using procedures and macros to battle program complexity</a></li>
+  <li><a href="#chap11-strings-and-things" id="toc-chap11-strings-and-things" class="nav-link" data-scroll-target="#chap11-strings-and-things">Chap11, Strings and Things</a></li>
+  <li><a href="#chap12-calling-external-functions-written-in-the-c-language" id="toc-chap12-calling-external-functions-written-in-the-c-language" class="nav-link" data-scroll-target="#chap12-calling-external-functions-written-in-the-c-language">Chap12, Calling external functions written in the C language</a></li>
   </ul></li>
   <li><a href="#end" id="toc-end" class="nav-link" data-scroll-target="#end">end</a></li>
   </ul>
@@ -522,6 +538,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Indirect jump/call operands indicated with * (as opposed to direct).</li>
 </ul>
 </section>
+<section id="add-sub-inc-dec" class="level2">
+<h2 class="anchored" data-anchor-id="add-sub-inc-dec">add, sub, inc, dec</h2>
+<p><code>inc</code> and <code>add 1</code> are different.</p>
+<p><code>dec</code> and <code>sub 1</code> are different.</p>
+<p><code>inc</code> and <code>dec</code> won’t affect the carry flag, while <code>add</code> and <code>sub</code> will.</p>
+<p>Refer to <a href="http://www.c-jump.com/CIS77/ASM/Flags/lecture.html#F77_0070_inc_dec">inc, dec instructions</a></p>
+</section>
 <section id="a-comparison-of-gas-and-nasm" class="level2">
 <h2 class="anchored" data-anchor-id="a-comparison-of-gas-and-nasm">A comparison of GAS and NASM</h2>
 <p>Refer to <a href="http://web.archive.org/web/20090215122116/http://www.ibm.com/developerworks/library/l-gas-nasm.html">Linux assemblers: A comparison of GAS and NASM</a></p>
@@ -544,7 +567,260 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb14-7"><a href="#cb14-7"></a>  config.vm.box = "reelio/trusty32"</span>
 <span id="cb14-8"><a href="#cb14-8"></a>  config.vm.box_version = "0.0.1"</span>
 <span id="cb14-9"><a href="#cb14-9"></a>end</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Read to the chapter Moving Data</p>
+<section id="chap5-moving-data" class="level2">
+<h2 class="anchored" data-anchor-id="chap5-moving-data">Chap5 Moving data</h2>
+<p>The data section is declared using the .data directive.</p>
+<p>There is another type of data section called .rodata. Any data elements defined in this section can only be accessed in readonly mode(thus the ro prefix).</p>
+<p>Two statements are required to define a data element in the data section: a label and a directive. The label has no meaning to the processor; it is just a place for the assembler to reserve a specified amount of memory for the data element to be referenced by the label.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode numberSource default number-lines code-with-copy"><code class="sourceCode default"><span id="cb15-1"><a href="#cb15-1"></a>directive, data type </span>
+<span id="cb15-2"><a href="#cb15-2"></a></span>
+<span id="cb15-3"><a href="#cb15-3"></a>.ascii, Text string </span>
+<span id="cb15-4"><a href="#cb15-4"></a>.asciz, Null terminated text string </span>
+<span id="cb15-5"><a href="#cb15-5"></a>.byte, Byte value </span>
+<span id="cb15-6"><a href="#cb15-6"></a>.double, Double precision floating-point number </span>
+<span id="cb15-7"><a href="#cb15-7"></a>.float, Single precision floating-point nuber </span>
+<span id="cb15-8"><a href="#cb15-8"></a>.int, 32-bit integer number </span>
+<span id="cb15-9"><a href="#cb15-9"></a>.long, 32-bit integer number </span>
+<span id="cb15-10"><a href="#cb15-10"></a>.octa, 16-byte integer number </span>
+<span id="cb15-11"><a href="#cb15-11"></a>.quad, 8-byte integer number </span>
+<span id="cb15-12"><a href="#cb15-12"></a>.short, 16-bit integer number </span>
+<span id="cb15-13"><a href="#cb15-13"></a>.single, single-precision floating pointer number(same as .float)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You are not limited to defining just one value on the directive statement line. You can define multiple values on the line, with each value being placed in memory in the order it appears in the directive.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb16-1"><a href="#cb16-1"></a><span class="fu">sizes:</span> .long <span class="dv">100</span><span class="op">,</span><span class="dv">150</span><span class="op">,</span><span class="dv">200</span><span class="op">,</span><span class="dv">250</span><span class="op">,</span><span class="dv">300</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You can also declare static data symbols in the data section. The .equ directive is used to set a constant value to a symbol that can be used in the text section, as shown in the following examples:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb17-1"><a href="#cb17-1"></a>.<span class="pp">equ</span> factor<span class="op">,</span> <span class="dv">3</span> </span>
+<span id="cb17-2"><a href="#cb17-2"></a>.<span class="pp">equ</span> LINUX_SYS_CALL<span class="op">,</span> <span class="bn">0X60</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>To reference the static data element, you must use a dollar sign before the label name.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb18-1"><a href="#cb18-1"></a>movl <span class="op">$</span>LINUX_SYS_CALL<span class="op">,</span> <span class="op">%</span><span class="kw">eax</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In BSS section, defining data elements is somewhat different from defining them in the data section. Instead of declaring specific data types, you just declare raw segments of memory that are reserved for whatever purpose you need them for.</p>
+<p>The GNU assembler uses two directives to declare buffers, as shown in the following table.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode numberSource default number-lines code-with-copy"><code class="sourceCode default"><span id="cb19-1"><a href="#cb19-1"></a>.comm, Declares a common memory area for data that is not initialized </span>
+<span id="cb19-2"><a href="#cb19-2"></a>.lcomm, Declares a local common memory area for data that is not initialized </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The local common memory area is reserved for data that will not be accessed outside of the local assembly code.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb20-1"><a href="#cb20-1"></a>.comm symbol<span class="op">,</span> length </span>
+<span id="cb20-2"><a href="#cb20-2"></a>.lcomm buffer<span class="op">,</span> <span class="dv">10000</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Local common memory areas cannot be accessed by functions outside of where they were declared(They can’t be used in .globl directives).</p>
+<p>One benefit to declaring data in the bss section is that the data is not included in the executable program.</p>
+<p>The .fill directive enables the assembler to automatically create the 10000 elements for you. The default is to create one byte per field, and fill it with zeros.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb21-1"><a href="#cb21-1"></a>.<span class="bu">section</span> <span class="op">.</span>data </span>
+<span id="cb21-2"><a href="#cb21-2"></a><span class="fu">buffer:</span> </span>
+<span id="cb21-3"><a href="#cb21-3"></a>    .fill <span class="dv">10000</span> </span>
+<span id="cb21-4"><a href="#cb21-4"></a>.<span class="bu">section</span> <span class="op">.</span>text </span>
+<span id="cb21-5"><a href="#cb21-5"></a>.globl _start </span>
+<span id="cb21-6"><a href="#cb21-6"></a><span class="fu">_start:</span> </span>
+<span id="cb21-7"><a href="#cb21-7"></a>    movl <span class="op">$</span><span class="bn">1</span><span class="op">,</span> <span class="op">%</span><span class="kw">eax</span> </span>
+<span id="cb21-8"><a href="#cb21-8"></a>    movl <span class="op">$</span><span class="bn">0</span><span class="op">,</span> <span class="op">$</span>ebx </span>
+<span id="cb21-9"><a href="#cb21-9"></a>    <span class="bu">int</span> <span class="op">$</span><span class="bn">0</span>x80 </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The GNU assembler adds another dimension to the MOV instruction, in that the size of the data element moved must be declared. The size is declared by adding an additional character to the MOV mnemonic. Thus the instruction becomes movx, where x can be l for a 32-bit long word value, w for a 16-bit word value, b for an 8-bit byte value, q for an 8-byte value.</p>
+<section id="moving-data-values-from-memory-to-a-register" class="level3">
+<h3 class="anchored" data-anchor-id="moving-data-values-from-memory-to-a-register">moving data values from memory to a register</h3>
+<p>By my test in both 32 bit and 64 bit OS, <code>.int</code> and <code>.long</code> both have size 4 bytes.</p>
+<p>By my test in both 32 bit and 64 bit OS(take 64 bits as an example), <code>movq (value), %rcx</code> and <code>movq value, %rcx</code> mean the same thing. After executation of the below 2 programs, the value of %rcx is 3, instead of the address of <code>value</code> in the .data section.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb22-1"><a href="#cb22-1"></a># movtest1<span class="op">.</span>s </span>
+<span id="cb22-2"><a href="#cb22-2"></a>.<span class="bu">section</span> <span class="op">.</span>data<span class="op">,</span> first way </span>
+<span id="cb22-3"><a href="#cb22-3"></a># define value with <span class="dv">8</span> bytes <span class="op">and</span> value <span class="dv">3</span> </span>
+<span id="cb22-4"><a href="#cb22-4"></a><span class="fu">value:</span> .quad <span class="dv">3</span>  </span>
+<span id="cb22-5"><a href="#cb22-5"></a></span>
+<span id="cb22-6"><a href="#cb22-6"></a>.<span class="bu">section</span> <span class="op">.</span>text </span>
+<span id="cb22-7"><a href="#cb22-7"></a>.globl _start </span>
+<span id="cb22-8"><a href="#cb22-8"></a><span class="fu">_start:</span> </span>
+<span id="cb22-9"><a href="#cb22-9"></a>    <span class="bu">nop</span> </span>
+<span id="cb22-10"><a href="#cb22-10"></a>    <span class="bu">movq</span> value<span class="op">,%</span><span class="kw">rcx</span> </span>
+<span id="cb22-11"><a href="#cb22-11"></a>    <span class="bu">movq</span> <span class="op">$</span><span class="bn">60</span><span class="op">,</span> <span class="op">%</span><span class="kw">rax</span> </span>
+<span id="cb22-12"><a href="#cb22-12"></a>    <span class="bu">movq</span> <span class="op">$</span><span class="bn">42</span><span class="op">,</span> <span class="op">%</span><span class="kw">rdi</span> </span>
+<span id="cb22-13"><a href="#cb22-13"></a>    <span class="cf">syscall</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb23-1"><a href="#cb23-1"></a># movtest1<span class="op">.</span>s </span>
+<span id="cb23-2"><a href="#cb23-2"></a>.<span class="bu">section</span> <span class="op">.</span>data<span class="op">,</span> <span class="dv">2</span><span class="er">nd</span> way </span>
+<span id="cb23-3"><a href="#cb23-3"></a># define value with <span class="dv">8</span> bytes <span class="op">and</span> value <span class="dv">3</span> </span>
+<span id="cb23-4"><a href="#cb23-4"></a><span class="fu">value:</span> .quad <span class="dv">3</span>  </span>
+<span id="cb23-5"><a href="#cb23-5"></a></span>
+<span id="cb23-6"><a href="#cb23-6"></a>.<span class="bu">section</span> <span class="op">.</span>text </span>
+<span id="cb23-7"><a href="#cb23-7"></a>.globl _start </span>
+<span id="cb23-8"><a href="#cb23-8"></a><span class="fu">_start:</span> </span>
+<span id="cb23-9"><a href="#cb23-9"></a>    <span class="bu">nop</span> </span>
+<span id="cb23-10"><a href="#cb23-10"></a>    <span class="bu">movq</span> value<span class="op">,%</span><span class="kw">rcx</span> </span>
+<span id="cb23-11"><a href="#cb23-11"></a>    <span class="bu">movq</span> <span class="op">$</span><span class="bn">60</span><span class="op">,</span> <span class="op">%</span><span class="kw">rax</span> </span>
+<span id="cb23-12"><a href="#cb23-12"></a>    <span class="bu">movq</span> <span class="op">$</span><span class="bn">42</span><span class="op">,</span> <span class="op">%</span><span class="kw">rdi</span> </span>
+<span id="cb23-13"><a href="#cb23-13"></a>    <span class="cf">syscall</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Followed the steps to build and debug the program.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1"></a><span class="ex">[root@centos8</span> asm]# as <span class="at">-gstabs</span> <span class="at">-o</span> movtest1.o movtest1.s </span>
+<span id="cb24-2"><a href="#cb24-2"></a><span class="ex">[root@centos8</span> asm]# ld <span class="at">-o</span> movtest1 movtest1.o </span>
+<span id="cb24-3"><a href="#cb24-3"></a><span class="ex">[root@centos8</span> asm]# gdb ./movtest1 </span>
+<span id="cb24-4"><a href="#cb24-4"></a><span class="kw">(</span><span class="fu">gdb</span><span class="kw">)</span> <span class="ex">b</span> <span class="pp">*</span>_start </span>
+<span id="cb24-5"><a href="#cb24-5"></a><span class="ex">Breakpoint</span> 1 at 0x4000b0: file movtest1.s, line 8.</span>
+<span id="cb24-6"><a href="#cb24-6"></a><span class="kw">(</span><span class="fu">gdb</span><span class="kw">)</span> <span class="ex">r</span></span>
+<span id="cb24-7"><a href="#cb24-7"></a><span class="ex">Starting</span> program: /root/tmp/asm/movtest1 </span>
+<span id="cb24-8"><a href="#cb24-8"></a></span>
+<span id="cb24-9"><a href="#cb24-9"></a><span class="ex">Breakpoint</span> 1, _start <span class="er">(</span><span class="kw">)</span> <span class="ex">at</span> movtest1.s:8</span>
+<span id="cb24-10"><a href="#cb24-10"></a><span class="ex">8</span>       nop </span>
+<span id="cb24-11"><a href="#cb24-11"></a><span class="kw">(</span><span class="fu">gdb</span><span class="kw">)</span> <span class="ex">n</span></span>
+<span id="cb24-12"><a href="#cb24-12"></a><span class="ex">9</span>       movq <span class="er">(</span><span class="ex">value</span><span class="kw">)</span><span class="ex">,%rcx</span> </span>
+<span id="cb24-13"><a href="#cb24-13"></a><span class="kw">(</span><span class="fu">gdb</span><span class="kw">)</span> <span class="ex">print/x</span> <span class="va">$rcx</span> </span>
+<span id="cb24-14"><a href="#cb24-14"></a><span class="va">$1</span> = 0x0</span>
+<span id="cb24-15"><a href="#cb24-15"></a><span class="kw">(</span><span class="fu">gdb</span><span class="kw">)</span> <span class="ex">n</span></span>
+<span id="cb24-16"><a href="#cb24-16"></a><span class="ex">10</span>      movq <span class="va">$6</span>0, %rax </span>
+<span id="cb24-17"><a href="#cb24-17"></a><span class="kw">(</span><span class="fu">gdb</span><span class="kw">)</span> <span class="ex">print/x</span> <span class="va">$rcx</span> </span>
+<span id="cb24-18"><a href="#cb24-18"></a><span class="va">$2</span> = 0x3</span>
+<span id="cb24-19"><a href="#cb24-19"></a><span class="kw">(</span><span class="fu">gdb</span><span class="kw">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>But if we put the <code>$</code> prefix in mov instruction before <code>value</code>, it will mov the address instead of value as shown in the below program.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb25-1"><a href="#cb25-1"></a># movtest1<span class="op">,</span> it will move the address instead of the value </span>
+<span id="cb25-2"><a href="#cb25-2"></a>.<span class="bu">section</span> <span class="op">.</span>data </span>
+<span id="cb25-3"><a href="#cb25-3"></a># define value with <span class="dv">8</span> bytes <span class="op">and</span> value <span class="dv">3</span> </span>
+<span id="cb25-4"><a href="#cb25-4"></a><span class="fu">value:</span> .quad <span class="dv">3</span>  </span>
+<span id="cb25-5"><a href="#cb25-5"></a></span>
+<span id="cb25-6"><a href="#cb25-6"></a>.<span class="bu">section</span> <span class="op">.</span>text </span>
+<span id="cb25-7"><a href="#cb25-7"></a>.globl _start </span>
+<span id="cb25-8"><a href="#cb25-8"></a><span class="fu">_start:</span> </span>
+<span id="cb25-9"><a href="#cb25-9"></a>    <span class="bu">nop</span> </span>
+<span id="cb25-10"><a href="#cb25-10"></a>    <span class="bu">movq</span> <span class="op">$</span>value<span class="op">,%</span><span class="kw">rcx</span> </span>
+<span id="cb25-11"><a href="#cb25-11"></a>    <span class="bu">movq</span> <span class="op">$</span><span class="bn">60</span><span class="op">,</span> <span class="op">%</span><span class="kw">rax</span> </span>
+<span id="cb25-12"><a href="#cb25-12"></a>    <span class="bu">movq</span> <span class="op">$</span><span class="bn">42</span><span class="op">,</span> <span class="op">%</span><span class="kw">rdi</span> </span>
+<span id="cb25-13"><a href="#cb25-13"></a>    <span class="cf">syscall</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Followed the debug steps to demonstrate.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1"></a><span class="fu">gdb</span> ./movtest1 </span>
+<span id="cb26-2"><a href="#cb26-2"></a></span>
+<span id="cb26-3"><a href="#cb26-3"></a><span class="kw">(</span><span class="fu">gdb</span><span class="kw">)</span> <span class="ex">b</span> <span class="pp">*</span>_start </span>
+<span id="cb26-4"><a href="#cb26-4"></a><span class="ex">Breakpoint</span> 1 at 0x4000b0: file movtest1.s, line 8.</span>
+<span id="cb26-5"><a href="#cb26-5"></a><span class="kw">(</span><span class="fu">gdb</span><span class="kw">)</span> <span class="ex">r</span></span>
+<span id="cb26-6"><a href="#cb26-6"></a><span class="ex">Starting</span> program: /root/tmp/asm/movtest1 </span>
+<span id="cb26-7"><a href="#cb26-7"></a></span>
+<span id="cb26-8"><a href="#cb26-8"></a><span class="ex">Breakpoint</span> 1, _start <span class="er">(</span><span class="kw">)</span> <span class="ex">at</span> movtest1.s:8</span>
+<span id="cb26-9"><a href="#cb26-9"></a><span class="ex">8</span>       nop </span>
+<span id="cb26-10"><a href="#cb26-10"></a><span class="kw">(</span><span class="fu">gdb</span><span class="kw">)</span> <span class="ex">n</span></span>
+<span id="cb26-11"><a href="#cb26-11"></a><span class="ex">9</span>       movq <span class="va">$value</span>,%rcx </span>
+<span id="cb26-12"><a href="#cb26-12"></a><span class="kw">(</span><span class="fu">gdb</span><span class="kw">)</span> <span class="ex">print/x</span> <span class="va">$rcx</span> </span>
+<span id="cb26-13"><a href="#cb26-13"></a><span class="va">$1</span> = 0x0</span>
+<span id="cb26-14"><a href="#cb26-14"></a><span class="kw">(</span><span class="fu">gdb</span><span class="kw">)</span> <span class="ex">n</span></span>
+<span id="cb26-15"><a href="#cb26-15"></a><span class="ex">10</span>      movq <span class="va">$6</span>0, %rax </span>
+<span id="cb26-16"><a href="#cb26-16"></a><span class="kw">(</span><span class="fu">gdb</span><span class="kw">)</span> <span class="ex">print/x</span> <span class="va">$rcx</span> </span>
+<span id="cb26-17"><a href="#cb26-17"></a><span class="va">$2</span> = 0x6000c8</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="moving-data-values-from-a-register-to-memory" class="level3">
+<h3 class="anchored" data-anchor-id="moving-data-values-from-a-register-to-memory">moving data values from a register to memory</h3>
+<div class="sourceCode" id="cb27"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb27-1"><a href="#cb27-1"></a>.<span class="bu">section</span> <span class="op">.</span>data </span>
+<span id="cb27-2"><a href="#cb27-2"></a># define value with <span class="dv">8</span> bytes <span class="op">and</span> value <span class="dv">3</span></span>
+<span id="cb27-3"><a href="#cb27-3"></a><span class="fu">value:</span> .quad <span class="dv">3</span>  </span>
+<span id="cb27-4"><a href="#cb27-4"></a></span>
+<span id="cb27-5"><a href="#cb27-5"></a>.<span class="bu">section</span> <span class="op">.</span>text </span>
+<span id="cb27-6"><a href="#cb27-6"></a>.globl _start </span>
+<span id="cb27-7"><a href="#cb27-7"></a><span class="fu">_start:</span> </span>
+<span id="cb27-8"><a href="#cb27-8"></a>    <span class="bu">nop</span> </span>
+<span id="cb27-9"><a href="#cb27-9"></a>    <span class="bu">movq</span> <span class="op">$</span><span class="bn">100</span><span class="op">,</span> <span class="op">%</span><span class="kw">rcx</span> </span>
+<span id="cb27-10"><a href="#cb27-10"></a>    <span class="bu">movq</span> <span class="op">%</span><span class="kw">rcx</span><span class="op">,</span> value </span>
+<span id="cb27-11"><a href="#cb27-11"></a>    </span>
+<span id="cb27-12"><a href="#cb27-12"></a>    # exit the program with error code <span class="dv">42</span> </span>
+<span id="cb27-13"><a href="#cb27-13"></a>    <span class="bu">movq</span> <span class="op">$</span><span class="bn">60</span><span class="op">,</span> <span class="op">%</span><span class="kw">rax</span> </span>
+<span id="cb27-14"><a href="#cb27-14"></a>    <span class="bu">movq</span> <span class="op">$</span><span class="bn">42</span><span class="op">,</span> <span class="op">%</span><span class="kw">rdi</span> </span>
+<span id="cb27-15"><a href="#cb27-15"></a>    <span class="cf">syscall</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1"></a><span class="ex">[root@centos8</span> asm]# as <span class="at">-gstabs</span> <span class="at">-o</span> movtest1.o movtest1.s </span>
+<span id="cb28-2"><a href="#cb28-2"></a><span class="ex">[root@centos8</span> asm]# ld <span class="at">-o</span> movtest1 movtest1.o </span>
+<span id="cb28-3"><a href="#cb28-3"></a><span class="ex">[root@centos8</span> asm]# gdb <span class="at">-q</span> ./movtest1</span>
+<span id="cb28-4"><a href="#cb28-4"></a><span class="ex">Reading</span> symbols from ./movtest1...done.</span>
+<span id="cb28-5"><a href="#cb28-5"></a><span class="kw">(</span><span class="fu">gdb</span><span class="kw">)</span> <span class="ex">b</span> <span class="pp">*</span>_start</span>
+<span id="cb28-6"><a href="#cb28-6"></a><span class="ex">Breakpoint</span> 1 at 0x4000b0: file movtest1.s, line 8.</span>
+<span id="cb28-7"><a href="#cb28-7"></a><span class="kw">(</span><span class="fu">gdb</span><span class="kw">)</span> <span class="ex">r</span></span>
+<span id="cb28-8"><a href="#cb28-8"></a><span class="ex">Starting</span> program: /root/tmp/asm/movtest1 </span>
+<span id="cb28-9"><a href="#cb28-9"></a></span>
+<span id="cb28-10"><a href="#cb28-10"></a><span class="ex">Breakpoint</span> 1, _start <span class="er">(</span><span class="kw">)</span> <span class="ex">at</span> movtest1.s:8</span>
+<span id="cb28-11"><a href="#cb28-11"></a><span class="ex">8</span>       nop </span>
+<span id="cb28-12"><a href="#cb28-12"></a><span class="kw">(</span><span class="fu">gdb</span><span class="kw">)</span> <span class="ex">x/d</span> <span class="kw">&amp;</span><span class="ex">value</span> </span>
+<span id="cb28-13"><a href="#cb28-13"></a><span class="ex">0x6000d0:</span>   3</span>
+<span id="cb28-14"><a href="#cb28-14"></a><span class="kw">(</span><span class="fu">gdb</span><span class="kw">)</span> <span class="ex">n</span></span>
+<span id="cb28-15"><a href="#cb28-15"></a><span class="ex">9</span>       movq <span class="va">$1</span>00, %rcx </span>
+<span id="cb28-16"><a href="#cb28-16"></a><span class="kw">(</span><span class="fu">gdb</span><span class="kw">)</span> <span class="ex">n</span></span>
+<span id="cb28-17"><a href="#cb28-17"></a><span class="ex">10</span>      movq %rcx, value </span>
+<span id="cb28-18"><a href="#cb28-18"></a><span class="kw">(</span><span class="fu">gdb</span><span class="kw">)</span> <span class="ex">n</span></span>
+<span id="cb28-19"><a href="#cb28-19"></a><span class="ex">13</span>      movq <span class="va">$6</span>0, %rax </span>
+<span id="cb28-20"><a href="#cb28-20"></a><span class="kw">(</span><span class="fu">gdb</span><span class="kw">)</span> <span class="ex">x/d</span> <span class="kw">&amp;</span><span class="ex">value</span> </span>
+<span id="cb28-21"><a href="#cb28-21"></a><span class="ex">0x6000d0:</span>   100</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="using-indexed-memory-locations" class="level3">
+<h3 class="anchored" data-anchor-id="using-indexed-memory-locations">Using indexed memory locations</h3>
+<p>You can specify more than one value on a directive to place in memory:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb29-1"><a href="#cb29-1"></a><span class="fu">values:</span> .<span class="bu">int</span> <span class="dv">10</span><span class="op">,</span> <span class="dv">15</span><span class="op">,</span> <span class="dv">20</span><span class="op">,</span> <span class="dv">25</span><span class="op">,</span> <span class="dv">30</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>When referencing data in the array, you must use an index system to determine which value you are accessing. The way this id done is called “indexed memory mode”. The memory location is determined by the following:</p>
+<ul>
+<li>A base address</li>
+<li>A offset address to add to the base address</li>
+<li>The size of the data element</li>
+<li>An index to determine which data element to select</li>
+</ul>
+<p>The format of the expression is</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb30-1"><a href="#cb30-1"></a>base_address<span class="op">(</span>offset_address<span class="op">,</span> index<span class="op">,</span> size<span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The data value retrieved is located at <code>base_address + offset_address + index * size</code>. If any of the values are zero, they can be omitted(but the commas are still required as placeholders). The offset_address and index value must be registers, but the size value can be a numerical value. For ex, to reference the value 20 from the values array shown, you would use the following instructions:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb31-1"><a href="#cb31-1"></a>movl <span class="op">$</span><span class="bn">2</span><span class="op">,</span> <span class="op">%</span><span class="kw">edi</span> </span>
+<span id="cb31-2"><a href="#cb31-2"></a>movl values<span class="op">(,%</span><span class="kw">edi</span><span class="op">,</span><span class="dv">4</span><span class="op">),</span> <span class="op">%</span><span class="kw">eax</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="using-indirect-addressing-with-registers" class="level3">
+<h3 class="anchored" data-anchor-id="using-indirect-addressing-with-registers">Using indirect addressing with registers</h3>
+<p>Besides holding data, registers can also be used to hold memory addresses. When a register holds a memory address, it is referred to as a pointer. Accessing the data stored in the memory location using the pointer is called indirect addressing.</p>
+<p>While using a label references the data value contained in the memory location, you can get the memory location address of the data value by placing a dollar sign <code>$</code> in front of the label in the instruction.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb32-1"><a href="#cb32-1"></a>// move the memory address the <span class="op">`</span>values<span class="op">`</span> label references to the <span class="kw">EDI</span> register </span>
+<span id="cb32-2"><a href="#cb32-2"></a>movl <span class="op">$</span>values<span class="op">,</span> <span class="op">%</span><span class="kw">edi</span> </span>
+<span id="cb32-3"><a href="#cb32-3"></a></span>
+<span id="cb32-4"><a href="#cb32-4"></a>movl <span class="op">%</span><span class="kw">edx</span><span class="op">,</span> <span class="dv">4</span><span class="op">(%</span><span class="kw">edi</span><span class="op">)</span></span>
+<span id="cb32-5"><a href="#cb32-5"></a></span>
+<span id="cb32-6"><a href="#cb32-6"></a>movl <span class="op">%</span><span class="kw">edx</span><span class="op">,</span> <span class="op">-</span><span class="dv">4</span><span class="op">(%</span><span class="kw">edi</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="conditional-move-instructions" class="level3">
+<h3 class="anchored" data-anchor-id="conditional-move-instructions">Conditional Move Instructions</h3>
+<p>The conditional move instruction can prevent the processor from implementing JMP instructions, which helps out the prefetch cache condition of the processor, usually speeding up the application.</p>
+<p><code>cmovx source, destimation</code> where x is a one or two letter code denoting the condition that will trigger the move action. The conditions are based on the current values in the RFLAGS register.</p>
+<p>CF, Carry flag</p>
+<p>OF, Overflow flag</p>
+<p>PF, Parity flag</p>
+<p>SF, Sign flag</p>
+<p>ZF, Zero flag</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb33-1"><a href="#cb33-1"></a>//conditional move instructions for unsigned values </span>
+<span id="cb33-2"><a href="#cb33-2"></a><span class="bu">cmova</span><span class="op">/</span>cmovnbe<span class="op">,</span> above<span class="op">/not</span> below <span class="op">or</span> equal </span>
+<span id="cb33-3"><a href="#cb33-3"></a><span class="bu">cmovae</span><span class="op">/</span>cmovnb<span class="op">,</span> above <span class="op">or</span> equal<span class="op">/not</span> below </span>
+<span id="cb33-4"><a href="#cb33-4"></a><span class="bu">cmovnc</span><span class="op">,</span> <span class="op">not</span> carry </span>
+<span id="cb33-5"><a href="#cb33-5"></a><span class="bu">cmovb</span><span class="op">/</span>cmovnae<span class="op">,</span> below<span class="op">/not</span> above <span class="op">or</span> equal </span>
+<span id="cb33-6"><a href="#cb33-6"></a><span class="bu">cmovc</span><span class="op">,</span> carry </span>
+<span id="cb33-7"><a href="#cb33-7"></a><span class="bu">cmovbe</span><span class="op">/</span>cmovna<span class="op">,</span> below <span class="op">or</span> equal<span class="op">/not</span> above </span>
+<span id="cb33-8"><a href="#cb33-8"></a><span class="bu">cmove</span><span class="op">/</span>cmovz<span class="op">,</span> equal<span class="op">/</span>zero </span>
+<span id="cb33-9"><a href="#cb33-9"></a><span class="bu">cmovne</span><span class="op">/</span>cmovnz<span class="op">,</span> <span class="op">not</span> equal<span class="op">/not</span> zero </span>
+<span id="cb33-10"><a href="#cb33-10"></a><span class="bu">cmovp</span><span class="op">/</span>cmovpe<span class="op">,</span> PF <span class="op">=</span> <span class="dv">1</span><span class="op">,</span> parity even </span>
+<span id="cb33-11"><a href="#cb33-11"></a><span class="bu">cmovnp</span><span class="op">/</span>cmovpo<span class="op">,</span> <span class="op">not</span> parity<span class="op">/</span>parity odd<span class="op">,</span> PF<span class="op">=</span><span class="dv">0</span> </span>
+<span id="cb33-12"><a href="#cb33-12"></a></span>
+<span id="cb33-13"><a href="#cb33-13"></a>//conditional move instructions for signed values </span>
+<span id="cb33-14"><a href="#cb33-14"></a><span class="bu">cmovge</span><span class="op">/</span>cmovnl<span class="op">,</span> greater <span class="op">or</span> equal<span class="op">/not</span> less  </span>
+<span id="cb33-15"><a href="#cb33-15"></a><span class="bu">cmovl</span><span class="op">/</span>cmovnge<span class="op">,</span> less<span class="op">/not</span> greater <span class="op">or</span> equal </span>
+<span id="cb33-16"><a href="#cb33-16"></a><span class="bu">cmovle</span><span class="op">/</span>cmovng<span class="op">,</span> less <span class="op">or</span> equal<span class="op">/not</span> greater </span>
+<span id="cb33-17"><a href="#cb33-17"></a><span class="bu">cmovo</span><span class="op">,</span> overflow</span>
+<span id="cb33-18"><a href="#cb33-18"></a><span class="bu">cmovno</span><span class="op">,</span> <span class="op">not</span> overflow  </span>
+<span id="cb33-19"><a href="#cb33-19"></a><span class="bu">cmovs</span><span class="op">,</span> sign </span>
+<span id="cb33-20"><a href="#cb33-20"></a><span class="bu">cmovns</span><span class="op">,</span> <span class="op">not</span> sign </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="exchanging-data" class="level3">
+<h3 class="anchored" data-anchor-id="exchanging-data">Exchanging Data</h3>
+<p>One drawback to the MOV instructions is that it is difficult to switch the values of two registers without using a temporary intermediate register.</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb34-1"><a href="#cb34-1"></a><span class="bu">xchg</span><span class="op">,</span> exchanges the values of two registers<span class="op">,</span> <span class="op">or</span> a register <span class="op">and</span> a memory location </span>
+<span id="cb34-2"><a href="#cb34-2"></a><span class="bu">BSWAP</span><span class="op">,</span> reverses the <span class="dt">byte</span> order in a <span class="dv">32</span><span class="op">-</span>bit register </span>
+<span id="cb34-3"><a href="#cb34-3"></a><span class="bu">xadd</span><span class="op">,</span> exchanges two values <span class="op">and</span> stores the sum in the destination operand </span>
+<span id="cb34-4"><a href="#cb34-4"></a><span class="bu">cmpxchg</span><span class="op">,</span> compares a value with an external value <span class="op">and</span> exchanges it with another<span class="op">.</span> </span>
+<span id="cb34-5"><a href="#cb34-5"></a><span class="bu">cmpxchg8b</span><span class="op">,</span> compares two <span class="dv">64</span><span class="op">-</span>bit values <span class="op">and</span> exchanges it with another </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="stack" class="level3">
+<h3 class="anchored" data-anchor-id="stack">Stack</h3>
+<div class="sourceCode" id="cb35"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb35-1"><a href="#cb35-1"></a>pushl </span>
+<span id="cb35-2"><a href="#cb35-2"></a><span class="bu">pushw</span> </span>
+<span id="cb35-3"><a href="#cb35-3"></a>pushq</span>
+<span id="cb35-4"><a href="#cb35-4"></a></span>
+<span id="cb35-5"><a href="#cb35-5"></a>popl</span>
+<span id="cb35-6"><a href="#cb35-6"></a><span class="bu">popw</span></span>
+<span id="cb35-7"><a href="#cb35-7"></a>popq</span>
+<span id="cb35-8"><a href="#cb35-8"></a></span>
+<span id="cb35-9"><a href="#cb35-9"></a><span class="bu">PUSHA</span><span class="op">/</span>POPA    <span class="op">//not</span> available in <span class="dv">64</span><span class="op">-</span>bit </span>
+<span id="cb35-10"><a href="#cb35-10"></a><span class="bu">PUSHAD</span><span class="op">/</span>POPAD  <span class="op">//not</span> available in <span class="dv">64</span><span class="op">-</span>bit </span>
+<span id="cb35-11"><a href="#cb35-11"></a><span class="bu">PUSHF</span><span class="op">/</span>POPF</span>
+<span id="cb35-12"><a href="#cb35-12"></a><span class="bu">PUSHFD</span><span class="op">/</span>POPFD </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="chap6-controlling-execution-flow" class="level2">
+<h2 class="anchored" data-anchor-id="chap6-controlling-execution-flow">Chap6 Controlling Execution Flow</h2>
+<p>Read to page 158</p>
+</section>
 </section>
 <section id="book-beginning-x64-assembly-programming-by-jo-van-hoey" class="level1">
 <h1>Book Beginning x64 Assembly Programming by Jo Van Hoey</h1>
@@ -630,7 +906,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Debugging info: Debugging information is, in a sense, a step backward. Portions of the source code, which was all stripped out early in the assembly process, are put back into the object module by the assembler. These portions of the source code are mostly the names of data items and procedures, and they’re embedded in the object file to make it easier for the programmer (you!) to see the names of data items when you debug the program.</p>
 <p>Relocatability: Primordial microcomputers like 8080 systems running CP/M-80 had a simple memory architecture. Programs were written to be loaded and run at a specific physical memory address. For CP/M, this was 0100H. The programmer could assume that any program would start at 0100H and go up from there. Memory addresses of data items and procedures were actual physical addresses, and every time the program ran, its data items were loaded and referenced at precisely the same place in memory. This all changed with the arrival of the 8086, and 8086-specific operating systems such as CP/M-86 and PC DOS. Improvements in the Intel architecture introduced with the 8086 made it unnecessary for the program to be assembled for running at any specific physical memory address. This feature is called relocatability and is a necessary part of any modern operating system, especially when multiple programs may be running at once.</p>
 <p>The author uses <code>nasm</code>. To compile an ASM file. Also <code>SASM</code> IDE for editing, building and debugging. <code>SASM</code> means SimpleAssembler.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1"></a><span class="fu">nasm</span> <span class="at">-f</span> elf64 <span class="at">-g</span> <span class="at">-Fdwarf</span> first.asm </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1"></a><span class="fu">nasm</span> <span class="at">-f</span> elf64 <span class="at">-g</span> <span class="at">-Fdwarf</span> first.asm </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="chap6-linux-and-the-tools-that-shape-the-way-you-work" class="level2">
 <h2 class="anchored" data-anchor-id="chap6-linux-and-the-tools-that-shape-the-way-you-work">Chap6 Linux and the Tools That Shape the Way You Work</h2>
@@ -643,16 +919,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Immediate data is built right into its own machine instruction. Register data is stored in one of the CPU’s collection of internal registers. In contrast, memory data is stored somewhere in the silver of system memory “owned” by a program, at a 64-bit memory address.</p>
 <p>Only one of an instruction’s two operands may specify a memory location. You can’t move a memory value directly to another memory value. This is an inherent limitation of Intel CPUs of all generations.</p>
 <p>To specify that we want the data at the memory location contained in a register rather than the data in the register itself, we use square brackets around the name of the register.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb16-1"><a href="#cb16-1"></a><span class="bu">mov</span> <span class="kw">rax</span><span class="op">,</span> <span class="op">[</span><span class="kw">rbx</span><span class="op">]</span></span>
-<span id="cb16-2"><a href="#cb16-2"></a></span>
-<span id="cb16-3"><a href="#cb16-3"></a><span class="bu">mov</span> <span class="kw">rax</span><span class="op">,</span> <span class="op">[</span><span class="kw">rbx</span> <span class="op">+</span> <span class="dv">16</span><span class="op">]</span></span>
-<span id="cb16-4"><a href="#cb16-4"></a></span>
-<span id="cb16-5"><a href="#cb16-5"></a><span class="bu">mov</span> <span class="kw">rax</span><span class="op">,</span> <span class="op">[</span><span class="kw">rbx</span> <span class="op">+</span> <span class="kw">rcx</span><span class="op">]</span></span>
-<span id="cb16-6"><a href="#cb16-6"></a></span>
-<span id="cb16-7"><a href="#cb16-7"></a><span class="bu">mov</span> <span class="kw">rax</span><span class="op">,</span> <span class="op">[</span><span class="kw">rbx</span> <span class="op">+</span> <span class="kw">rcx</span> <span class="op">+</span> <span class="dv">11</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb37-1"><a href="#cb37-1"></a><span class="bu">mov</span> <span class="kw">rax</span><span class="op">,</span> <span class="op">[</span><span class="kw">rbx</span><span class="op">]</span></span>
+<span id="cb37-2"><a href="#cb37-2"></a></span>
+<span id="cb37-3"><a href="#cb37-3"></a><span class="bu">mov</span> <span class="kw">rax</span><span class="op">,</span> <span class="op">[</span><span class="kw">rbx</span> <span class="op">+</span> <span class="dv">16</span><span class="op">]</span></span>
+<span id="cb37-4"><a href="#cb37-4"></a></span>
+<span id="cb37-5"><a href="#cb37-5"></a><span class="bu">mov</span> <span class="kw">rax</span><span class="op">,</span> <span class="op">[</span><span class="kw">rbx</span> <span class="op">+</span> <span class="kw">rcx</span><span class="op">]</span></span>
+<span id="cb37-6"><a href="#cb37-6"></a></span>
+<span id="cb37-7"><a href="#cb37-7"></a><span class="bu">mov</span> <span class="kw">rax</span><span class="op">,</span> <span class="op">[</span><span class="kw">rbx</span> <span class="op">+</span> <span class="kw">rcx</span> <span class="op">+</span> <span class="dv">11</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Whatever is inside the brackets is called the effective address of a data item in memory. At the current evolution of the Intel hardware, 2 registers may be added together to form the effective address, but not three or more.</p>
 <p>Where the size issue gets tricky is when you write data in a register out to memory. NASM does not “remember” the size of variables, like higher-level languages do. It knows where EatMsg starts in memory, and that’s it. You have to tell NASM how many bytes of data to move. This is done by a size specifier.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb17-1"><a href="#cb17-1"></a><span class="bu">mov</span> <span class="dt">byte</span> <span class="op">[</span>EatMsg<span class="op">],</span> <span class="st">'G'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb38-1"><a href="#cb38-1"></a><span class="bu">mov</span> <span class="dt">byte</span> <span class="op">[</span>EatMsg<span class="op">],</span> <span class="st">'G'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Here we tell NASM that we want to move only a single byte out to memory by using the BYTE size specifier. Other size specifiers include WORD, DWORD, QWORD.</p>
 <p>Only 18 bits of the RFlags register are actually flags. The rest are reserved for later use in future generations of Intel CPUs. Even among the defined flags, only a few are commonplace, and fewer still are useful when you’re just learning your way around. Some are used only inside system software like operating systems and are not available at all in userspace programs.</p>
 <p>OF: Overflow flag. is set when the result of an arithmetic operation on a signed integer quantity becomes too large to fit in the operand it originally occupied. OF is generally used as the “carry flag” in signed arithmetic.</p>
@@ -666,9 +942,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>CF: The Carry flag is used in unsigned arithmetic operations. If the result of an arithmetic or shift operation “carries out” a bit from the operand, CF becomes set. Otherwise, if nothing is carried out, CF is cleared.</p>
 <p>The highest bit in the most significant byte of a signed value is the sign bit. If the sign bit is a 1-bit, the number is negative.</p>
 <p>movsx: move with sign extension</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb18-1"><a href="#cb18-1"></a><span class="bu">xor</span> <span class="kw">rax</span><span class="op">,</span> <span class="kw">rax</span> </span>
-<span id="cb18-2"><a href="#cb18-2"></a><span class="bu">mov</span> <span class="kw">ax</span><span class="op">,</span> <span class="op">-</span><span class="dv">42</span> </span>
-<span id="cb18-3"><a href="#cb18-3"></a><span class="bu">movsx</span> <span class="kw">rbx</span><span class="op">,</span> <span class="kw">ax</span> <span class="co">;rbx will become -42 in two's complement </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb39-1"><a href="#cb39-1"></a><span class="bu">xor</span> <span class="kw">rax</span><span class="op">,</span> <span class="kw">rax</span> </span>
+<span id="cb39-2"><a href="#cb39-2"></a><span class="bu">mov</span> <span class="kw">ax</span><span class="op">,</span> <span class="op">-</span><span class="dv">42</span> </span>
+<span id="cb39-3"><a href="#cb39-3"></a><span class="bu">movsx</span> <span class="kw">rbx</span><span class="op">,</span> <span class="kw">ax</span> <span class="co">;rbx will become -42 in two's complement </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><code>mul</code> instruction has implicit operand. Immediate values cannot be used as operands for <code>mul</code>. MUL very helpfully sets the Carry flag CF when the value of the product overflows the low-order register.</p>
 <table class="table">
 <thead>
@@ -738,9 +1014,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 <p>Note: r/m8 means 8bits register or memory</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb19-1"><a href="#cb19-1"></a><span class="bu">mov</span> <span class="kw">eax</span><span class="op">,</span><span class="dv">447</span></span>
-<span id="cb19-2"><a href="#cb19-2"></a><span class="bu">mov</span> <span class="kw">ebx</span><span class="op">,</span><span class="dv">1739</span></span>
-<span id="cb19-3"><a href="#cb19-3"></a><span class="bu">mul</span> <span class="kw">ebx</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb40-1"><a href="#cb40-1"></a><span class="bu">mov</span> <span class="kw">eax</span><span class="op">,</span><span class="dv">447</span></span>
+<span id="cb40-2"><a href="#cb40-2"></a><span class="bu">mov</span> <span class="kw">ebx</span><span class="op">,</span><span class="dv">1739</span></span>
+<span id="cb40-3"><a href="#cb40-3"></a><span class="bu">mul</span> <span class="kw">ebx</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="chap8-creating-programs-that-work" class="level2">
 <h2 class="anchored" data-anchor-id="chap8-creating-programs-that-work">Chap8 Creating programs that work</h2>
@@ -761,75 +1037,75 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>PUSHFQ: pushes the full 64-bit RFlags register onto the stack. The Q means quadword.</p>
 <p>Any of the 16-bit and 64-bit general-purpose registers may be pushed individually onto the stack. You can’t push AL or BH or any other of the 8-bit registers. 16bit and 64bit immediate data can be pushed onto the stack. User-space Linux programs cannot push the segment registers onto the stack under any circumstance. With x64, segment registers belong to the OS and are unavailable to user-space programs. As odd as it might seem, 32-bit values (including all 32-bit registers) may not be pushed onto the stack.</p>
 <p>POP</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb20-1"><a href="#cb20-1"></a><span class="bu">popfq</span> <span class="co">; pop 8bytes from the stack into RFlags </span></span>
-<span id="cb20-2"><a href="#cb20-2"></a><span class="bu">pop</span> <span class="kw">rcx</span> </span>
-<span id="cb20-3"><a href="#cb20-3"></a><span class="bu">pop</span> <span class="kw">bx</span> </span>
-<span id="cb20-4"><a href="#cb20-4"></a><span class="bu">pop</span> <span class="op">[</span><span class="kw">rbx</span><span class="op">]</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb41-1"><a href="#cb41-1"></a><span class="bu">popfq</span> <span class="co">; pop 8bytes from the stack into RFlags </span></span>
+<span id="cb41-2"><a href="#cb41-2"></a><span class="bu">pop</span> <span class="kw">rcx</span> </span>
+<span id="cb41-3"><a href="#cb41-3"></a><span class="bu">pop</span> <span class="kw">bx</span> </span>
+<span id="cb41-4"><a href="#cb41-4"></a><span class="bu">pop</span> <span class="op">[</span><span class="kw">rbx</span><span class="op">]</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>PUSHA, PUSHAD, POPA, POPAD are gone in x64, though they are available in x86-32. These instructions were used to push or pop all of the general-purpose registers at once. They are removed likely due to that there are a lot more general-purpose registers in x64.</p>
 <p>ABI: Application Binary Interface. It defines a collection of fundamental callable functions, generally supplied by the operating system, as is done in Linux. This definition describes how to pass parameters to the many kernel service functions. An ABI also defines how linkers link compiled or assembled modules into a single executable binary program.</p>
 <p>RDI, RSI, RDX, R10,R8,R9 specifies a system call’s parameters. RAX is dedicated to the numeric code specifying the system call to be made.</p>
 <p>The SYSCALL instruction itself makes use of RAX, RCX, and R11 internally. After the SYSCALL returns, you can’t assume that RAX, RCX or R11 will have the same values they did before the SYSCALL.</p>
 <p>How to reserve bytes in .bss section in NASM. How to do it in gas?</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb21-1"><a href="#cb21-1"></a><span class="co">;nasm assembly </span></span>
-<span id="cb21-2"><a href="#cb21-2"></a><span class="bu">section</span> <span class="op">.</span>bss</span>
-<span id="cb21-3"><a href="#cb21-3"></a>Buff resb <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb22"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb22-1"><a href="#cb22-1"></a><span class="co">;gas assembly </span></span>
-<span id="cb22-2"><a href="#cb22-2"></a>.bss </span>
-<span id="cb22-3"><a href="#cb22-3"></a>.lcomm buff1<span class="op">,</span> <span class="dv">10</span> <span class="co">;reserve length bytes for a local common denoted by symbol. Symbol is not declared global, so normally it is not visible to ld. </span></span>
-<span id="cb22-4"><a href="#cb22-4"></a>.comm buff2<span class="op">,</span> <span class="dv">10</span> <span class="co">;declares common symbol named symbol. </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb42-1"><a href="#cb42-1"></a><span class="co">;nasm assembly </span></span>
+<span id="cb42-2"><a href="#cb42-2"></a><span class="bu">section</span> <span class="op">.</span>bss</span>
+<span id="cb42-3"><a href="#cb42-3"></a>Buff resb <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb43-1"><a href="#cb43-1"></a><span class="co">;gas assembly </span></span>
+<span id="cb43-2"><a href="#cb43-2"></a>.bss </span>
+<span id="cb43-3"><a href="#cb43-3"></a>.lcomm buff1<span class="op">,</span> <span class="dv">10</span> <span class="co">;reserve length bytes for a local common denoted by symbol. Symbol is not declared global, so normally it is not visible to ld. </span></span>
+<span id="cb43-4"><a href="#cb43-4"></a>.comm buff2<span class="op">,</span> <span class="dv">10</span> <span class="co">;declares common symbol named symbol. </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>jb and ja are for unsigned number, and jg and jl are for signed number</p>
 <p>jb: jump if below</p>
 <p>ja: jump if above</p>
 <p>jg: jump if greater</p>
 <p>jl: jump if lesser</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb23-1"><a href="#cb23-1"></a># upper<span class="op">.</span>s</span>
-<span id="cb23-2"><a href="#cb23-2"></a># a program to convert user inputted char from lower case to upper case</span>
-<span id="cb23-3"><a href="#cb23-3"></a>.<span class="bu">data</span></span>
-<span id="cb23-4"><a href="#cb23-4"></a></span>
-<span id="cb23-5"><a href="#cb23-5"></a>.bss</span>
-<span id="cb23-6"><a href="#cb23-6"></a>.lcomm char<span class="op">,</span><span class="dv">1</span> <span class="op">#</span>local common buffer<span class="op">,</span> with the name <span class="op">`</span>char<span class="op">`,</span> <span class="dv">1</span> <span class="dt">byte</span> size</span>
-<span id="cb23-7"><a href="#cb23-7"></a></span>
-<span id="cb23-8"><a href="#cb23-8"></a>.text</span>
-<span id="cb23-9"><a href="#cb23-9"></a>.global _start</span>
-<span id="cb23-10"><a href="#cb23-10"></a></span>
-<span id="cb23-11"><a href="#cb23-11"></a><span class="fu">_start:</span></span>
-<span id="cb23-12"><a href="#cb23-12"></a>    <span class="bu">push</span> <span class="op">%</span><span class="kw">rbp</span></span>
-<span id="cb23-13"><a href="#cb23-13"></a>    <span class="bu">mov</span> <span class="op">%</span><span class="kw">rsp</span><span class="op">,</span> <span class="op">%</span><span class="kw">rbp</span></span>
-<span id="cb23-14"><a href="#cb23-14"></a></span>
-<span id="cb23-15"><a href="#cb23-15"></a>    #read a char</span>
-<span id="cb23-16"><a href="#cb23-16"></a>    <span class="bu">mov</span> <span class="op">$</span><span class="bn">0</span><span class="op">,</span> <span class="op">%</span><span class="kw">rax</span></span>
-<span id="cb23-17"><a href="#cb23-17"></a>    <span class="bu">mov</span> <span class="op">$</span><span class="bn">0</span><span class="op">,</span> <span class="op">%</span><span class="kw">rdi</span></span>
-<span id="cb23-18"><a href="#cb23-18"></a>    <span class="bu">lea</span> char<span class="op">,</span> <span class="op">%</span><span class="kw">rsi</span></span>
-<span id="cb23-19"><a href="#cb23-19"></a>    <span class="bu">mov</span> <span class="op">$</span><span class="bn">1</span><span class="op">,</span> <span class="op">%</span><span class="kw">rdx</span></span>
-<span id="cb23-20"><a href="#cb23-20"></a>    <span class="cf">syscall</span></span>
-<span id="cb23-21"><a href="#cb23-21"></a></span>
-<span id="cb23-22"><a href="#cb23-22"></a>    <span class="bu">lea</span> char<span class="op">,</span> <span class="op">%</span><span class="kw">rax</span> <span class="op">#</span>put the addr of char to <span class="op">%</span><span class="kw">rax</span></span>
-<span id="cb23-23"><a href="#cb23-23"></a>    movb <span class="op">(%</span><span class="kw">rax</span><span class="op">),%</span><span class="kw">bl</span> <span class="op">#</span>put the <span class="dt">byte</span> value pointed by <span class="op">%</span><span class="kw">rax</span> to <span class="op">%</span><span class="kw">rbx</span></span>
-<span id="cb23-24"><a href="#cb23-24"></a>    <span class="bu">cmp</span> <span class="op">$</span><span class="bn">0</span>x61<span class="op">,</span> <span class="op">%</span><span class="kw">bl</span> <span class="op">#</span>subtract <span class="bn">0x61</span> from <span class="op">%</span><span class="kw">bl</span> <span class="op">and</span> without changing <span class="op">%</span><span class="kw">rbx</span></span>
-<span id="cb23-25"><a href="#cb23-25"></a>    <span class="cf">jb</span> do_not_change <span class="op">#</span>jump if below<span class="op">.</span> Note the diff between Intel <span class="op">and</span> AT<span class="op">&amp;</span>T syntax</span>
-<span id="cb23-26"><a href="#cb23-26"></a>    <span class="bu">cmp</span> <span class="op">$</span><span class="bn">0</span>x7a<span class="op">,</span> <span class="op">%</span><span class="kw">bl</span></span>
-<span id="cb23-27"><a href="#cb23-27"></a>    <span class="cf">ja</span> do_not_change</span>
-<span id="cb23-28"><a href="#cb23-28"></a>    # convert the char to upper case</span>
-<span id="cb23-29"><a href="#cb23-29"></a>    <span class="bu">sub</span> <span class="op">$</span><span class="bn">0</span>x20<span class="op">,</span> <span class="op">%</span><span class="kw">bl</span></span>
-<span id="cb23-30"><a href="#cb23-30"></a>    movb <span class="op">%</span><span class="kw">bl</span><span class="op">,</span> <span class="op">(%</span><span class="kw">rax</span><span class="op">)</span> <span class="op">#</span>put the <span class="dt">byte</span> value in <span class="op">%</span><span class="kw">bl</span> to memory pointed by <span class="op">%</span><span class="kw">rax</span></span>
-<span id="cb23-31"><a href="#cb23-31"></a><span class="fu">do_not_change:</span></span>
-<span id="cb23-32"><a href="#cb23-32"></a></span>
-<span id="cb23-33"><a href="#cb23-33"></a>    #write a char</span>
-<span id="cb23-34"><a href="#cb23-34"></a>    <span class="bu">mov</span> <span class="op">$</span><span class="bn">1</span><span class="op">,</span> <span class="op">%</span><span class="kw">rax</span></span>
-<span id="cb23-35"><a href="#cb23-35"></a>    <span class="bu">mov</span> <span class="op">$</span><span class="bn">1</span><span class="op">,</span> <span class="op">%</span><span class="kw">rdi</span></span>
-<span id="cb23-36"><a href="#cb23-36"></a>    <span class="bu">lea</span> char<span class="op">,</span> <span class="op">%</span><span class="kw">rsi</span></span>
-<span id="cb23-37"><a href="#cb23-37"></a>    <span class="bu">mov</span> <span class="op">$</span><span class="bn">1</span><span class="op">,</span> <span class="op">%</span><span class="kw">rdx</span></span>
-<span id="cb23-38"><a href="#cb23-38"></a>    <span class="cf">syscall</span></span>
-<span id="cb23-39"><a href="#cb23-39"></a></span>
-<span id="cb23-40"><a href="#cb23-40"></a>    #exit the program</span>
-<span id="cb23-41"><a href="#cb23-41"></a>    <span class="bu">mov</span> <span class="op">$</span><span class="bn">60</span><span class="op">,</span> <span class="op">%</span><span class="kw">rax</span> <span class="op">#</span>syscall number</span>
-<span id="cb23-42"><a href="#cb23-42"></a>    <span class="bu">mov</span> <span class="op">$</span><span class="bn">42</span><span class="op">,</span> <span class="op">%</span><span class="kw">rdi</span> <span class="op">#</span>exit code</span>
-<span id="cb23-43"><a href="#cb23-43"></a>    <span class="cf">syscall</span></span>
-<span id="cb23-44"><a href="#cb23-44"></a></span>
-<span id="cb23-45"><a href="#cb23-45"></a>    <span class="bu">pop</span> <span class="op">%</span><span class="kw">rbp</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb44-1"><a href="#cb44-1"></a># upper<span class="op">.</span>s</span>
+<span id="cb44-2"><a href="#cb44-2"></a># a program to convert user inputted char from lower case to upper case</span>
+<span id="cb44-3"><a href="#cb44-3"></a>.<span class="bu">data</span></span>
+<span id="cb44-4"><a href="#cb44-4"></a></span>
+<span id="cb44-5"><a href="#cb44-5"></a>.bss</span>
+<span id="cb44-6"><a href="#cb44-6"></a>.lcomm char<span class="op">,</span><span class="dv">1</span> <span class="op">#</span>local common buffer<span class="op">,</span> with the name <span class="op">`</span>char<span class="op">`,</span> <span class="dv">1</span> <span class="dt">byte</span> size</span>
+<span id="cb44-7"><a href="#cb44-7"></a></span>
+<span id="cb44-8"><a href="#cb44-8"></a>.text</span>
+<span id="cb44-9"><a href="#cb44-9"></a>.global _start</span>
+<span id="cb44-10"><a href="#cb44-10"></a></span>
+<span id="cb44-11"><a href="#cb44-11"></a><span class="fu">_start:</span></span>
+<span id="cb44-12"><a href="#cb44-12"></a>    <span class="bu">push</span> <span class="op">%</span><span class="kw">rbp</span></span>
+<span id="cb44-13"><a href="#cb44-13"></a>    <span class="bu">mov</span> <span class="op">%</span><span class="kw">rsp</span><span class="op">,</span> <span class="op">%</span><span class="kw">rbp</span></span>
+<span id="cb44-14"><a href="#cb44-14"></a></span>
+<span id="cb44-15"><a href="#cb44-15"></a>    #read a char</span>
+<span id="cb44-16"><a href="#cb44-16"></a>    <span class="bu">mov</span> <span class="op">$</span><span class="bn">0</span><span class="op">,</span> <span class="op">%</span><span class="kw">rax</span></span>
+<span id="cb44-17"><a href="#cb44-17"></a>    <span class="bu">mov</span> <span class="op">$</span><span class="bn">0</span><span class="op">,</span> <span class="op">%</span><span class="kw">rdi</span></span>
+<span id="cb44-18"><a href="#cb44-18"></a>    <span class="bu">lea</span> char<span class="op">,</span> <span class="op">%</span><span class="kw">rsi</span></span>
+<span id="cb44-19"><a href="#cb44-19"></a>    <span class="bu">mov</span> <span class="op">$</span><span class="bn">1</span><span class="op">,</span> <span class="op">%</span><span class="kw">rdx</span></span>
+<span id="cb44-20"><a href="#cb44-20"></a>    <span class="cf">syscall</span></span>
+<span id="cb44-21"><a href="#cb44-21"></a></span>
+<span id="cb44-22"><a href="#cb44-22"></a>    <span class="bu">lea</span> char<span class="op">,</span> <span class="op">%</span><span class="kw">rax</span> <span class="op">#</span>put the addr of char to <span class="op">%</span><span class="kw">rax</span></span>
+<span id="cb44-23"><a href="#cb44-23"></a>    movb <span class="op">(%</span><span class="kw">rax</span><span class="op">),%</span><span class="kw">bl</span> <span class="op">#</span>put the <span class="dt">byte</span> value pointed by <span class="op">%</span><span class="kw">rax</span> to <span class="op">%</span><span class="kw">rbx</span></span>
+<span id="cb44-24"><a href="#cb44-24"></a>    <span class="bu">cmp</span> <span class="op">$</span><span class="bn">0</span>x61<span class="op">,</span> <span class="op">%</span><span class="kw">bl</span> <span class="op">#</span>subtract <span class="bn">0x61</span> from <span class="op">%</span><span class="kw">bl</span> <span class="op">and</span> without changing <span class="op">%</span><span class="kw">rbx</span></span>
+<span id="cb44-25"><a href="#cb44-25"></a>    <span class="cf">jb</span> do_not_change <span class="op">#</span>jump if below<span class="op">.</span> Note the diff between Intel <span class="op">and</span> AT<span class="op">&amp;</span>T syntax</span>
+<span id="cb44-26"><a href="#cb44-26"></a>    <span class="bu">cmp</span> <span class="op">$</span><span class="bn">0</span>x7a<span class="op">,</span> <span class="op">%</span><span class="kw">bl</span></span>
+<span id="cb44-27"><a href="#cb44-27"></a>    <span class="cf">ja</span> do_not_change</span>
+<span id="cb44-28"><a href="#cb44-28"></a>    # convert the char to upper case</span>
+<span id="cb44-29"><a href="#cb44-29"></a>    <span class="bu">sub</span> <span class="op">$</span><span class="bn">0</span>x20<span class="op">,</span> <span class="op">%</span><span class="kw">bl</span></span>
+<span id="cb44-30"><a href="#cb44-30"></a>    movb <span class="op">%</span><span class="kw">bl</span><span class="op">,</span> <span class="op">(%</span><span class="kw">rax</span><span class="op">)</span> <span class="op">#</span>put the <span class="dt">byte</span> value in <span class="op">%</span><span class="kw">bl</span> to memory pointed by <span class="op">%</span><span class="kw">rax</span></span>
+<span id="cb44-31"><a href="#cb44-31"></a><span class="fu">do_not_change:</span></span>
+<span id="cb44-32"><a href="#cb44-32"></a></span>
+<span id="cb44-33"><a href="#cb44-33"></a>    #write a char</span>
+<span id="cb44-34"><a href="#cb44-34"></a>    <span class="bu">mov</span> <span class="op">$</span><span class="bn">1</span><span class="op">,</span> <span class="op">%</span><span class="kw">rax</span></span>
+<span id="cb44-35"><a href="#cb44-35"></a>    <span class="bu">mov</span> <span class="op">$</span><span class="bn">1</span><span class="op">,</span> <span class="op">%</span><span class="kw">rdi</span></span>
+<span id="cb44-36"><a href="#cb44-36"></a>    <span class="bu">lea</span> char<span class="op">,</span> <span class="op">%</span><span class="kw">rsi</span></span>
+<span id="cb44-37"><a href="#cb44-37"></a>    <span class="bu">mov</span> <span class="op">$</span><span class="bn">1</span><span class="op">,</span> <span class="op">%</span><span class="kw">rdx</span></span>
+<span id="cb44-38"><a href="#cb44-38"></a>    <span class="cf">syscall</span></span>
+<span id="cb44-39"><a href="#cb44-39"></a></span>
+<span id="cb44-40"><a href="#cb44-40"></a>    #exit the program</span>
+<span id="cb44-41"><a href="#cb44-41"></a>    <span class="bu">mov</span> <span class="op">$</span><span class="bn">60</span><span class="op">,</span> <span class="op">%</span><span class="kw">rax</span> <span class="op">#</span>syscall number</span>
+<span id="cb44-42"><a href="#cb44-42"></a>    <span class="bu">mov</span> <span class="op">$</span><span class="bn">42</span><span class="op">,</span> <span class="op">%</span><span class="kw">rdi</span> <span class="op">#</span>exit code</span>
+<span id="cb44-43"><a href="#cb44-43"></a>    <span class="cf">syscall</span></span>
+<span id="cb44-44"><a href="#cb44-44"></a></span>
+<span id="cb44-45"><a href="#cb44-45"></a>    <span class="bu">pop</span> <span class="op">%</span><span class="kw">rbp</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Use the commands below to build the above program.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1"></a><span class="fu">as</span> <span class="at">-g</span> <span class="at">-o</span> upper.o upper.s</span>
-<span id="cb24-2"><a href="#cb24-2"></a><span class="fu">ld</span> <span class="at">-o</span> upper upper.o</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb45-1"><a href="#cb45-1"></a><span class="fu">as</span> <span class="at">-g</span> <span class="at">-o</span> upper.o upper.s</span>
+<span id="cb45-2"><a href="#cb45-2"></a><span class="fu">ld</span> <span class="at">-o</span> upper upper.o</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>In the above program, we should pay attention to the below facts.</p>
 <ul>
 <li>The way to declare buffer in .bss segment via <code>.lcomm</code> or <code>.comm</code></li>
@@ -838,10 +1114,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>When using the sub and cmp instructions, pay attention to the differences between AT&amp;T syntax and Intel syntax.</li>
 <li>The AT&amp;T syntax mnenomics have a suffix, movb, movw, movl, movq.</li>
 </ul>
-<div class="sourceCode" id="cb25"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb25-1"><a href="#cb25-1"></a>movb <span class="op">%</span><span class="kw">bl</span><span class="op">,</span> <span class="op">%</span><span class="kw">al</span> </span>
-<span id="cb25-2"><a href="#cb25-2"></a>movw <span class="op">%</span><span class="kw">bx</span><span class="op">,</span> <span class="op">%</span><span class="kw">ax</span> </span>
-<span id="cb25-3"><a href="#cb25-3"></a>movl <span class="op">%</span><span class="kw">ebx</span><span class="op">,</span> <span class="op">%</span><span class="kw">eax</span> </span>
-<span id="cb25-4"><a href="#cb25-4"></a><span class="bu">movq</span> <span class="op">%</span><span class="kw">rbx</span><span class="op">,</span> <span class="op">%</span><span class="kw">rax</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb46-1"><a href="#cb46-1"></a>movb <span class="op">%</span><span class="kw">bl</span><span class="op">,</span> <span class="op">%</span><span class="kw">al</span> </span>
+<span id="cb46-2"><a href="#cb46-2"></a>movw <span class="op">%</span><span class="kw">bx</span><span class="op">,</span> <span class="op">%</span><span class="kw">ax</span> </span>
+<span id="cb46-3"><a href="#cb46-3"></a>movl <span class="op">%</span><span class="kw">ebx</span><span class="op">,</span> <span class="op">%</span><span class="kw">eax</span> </span>
+<span id="cb46-4"><a href="#cb46-4"></a><span class="bu">movq</span> <span class="op">%</span><span class="kw">rbx</span><span class="op">,</span> <span class="op">%</span><span class="kw">rax</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="chap9-bits-flags-branches-and-tables-easing-into-mainstream-assembly-coding" class="level2">
 <h2 class="anchored" data-anchor-id="chap9-bits-flags-branches-and-tables-easing-into-mainstream-assembly-coding">Chap9 Bits, Flags, Branches, and Tables, Easing Into Mainstream Assembly Coding</h2>
@@ -868,38 +1144,296 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>DF, Direction Flag</p>
 <p>OF, Overflow Flag</p>
 <p>BT, Bit Test, it copies the specific bit in the first operand into the CF.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb26-1"><a href="#cb26-1"></a><span class="co">;intel syntax </span></span>
-<span id="cb26-2"><a href="#cb26-2"></a><span class="co">;check the 4th bits of rax, counting from 0 </span></span>
-<span id="cb26-3"><a href="#cb26-3"></a><span class="bu">bt</span> <span class="kw">rax</span><span class="op">,</span><span class="dv">4</span></span>
-<span id="cb26-4"><a href="#cb26-4"></a><span class="cf">jnc</span> quit <span class="co">; jump if the 4th bit is not 1 </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb47-1"><a href="#cb47-1"></a><span class="co">;intel syntax </span></span>
+<span id="cb47-2"><a href="#cb47-2"></a><span class="co">;check the 4th bits of rax, counting from 0 </span></span>
+<span id="cb47-3"><a href="#cb47-3"></a><span class="bu">bt</span> <span class="kw">rax</span><span class="op">,</span><span class="dv">4</span></span>
+<span id="cb47-4"><a href="#cb47-4"></a><span class="cf">jnc</span> quit <span class="co">; jump if the 4th bit is not 1 </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>X86-64 long mode memory addressing.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb27-1"><a href="#cb27-1"></a><span class="co">;BASE can be any GP register </span></span>
-<span id="cb27-2"><a href="#cb27-2"></a><span class="co">;INDEX can be any GP register </span></span>
-<span id="cb27-3"><a href="#cb27-3"></a><span class="co">;SCALE can be 1,2,4,8</span></span>
-<span id="cb27-4"><a href="#cb27-4"></a><span class="co">;DISP(displacement) can be any 32bit constant</span></span>
-<span id="cb27-5"><a href="#cb27-5"></a>BASE <span class="op">+</span> <span class="op">(</span>INDEX <span class="op">*</span> SCALE<span class="op">)</span> <span class="op">+</span> DISP</span>
-<span id="cb27-6"><a href="#cb27-6"></a><span class="co">;example in intel syntax </span></span>
-<span id="cb27-7"><a href="#cb27-7"></a>[rsi <span class="op">+</span> <span class="kw">rbp</span><span class="op">*</span><span class="dv">4</span> <span class="op">+</span> <span class="dv">9</span><span class="op">]</span></span>
-<span id="cb27-8"><a href="#cb27-8"></a><span class="co">;example in AT&amp;T syntax </span></span>
-<span id="cb27-9"><a href="#cb27-9"></a>jmpq <span class="op">*</span><span class="bn">0x402680</span><span class="op">(%</span><span class="kw">rbp</span><span class="op">,%</span><span class="kw">rax</span><span class="op">,</span><span class="dv">8</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb48-1"><a href="#cb48-1"></a><span class="co">;BASE can be any GP register </span></span>
+<span id="cb48-2"><a href="#cb48-2"></a><span class="co">;INDEX can be any GP register </span></span>
+<span id="cb48-3"><a href="#cb48-3"></a><span class="co">;SCALE can be 1,2,4,8</span></span>
+<span id="cb48-4"><a href="#cb48-4"></a><span class="co">;DISP(displacement) can be any 32bit constant</span></span>
+<span id="cb48-5"><a href="#cb48-5"></a>BASE <span class="op">+</span> <span class="op">(</span>INDEX <span class="op">*</span> SCALE<span class="op">)</span> <span class="op">+</span> DISP</span>
+<span id="cb48-6"><a href="#cb48-6"></a><span class="co">;example in intel syntax </span></span>
+<span id="cb48-7"><a href="#cb48-7"></a>[rsi <span class="op">+</span> <span class="kw">rbp</span><span class="op">*</span><span class="dv">4</span> <span class="op">+</span> <span class="dv">9</span><span class="op">]</span></span>
+<span id="cb48-8"><a href="#cb48-8"></a><span class="co">;example in AT&amp;T syntax </span></span>
+<span id="cb48-9"><a href="#cb48-9"></a>jmpq <span class="op">*</span><span class="bn">0x402680</span><span class="op">(%</span><span class="kw">rbp</span><span class="op">,%</span><span class="kw">rax</span><span class="op">,</span><span class="dv">8</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>LEA has a off-label purpose: doing fast math without shifts, adds or MUL.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb28-1"><a href="#cb28-1"></a><span class="co">;intex syntax </span></span>
-<span id="cb28-2"><a href="#cb28-2"></a><span class="co">;multiply rdx by 3 </span></span>
-<span id="cb28-3"><a href="#cb28-3"></a><span class="bu">lea</span> <span class="kw">rdx</span><span class="op">,[</span><span class="kw">rdx</span><span class="op">*</span><span class="dv">2</span><span class="op">+</span><span class="kw">rdx</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb49-1"><a href="#cb49-1"></a><span class="co">;intex syntax </span></span>
+<span id="cb49-2"><a href="#cb49-2"></a><span class="co">;multiply rdx by 3 </span></span>
+<span id="cb49-3"><a href="#cb49-3"></a><span class="bu">lea</span> <span class="kw">rdx</span><span class="op">,[</span><span class="kw">rdx</span><span class="op">*</span><span class="dv">2</span><span class="op">+</span><span class="kw">rdx</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="chap10-dividing-and-conquering-using-procedures-and-macros-to-battle-program-complexity" class="level2">
 <h2 class="anchored" data-anchor-id="chap10-dividing-and-conquering-using-procedures-and-macros-to-battle-program-complexity">Chap10 Dividing and Conquering: Using procedures and macros to battle program complexity</h2>
-<p>page 299</p>
+<p>A procedure must begin with a label.</p>
+<p>Somewhere within the procedure, there must be at least one <code>ret</code> instruction.</p>
+<p>A procedure may use <code>call</code> to call another procedure.</p>
+<p>CALL first push the address of the next instruction after itself onto the stack. Then CALL transfers the execution to the address represented by the label that names the procedure. The instructions contained in the procedure execute. The RET instruction pops the return address off the top of the stack and transfers execution to that address. Execution continues as though CALL had not changed the flow of instruction execution at all.</p>
+<p>There is a convention for which registers must be preserved within a procedure and which do not. This convention is part of the x86-64 System V ABI(Application Binary Interface). Some registers are considered volatile, meaning that they can be changed by a procedure, and others are nonvolatile, which means they must be preserved.</p>
+<p>Linux uses registers, too. It is serious knowing what registers are changed during system calls via the SYSCALL instruction. There is no simple answer. It depends completely on which system call you make. But first and above all, the SYSCALL instruction itself makes use of 2 registers:</p>
+<p>SYSCALL stores return address in the RCX register.</p>
+<p>SYSCALL stores RFlags in the R11 register.</p>
+<p>Everytime you execute SYSCALL, RCS and R11 will be clobbered.</p>
+<p>The system call number (in other words, which system call you’re calling) is always in RAX. A system call will accept up to six parameters. The registers used to pass parameters are in this order: RDI, RSI, RDX, R10, R8, and R9. In other words, the first parameter is passed in RDI. The second parameter is passed in RSI, and so on. No system call requires any parameters be passed to it on the stack.</p>
+<p>Note: Whether or not a register (like R9, say) is used to pass a parameter to a system call, that register is not preserved. Only seven registers are preserved by Linux across a system call: R12, R13, R14, R15, RBX, RSP, and RBP.</p>
+<p>After a SYSCALL, RAX will contain a return value. If RAX is negative, it indicates an error occurred during the call. For most system calls, a 0 value indicates success.</p>
+<p>Note: PUSHA, POPA, PUSHAD, POPAD are not available in x86-64.</p>
+<p>Sooner or later, you are going to accidentally reuse a label.</p>
+<p>This is a common enough problem that NASM’s authors created a feature to deal with it: local labels. Local labels are based on the fact that nearly all labels in assembly work (outside of names of subroutines and major sections) are “local” in nature, by which I mean that they are only referenced by jump instructions that are very close to them—perhaps only two or three instructions away.</p>
+<p>Note: NASM and Gas may have different syntax for local labels. And it seems local labels and local symbols mean different things in GAS. Refer to <a href="https://sourceware.org/binutils/docs/as/Symbol-Names.html">as symbol-names</a></p>
+<p>For NASM: Note that the label .modTest has a period in front of it. This period marks it as a local label. A local label is local to the first nonlocal label (that is, the first label not prefixed by a period; we call these global) that precedes it in the code.</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb50-1"><a href="#cb50-1"></a><span class="co">; Go through the buffer and convert binary byte values to hex digits:</span></span>
+<span id="cb50-2"><a href="#cb50-2"></a><span class="fu">Scan:</span></span>
+<span id="cb50-3"><a href="#cb50-3"></a><span class="bu">xor</span> <span class="kw">rax</span><span class="op">,</span><span class="kw">rax</span> <span class="co">; Clear RAX to 0</span></span>
+<span id="cb50-4"><a href="#cb50-4"></a><span class="bu">mov</span> <span class="kw">al</span><span class="op">,[</span>Buff<span class="op">+</span><span class="kw">rcx</span><span class="op">]</span> <span class="co">; Get a byte from the buffer into AL</span></span>
+<span id="cb50-5"><a href="#cb50-5"></a><span class="bu">mov</span> <span class="kw">rdx</span><span class="op">,</span><span class="kw">rsi</span> <span class="co">; Copy total counter into RDX</span></span>
+<span id="cb50-6"><a href="#cb50-6"></a><span class="bu">and</span> <span class="kw">rdx</span><span class="op">,</span><span class="dv">000000000000000</span><span class="er">Fh</span> <span class="co">; Mask out lowest 4 bits of char counter</span></span>
+<span id="cb50-7"><a href="#cb50-7"></a><span class="cf">call</span> DumpChar <span class="co">; Call the char poke procedure</span></span>
+<span id="cb50-8"><a href="#cb50-8"></a><span class="co">; Bump the buffer pointer to the next char and see if buffer's done:</span></span>
+<span id="cb50-9"><a href="#cb50-9"></a><span class="bu">inc</span> <span class="kw">rsi</span> <span class="co">; Increment total chars processed counter</span></span>
+<span id="cb50-10"><a href="#cb50-10"></a><span class="bu">inc</span> <span class="kw">rcx</span> <span class="co">; Increment buffer pointer</span></span>
+<span id="cb50-11"><a href="#cb50-11"></a><span class="bu">cmp</span> <span class="kw">rcx</span><span class="op">,</span><span class="kw">r15</span> <span class="co">; Compare with # of chars in buffer</span></span>
+<span id="cb50-12"><a href="#cb50-12"></a><span class="cf">jb</span> <span class="op">.</span>modTest <span class="co">; If we've processed all chars in buffer...</span></span>
+<span id="cb50-13"><a href="#cb50-13"></a><span class="cf">call</span> LoadBuff <span class="co">; ...go fill the buffer again</span></span>
+<span id="cb50-14"><a href="#cb50-14"></a><span class="bu">cmp</span> <span class="kw">r15</span><span class="op">,</span><span class="dv">0</span> <span class="co">; If r15=0, sys_read reached EOF on stdin</span></span>
+<span id="cb50-15"><a href="#cb50-15"></a><span class="cf">jbe</span> Done <span class="co">; If we get EOF, we're done</span></span>
+<span id="cb50-16"><a href="#cb50-16"></a><span class="co">; See if we're at the end of a block of 16 and need to display a line:</span></span>
+<span id="cb50-17"><a href="#cb50-17"></a><span class="fu">.modTest:</span></span>
+<span id="cb50-18"><a href="#cb50-18"></a><span class="bu">test</span> <span class="kw">rsi</span><span class="op">,</span><span class="dv">000000000000000</span><span class="er">Fh</span> <span class="co">; Test 4 lowest bits in counter for 0</span></span>
+<span id="cb50-19"><a href="#cb50-19"></a><span class="cf">jnz</span> Scan <span class="co">; If counter is *not* modulo 16, loop back</span></span>
+<span id="cb50-20"><a href="#cb50-20"></a><span class="cf">call</span> PrintLine <span class="co">; ...otherwise print the line</span></span>
+<span id="cb50-21"><a href="#cb50-21"></a><span class="cf">call</span> ClearLine <span class="co">; Clear hex dump line to 0's</span></span>
+<span id="cb50-22"><a href="#cb50-22"></a><span class="cf">jmp</span> Scan <span class="co">; Continue scanning the buffer</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Local labels can also be called in the nested way as shown below in NASM. In a sense, under the covers, a local label is just the “tail” of a global label.</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb51-1"><a href="#cb51-1"></a><span class="cf">jne</span> Calc<span class="op">.</span>modTest</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>For GAS: Local labels are different from local symbols. Local labels help compilers and programmers use names temporarily. They create symbols which are guaranteed to be unique over the entire scope of the input source code and which can be referred to by a simple notation. To define a local label, write a label of the form ‘N:’ (where N represents any non-negative integer). To refer to the most recent previous definition of that label write ‘Nb’, using the same number as when you defined the label. To refer to the next definition of a local label, write ‘Nf’. The ‘b’ stands for “backwards” and the ‘f’ stands for “forwards”.</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb52-1"><a href="#cb52-1"></a>Here is an example<span class="op">:</span></span>
+<span id="cb52-2"><a href="#cb52-2"></a></span>
+<span id="cb52-3"><a href="#cb52-3"></a>1:        branch <span class="fl">1</span><span class="bn">f</span></span>
+<span id="cb52-4"><a href="#cb52-4"></a>2:        branch <span class="bn">1b</span></span>
+<span id="cb52-5"><a href="#cb52-5"></a>1:        branch <span class="fl">2</span><span class="bn">f</span></span>
+<span id="cb52-6"><a href="#cb52-6"></a>2:        branch <span class="bn">1b</span></span>
+<span id="cb52-7"><a href="#cb52-7"></a>Which is the equivalent of<span class="op">:</span></span>
+<span id="cb52-8"><a href="#cb52-8"></a></span>
+<span id="cb52-9"><a href="#cb52-9"></a><span class="fu">label_1:</span>  branch label_3</span>
+<span id="cb52-10"><a href="#cb52-10"></a><span class="fu">label_2:</span>  branch label_1</span>
+<span id="cb52-11"><a href="#cb52-11"></a><span class="fu">label_3:</span>  branch label_4</span>
+<span id="cb52-12"><a href="#cb52-12"></a><span class="fu">label_4:</span>  branch label_3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This is a real GAS example from <a href="https://stackoverflow.com/questions/63874455/how-to-translate-gas-1-in-nasm-assembly">stackoverflow</a>:</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb53-1"><a href="#cb53-1"></a><span class="fu">_pg_dir:</span></span>
+<span id="cb53-2"><a href="#cb53-2"></a><span class="fu">startup_32:</span></span>
+<span id="cb53-3"><a href="#cb53-3"></a>    movl <span class="op">$</span><span class="bn">0</span>x10<span class="op">,%</span><span class="kw">eax</span></span>
+<span id="cb53-4"><a href="#cb53-4"></a>    <span class="bu">mov</span> <span class="op">%</span><span class="kw">ax</span><span class="op">,%</span><span class="kw">ds</span></span>
+<span id="cb53-5"><a href="#cb53-5"></a>    <span class="bu">mov</span> <span class="op">%</span><span class="kw">ax</span><span class="op">,%</span><span class="kw">es</span></span>
+<span id="cb53-6"><a href="#cb53-6"></a>    <span class="bu">mov</span> <span class="op">%</span><span class="kw">ax</span><span class="op">,%</span><span class="kw">fs</span></span>
+<span id="cb53-7"><a href="#cb53-7"></a>    <span class="bu">mov</span> <span class="op">%</span><span class="kw">ax</span><span class="op">,%</span><span class="kw">gs</span></span>
+<span id="cb53-8"><a href="#cb53-8"></a>    <span class="bu">lss</span> _stack_start<span class="op">,%</span><span class="kw">esp</span></span>
+<span id="cb53-9"><a href="#cb53-9"></a>    <span class="cf">call</span> setup_idt</span>
+<span id="cb53-10"><a href="#cb53-10"></a>    <span class="cf">call</span> setup_gdt</span>
+<span id="cb53-11"><a href="#cb53-11"></a>    movl <span class="op">$</span><span class="bn">0</span>x10<span class="op">,%</span><span class="kw">eax</span>     <span class="op">#</span> reload all the segment registers</span>
+<span id="cb53-12"><a href="#cb53-12"></a>    <span class="bu">mov</span> <span class="op">%</span><span class="kw">ax</span><span class="op">,%</span><span class="kw">ds</span>     <span class="op">#</span> after changing gdt<span class="op">.</span> <span class="kw">CS</span> was already</span>
+<span id="cb53-13"><a href="#cb53-13"></a>    <span class="bu">mov</span> <span class="op">%</span><span class="kw">ax</span><span class="op">,%</span><span class="kw">es</span>     <span class="op">#</span> reloaded in <span class="st">'setup_gdt'</span></span>
+<span id="cb53-14"><a href="#cb53-14"></a>    <span class="bu">mov</span> <span class="op">%</span><span class="kw">ax</span><span class="op">,%</span><span class="kw">fs</span></span>
+<span id="cb53-15"><a href="#cb53-15"></a>    <span class="bu">mov</span> <span class="op">%</span><span class="kw">ax</span><span class="op">,%</span><span class="kw">gs</span></span>
+<span id="cb53-16"><a href="#cb53-16"></a>    <span class="bu">lss</span> _stack_start<span class="op">,%</span><span class="kw">esp</span></span>
+<span id="cb53-17"><a href="#cb53-17"></a>    xorl <span class="op">%</span><span class="kw">eax</span><span class="op">,%</span><span class="kw">eax</span></span>
+<span id="cb53-18"><a href="#cb53-18"></a>1:  incl <span class="op">%</span><span class="kw">eax</span>       <span class="op">#</span> check that A20 really IS enabled  <span class="op">~~~</span></span>
+<span id="cb53-19"><a href="#cb53-19"></a>    movl <span class="op">%</span><span class="kw">eax</span><span class="op">,</span><span class="bn">0x000000</span></span>
+<span id="cb53-20"><a href="#cb53-20"></a>    cmpl <span class="op">%</span><span class="kw">eax</span><span class="op">,</span><span class="bn">0x100000</span></span>
+<span id="cb53-21"><a href="#cb53-21"></a>    <span class="cf">je</span> <span class="bn">1b</span>                                             <span class="op">~~~</span></span>
+<span id="cb53-22"><a href="#cb53-22"></a>    movl <span class="op">%</span><span class="kw">cr0</span><span class="op">,%</span><span class="kw">eax</span>      <span class="op">#</span> check math chip</span>
+<span id="cb53-23"><a href="#cb53-23"></a>    andl <span class="op">$</span><span class="bn">0</span>x80000011<span class="op">,%</span><span class="kw">eax</span>   <span class="op">#</span> Save PG<span class="op">,</span>ET<span class="op">,</span>PE</span>
+<span id="cb53-24"><a href="#cb53-24"></a>    testl <span class="op">$</span><span class="bn">0</span>x10<span class="op">,%</span><span class="kw">eax</span></span>
+<span id="cb53-25"><a href="#cb53-25"></a>    <span class="cf">jne</span> <span class="fl">1</span><span class="bn">f</span>          <span class="op">#</span> ET is set <span class="op">-</span> <span class="dv">387</span> is present      <span class="op">~~~</span></span>
+<span id="cb53-26"><a href="#cb53-26"></a>    orl <span class="op">$</span><span class="bn">4</span><span class="op">,%</span><span class="kw">eax</span>     <span class="op">#</span> else set emulate bit</span>
+<span id="cb53-27"><a href="#cb53-27"></a>1:  movl <span class="op">%</span><span class="kw">eax</span><span class="op">,%</span><span class="kw">cr0</span>                                    <span class="op">~~~</span></span>
+<span id="cb53-28"><a href="#cb53-28"></a><span class="cf">jmp</span> after_page_tables</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>short, near, far jumps:</p>
+<p>A jump target that lies within 127 bytes of the conditional jump instruction is called a short jump. A jump target that is further away than 127 bytes but still within the current code segment is called a near jump.</p>
+<p>There is a third kind of jump called a far jump, which involves leaving the current code segment entirely for whatever reason. In the old DOS real‐mode world, this meant specifying both a segment address and an offset address for the jump target. Far jumps were not used very often. In the 32‐bit protected mode and 64‐bit long mode, far jumps are extremely rare and involve all sorts of operating system complexity that I can’t go into in this book.</p>
+<p>The problem really lies with the difference between short and near jumps. A short conditional jump instruction generates a short—and hence compact—binary opcode. Short jump opcodes are always two bytes in size, no more. Near jump opcodes are either four or six bytes in size, depending on various factors.</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb54-1"><a href="#cb54-1"></a><span class="cf">jne</span> Scan <span class="co">; Jump within 127 bytes in either direction</span></span>
+<span id="cb54-2"><a href="#cb54-2"></a><span class="cf">jne</span> <span class="op">near</span> Scan <span class="co">; Jump anywhere in the current code segment</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Once you create library files containing procedures, there are two ways to use them: - A library file can be assembled separately to a .o file, which in turn can be linked by the Linux linker into other programs that you may write in the future. - A library file can be included in the source code file of the main program, using a directive called <code>%INCLUDE</code>. This is what you must do to use libraries from programs written within SASM.</p>
+<p>The very heart of programming in modules is “putting off” resolution of addresses until link time.</p>
+<p>Declare a procedure external.</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb55-1"><a href="#cb55-1"></a>EXTERN myProc </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Over in the other module where procedure MyProc is actually defined, it isn’t enough just to define the procedure. An eyelet needs a hook. You have to warn the assembler that MyProc will be referenced from outside the module. The assembler needs to forge the hook that will hook into the eyelet. You forge the hook by declaring the procedure <code>global</code>, meaning that other modules anywhere else in the program may freely reference the procedure.</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb56-1"><a href="#cb56-1"></a>GLOBAL myProc </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In GAS:</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb57-1"><a href="#cb57-1"></a>.exern myProc </span>
+<span id="cb57-2"><a href="#cb57-2"></a>.global myProc </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>A procedure that is declared as GLOBAL where it is defined may be referenced from anywhere its label is declared as EXTERN.</p>
+<p>What works for procedures works for data as well, and it can work in either direction. Your program can declare any named variable as GLOBAL, and that variable may then be used by any module in which the same variable name is declared as external with the EXTERN directive.</p>
+<p>defining Macro in NASM:</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb58-1"><a href="#cb58-1"></a>%<span class="pp">macro</span> ExitProg <span class="dv">0</span></span>
+<span id="cb58-2"><a href="#cb58-2"></a><span class="bu">mov</span> <span class="kw">rsp</span><span class="op">,</span><span class="kw">rbp</span> <span class="co">; Stack alignment epilog</span></span>
+<span id="cb58-3"><a href="#cb58-3"></a><span class="bu">pop</span> <span class="kw">rbp</span></span>
+<span id="cb58-4"><a href="#cb58-4"></a><span class="bu">mov</span> <span class="kw">rax</span><span class="op">,</span><span class="dv">60</span> <span class="co">; 60 = exit the program</span></span>
+<span id="cb58-5"><a href="#cb58-5"></a><span class="bu">mov</span> <span class="kw">rdi</span><span class="op">,</span><span class="dv">0</span> <span class="co">; Return value in rdi 0 = nothing to return</span></span>
+<span id="cb58-6"><a href="#cb58-6"></a><span class="cf">syscall</span> <span class="co">; Call syscall sys_exit to return to Linux</span></span>
+<span id="cb58-7"><a href="#cb58-7"></a>%endmacro</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Macros with parameters.</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb59-1"><a href="#cb59-1"></a>%<span class="pp">macro</span> WriteCtr <span class="dv">3</span> <span class="co">; %1 = row; %2 = String addr; %3 = String length</span></span>
+<span id="cb59-2"><a href="#cb59-2"></a><span class="bu">push</span> <span class="kw">rbx</span> <span class="co">; Save caller's RBX</span></span>
+<span id="cb59-3"><a href="#cb59-3"></a><span class="bu">push</span> <span class="kw">rdx</span> <span class="co">; Save caller's RDX</span></span>
+<span id="cb59-4"><a href="#cb59-4"></a><span class="bu">mov</span> <span class="kw">rdx</span><span class="op">,%</span><span class="dv">3</span> <span class="co">; Load string length into RDX</span></span>
+<span id="cb59-5"><a href="#cb59-5"></a><span class="bu">xor</span> <span class="kw">rbx</span><span class="op">,</span><span class="kw">rbx</span> <span class="co">; Zero RBX</span></span>
+<span id="cb59-6"><a href="#cb59-6"></a><span class="bu">mov</span> <span class="kw">bl</span><span class="op">,</span>SCRWIDTH <span class="co">; Load the screen width value to BL</span></span>
+<span id="cb59-7"><a href="#cb59-7"></a><span class="bu">sub</span> <span class="kw">bl</span><span class="op">,</span><span class="kw">dl</span> <span class="co">; Calc diff. of screen width and string length</span></span>
+<span id="cb59-8"><a href="#cb59-8"></a><span class="bu">shr</span> <span class="kw">bl</span><span class="op">,</span><span class="dv">1</span> <span class="co">; Divide difference by two for X value</span></span>
+<span id="cb59-9"><a href="#cb59-9"></a>GotoXY <span class="kw">bl</span><span class="op">,%</span><span class="dv">1</span> <span class="co">; Position the cursor for display</span></span>
+<span id="cb59-10"><a href="#cb59-10"></a>WriteStr <span class="op">%</span><span class="dv">2</span><span class="op">,%</span><span class="dv">3</span> <span class="co">; Write the string to the console</span></span>
+<span id="cb59-11"><a href="#cb59-11"></a><span class="bu">pop</span> <span class="kw">rdx</span> <span class="co">; Restore caller's RDX</span></span>
+<span id="cb59-12"><a href="#cb59-12"></a><span class="bu">pop</span> <span class="kw">rbx</span> <span class="co">; Restore caller's RBX</span></span>
+<span id="cb59-13"><a href="#cb59-13"></a>%endmacro</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Call a macro</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb60-1"><a href="#cb60-1"></a>WriteCtr <span class="kw">al</span><span class="op">,</span>AdMsg<span class="op">,</span>ADLEN</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>All labels defined within a macro are considered local to the macro and are handled specially by the assembler. A label in a macro is made local by beginning it with two percent symbols: %%.</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb61-1"><a href="#cb61-1"></a>%<span class="pp">macro</span> UpCase <span class="dv">2</span> <span class="co">; %1 = Address of buffer; %2 = Chars in buffer</span></span>
+<span id="cb61-2"><a href="#cb61-2"></a><span class="bu">mov</span> <span class="kw">rdx</span><span class="op">,%</span><span class="dv">1</span> <span class="co">; Place the offset of the buffer into rdx</span></span>
+<span id="cb61-3"><a href="#cb61-3"></a><span class="bu">mov</span> <span class="kw">rcx</span><span class="op">,%</span><span class="dv">2</span> <span class="co">; Place the number of bytes in the buffer into rcx</span></span>
+<span id="cb61-4"><a href="#cb61-4"></a><span class="fu">%%IsLC:</span><span class="bu">cmp</span> <span class="dt">byte</span> <span class="op">[</span><span class="kw">rdx</span><span class="op">+</span>rcx‐<span class="dv">1</span><span class="op">],</span><span class="st">'</span></span>
+<span id="cb61-5"><a href="#cb61-5"></a>a<span class="st">' ; Below '</span>a<span class="st">'?</span></span>
+<span id="cb61-6"><a href="#cb61-6"></a><span class="cf">jb</span> <span class="op">%%</span>Bump <span class="co">; Not lowercase. Skip</span></span>
+<span id="cb61-7"><a href="#cb61-7"></a><span class="bu">cmp</span> <span class="dt">byte</span> <span class="op">[</span><span class="kw">rdx</span><span class="op">+</span>rcx‐<span class="dv">1</span><span class="op">],</span><span class="st">'</span></span>
+<span id="cb61-8"><a href="#cb61-8"></a>z<span class="st">' ; Above '</span>z<span class="st">'?</span></span>
+<span id="cb61-9"><a href="#cb61-9"></a><span class="cf">ja</span> <span class="op">%%</span>Bump <span class="co">; Not lowercase. Skip</span></span>
+<span id="cb61-10"><a href="#cb61-10"></a><span class="bu">sub</span> <span class="dt">byte</span> <span class="op">[</span><span class="kw">rdx</span><span class="op">+</span>rcx‐<span class="dv">1</span><span class="op">],</span></span>
+<span id="cb61-11"><a href="#cb61-11"></a>20h <span class="co">; Force byte in buffer to uppercase</span></span>
+<span id="cb61-12"><a href="#cb61-12"></a><span class="fu">%%Bump:</span><span class="bu">dec</span> <span class="kw">rcx</span> <span class="co">; Decrement character count</span></span>
+<span id="cb61-13"><a href="#cb61-13"></a><span class="cf">jnz</span> <span class="op">%%</span>IsLC <span class="co">; If more chars in the buffer, repeat</span></span>
+<span id="cb61-14"><a href="#cb61-14"></a>%endmacro</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>GAS define macros, refer to <a href="https://ftp.gnu.org/old-gnu/Manuals/gas-2.9.1/html_node/as_107.html">macros in GAS</a></p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb62-1"><a href="#cb62-1"></a>.<span class="bu">section</span> <span class="op">.</span>data</span>
+<span id="cb62-2"><a href="#cb62-2"></a></span>
+<span id="cb62-3"><a href="#cb62-3"></a>   <span class="fu">prompt_str:</span></span>
+<span id="cb62-4"><a href="#cb62-4"></a>      .ascii <span class="st">"Enter Your Name: "</span></span>
+<span id="cb62-5"><a href="#cb62-5"></a>   <span class="fu">pstr_end:</span></span>
+<span id="cb62-6"><a href="#cb62-6"></a>      .<span class="bu">set</span> STR_SIZE<span class="op">,</span> pstr_end <span class="op">-</span> prompt_str</span>
+<span id="cb62-7"><a href="#cb62-7"></a></span>
+<span id="cb62-8"><a href="#cb62-8"></a>   <span class="fu">greet_str:</span></span>
+<span id="cb62-9"><a href="#cb62-9"></a>      .ascii <span class="st">"Hello "</span></span>
+<span id="cb62-10"><a href="#cb62-10"></a></span>
+<span id="cb62-11"><a href="#cb62-11"></a>   <span class="fu">gstr_end:</span></span>
+<span id="cb62-12"><a href="#cb62-12"></a>      .<span class="bu">set</span> GSTR_SIZE<span class="op">,</span> gstr_end <span class="op">-</span> greet_str</span>
+<span id="cb62-13"><a href="#cb62-13"></a></span>
+<span id="cb62-14"><a href="#cb62-14"></a>.<span class="bu">section</span> <span class="op">.</span>bss</span>
+<span id="cb62-15"><a href="#cb62-15"></a></span>
+<span id="cb62-16"><a href="#cb62-16"></a>// Reserve <span class="dv">32</span> bytes of memory</span>
+<span id="cb62-17"><a href="#cb62-17"></a>   .lcomm  buff<span class="op">,</span> <span class="dv">32</span></span>
+<span id="cb62-18"><a href="#cb62-18"></a></span>
+<span id="cb62-19"><a href="#cb62-19"></a>// A macro with two parameters</span>
+<span id="cb62-20"><a href="#cb62-20"></a>//  implements the write system call</span>
+<span id="cb62-21"><a href="#cb62-21"></a>   .<span class="pp">macro</span> write str<span class="op">,</span> str_size </span>
+<span id="cb62-22"><a href="#cb62-22"></a>      movl  <span class="op">$</span><span class="bn">4</span><span class="op">,</span> <span class="op">%</span><span class="kw">eax</span></span>
+<span id="cb62-23"><a href="#cb62-23"></a>      movl  <span class="op">$</span><span class="bn">1</span><span class="op">,</span> <span class="op">%</span><span class="kw">ebx</span></span>
+<span id="cb62-24"><a href="#cb62-24"></a>      movl  <span class="op">\</span>str<span class="op">,</span> <span class="op">%</span><span class="kw">ecx</span></span>
+<span id="cb62-25"><a href="#cb62-25"></a>      movl  <span class="op">\</span>str_size<span class="op">,</span> <span class="op">%</span><span class="kw">edx</span></span>
+<span id="cb62-26"><a href="#cb62-26"></a>      <span class="bu">int</span>   <span class="op">$</span><span class="bn">0</span>x80</span>
+<span id="cb62-27"><a href="#cb62-27"></a>   .endm</span>
+<span id="cb62-28"><a href="#cb62-28"></a></span>
+<span id="cb62-29"><a href="#cb62-29"></a></span>
+<span id="cb62-30"><a href="#cb62-30"></a>// Implements the read system call</span>
+<span id="cb62-31"><a href="#cb62-31"></a>   .<span class="pp">macro</span> read buff<span class="op">,</span> buff_size</span>
+<span id="cb62-32"><a href="#cb62-32"></a>      movl  <span class="op">$</span><span class="bn">3</span><span class="op">,</span> <span class="op">%</span><span class="kw">eax</span></span>
+<span id="cb62-33"><a href="#cb62-33"></a>      movl  <span class="op">$</span><span class="bn">0</span><span class="op">,</span> <span class="op">%</span><span class="kw">ebx</span></span>
+<span id="cb62-34"><a href="#cb62-34"></a>      movl  <span class="op">\</span>buff<span class="op">,</span> <span class="op">%</span><span class="kw">ecx</span></span>
+<span id="cb62-35"><a href="#cb62-35"></a>      movl  <span class="op">\</span>buff_size<span class="op">,</span> <span class="op">%</span><span class="kw">edx</span></span>
+<span id="cb62-36"><a href="#cb62-36"></a>      <span class="bu">int</span>   <span class="op">$</span><span class="bn">0</span>x80</span>
+<span id="cb62-37"><a href="#cb62-37"></a>   .endm</span>
+<span id="cb62-38"><a href="#cb62-38"></a></span>
+<span id="cb62-39"><a href="#cb62-39"></a></span>
+<span id="cb62-40"><a href="#cb62-40"></a>.<span class="bu">section</span> <span class="op">.</span>text</span>
+<span id="cb62-41"><a href="#cb62-41"></a></span>
+<span id="cb62-42"><a href="#cb62-42"></a>   .globl _start</span>
+<span id="cb62-43"><a href="#cb62-43"></a></span>
+<span id="cb62-44"><a href="#cb62-44"></a>   <span class="fu">_start:</span></span>
+<span id="cb62-45"><a href="#cb62-45"></a>      write <span class="op">$</span>prompt_str<span class="op">,</span> <span class="op">$</span>STR_SIZE</span>
+<span id="cb62-46"><a href="#cb62-46"></a>      read  <span class="op">$</span>buff<span class="op">,</span> <span class="op">$</span><span class="bn">32</span></span>
+<span id="cb62-47"><a href="#cb62-47"></a></span>
+<span id="cb62-48"><a href="#cb62-48"></a>// Read returns the length in <span class="kw">eax</span></span>
+<span id="cb62-49"><a href="#cb62-49"></a>      pushl <span class="op">%</span><span class="kw">eax</span></span>
+<span id="cb62-50"><a href="#cb62-50"></a></span>
+<span id="cb62-51"><a href="#cb62-51"></a>// Print the hello text</span>
+<span id="cb62-52"><a href="#cb62-52"></a>      write <span class="op">$</span>greet_str<span class="op">,</span> <span class="op">$</span>GSTR_SIZE</span>
+<span id="cb62-53"><a href="#cb62-53"></a></span>
+<span id="cb62-54"><a href="#cb62-54"></a>      popl  <span class="op">%</span><span class="kw">edx</span></span>
+<span id="cb62-55"><a href="#cb62-55"></a></span>
+<span id="cb62-56"><a href="#cb62-56"></a>// edx <span class="op">=</span> length returned by read</span>
+<span id="cb62-57"><a href="#cb62-57"></a>   write <span class="op">$</span>buff<span class="op">,</span> <span class="op">%</span><span class="kw">edx</span></span>
+<span id="cb62-58"><a href="#cb62-58"></a></span>
+<span id="cb62-59"><a href="#cb62-59"></a>   <span class="fu">_exit:</span></span>
+<span id="cb62-60"><a href="#cb62-60"></a>      movl  <span class="op">$</span><span class="bn">1</span><span class="op">,</span> <span class="op">%</span><span class="kw">eax</span></span>
+<span id="cb62-61"><a href="#cb62-61"></a>      movl  <span class="op">$</span><span class="bn">0</span><span class="op">,</span> <span class="op">%</span><span class="kw">ebx</span></span>
+<span id="cb62-62"><a href="#cb62-62"></a>      <span class="bu">int</span>   <span class="op">$</span><span class="bn">0</span>x80</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="chap11-strings-and-things" class="level2">
+<h2 class="anchored" data-anchor-id="chap11-strings-and-things">Chap11, Strings and Things</h2>
+<p>Any contiguous sequence of bytes or larger units in memory may be considered a string – not simply sequences of human-readable characters.</p>
+<p>The string instructions deal with these large sequences of bytes or larger units in an extraordinarily compact way: by executing an instruction loop entirely inside the CPU.</p>
+<p>Pascal treat strings as a separate data type, with a length counter at the start of the string to indicate how many bytes are in the string. In C, a string has no length byte in front of it. A C string is said to end when a byte with a binary value of 0 is encountered.</p>
+<p>Assembly strings are just contiguous regions of memory. Assembly strings have no boundary values or length indicators. You should instead think of strings in terms of the register values that define them.</p>
+<p>There are 2 kinds of strings in x64 assembly work. Source strings are strings that you read from. Destination strings are strings that you write to.</p>
+<ul>
+<li>A source string is pointed to by RSI. A destination string is pointed to by RDI.</li>
+<li>The length of both kinds of strings is the value you place in RCX. How this length is acted upon by the CPU depends on the specific instruction and how it’s being used.</li>
+<li>Data coming from a source string or going to a destination string must begin the trip from, end the trip at, or pass through register RAX.</li>
+</ul>
+<p>stosb instruction: STOre String by Byte - RDI must be loaded with the address of the destination string. - RCX must be loaded with the number of times the value in AL is to be stored into the string. - AL must be loaded with the 8-bit value to be stored into the string. - The direction flag DF must be set or cleared, depending on whether you want the search to be up-memory(cleared; use CLD) or down-memory(set; use STD).</p>
+<p>Once you set up these three registers, you can safely execute a stosb instruction. This is what happens: - The byte value in AL is copied to the memory address stored in RDI. - RDI is incremented by 1, such that it now points to the next byte in memory following the one just written to.</p>
+<p>RCX is not decremented by stosb. RCX is decremented automatically onlyif you put the REP prefix in front of stosb. Lacking the REP prefix, you have to do the decrementing yourself, either explicitly through DEC or through the LOOP instruction.</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb63-1"><a href="#cb63-1"></a><span class="co">;intel syntax </span></span>
+<span id="cb63-2"><a href="#cb63-2"></a><span class="bu">cld</span> </span>
+<span id="cb63-3"><a href="#cb63-3"></a><span class="bu">mov</span> <span class="kw">al</span><span class="op">,</span> FILLCHR </span>
+<span id="cb63-4"><a href="#cb63-4"></a><span class="bu">mov</span> <span class="kw">rdi</span><span class="op">,</span> VidBuff </span>
+<span id="cb63-5"><a href="#cb63-5"></a><span class="bu">mov</span> <span class="kw">rcx</span><span class="op">,</span> COLS<span class="op">*</span>ROWs </span>
+<span id="cb63-6"><a href="#cb63-6"></a><span class="bu">rep</span> <span class="bu">stosb</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>When DF is set, STOSB and its fellow string instructions work downhill, from higher to lower addresses. When DF is cleared, STOSB and its siblings work uphill, from lower to higher addresses. When DF is set, RDI is decremented during string instruction execution. When DF is cleared, RDI is incremented.</p>
+<p>Loop instruction: combines the decrementing of RCX with a test and jump based on ZF. When executed, the loop instruction first decrements RCX by 1. It then checks the Zero flag o see if the decrement operation forced RCX to 0. If so, it falls through to the next instruction. If not, loop branches to the label specified as its operand.</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb64-1"><a href="#cb64-1"></a>  <span class="bu">mov</span> <span class="kw">al</span><span class="op">,</span><span class="bn">30h</span></span>
+<span id="cb64-2"><a href="#cb64-2"></a><span class="fu">dochar:</span> </span>
+<span id="cb64-3"><a href="#cb64-3"></a>  <span class="bu">stosb</span> </span>
+<span id="cb64-4"><a href="#cb64-4"></a>  <span class="bu">inc</span> <span class="kw">al</span> </span>
+<span id="cb64-5"><a href="#cb64-5"></a>  <span class="cf">loop</span> dochar </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>MUL, IMUL instructions: MUL treats its operand values as unsigned, where as IMUL treats them as signed.</p>
+<p>STOSB, STOSW, STOSD, STOSQ instructions. RDI is changed according to the sizes of the quantity acted upon by the instruction.</p>
+<p>X86-64 removed all BCD math instructions found in the x86 definition: AAA, DAA, DAS, AAS, AAM, AAD.</p>
+<p>MOVSB,MOVSW,MOVSD,MOVSQ instructions. A block of memory data at the address stored in RSI is copied to the address stored in RDI.</p>
+<p>JRCXZ instruction: Watches the RCX register. When it sees that RCX has just gone to zero, it jumps to the specified label. Note: there is not JRCXNZ instruction.</p>
+<p>LOOP and LOOPNZ: LOOP watches the state of the RCX register, and closes the loop until RCX goes to 0. LOOPNZ watches both the state of the RCX register and the state of the zero flag ZF.</p>
+<p>When one of your programs begins running, any command-line arguments that were entered when the program was launched are passed to the program on the Linux stack.</p>
+<p>SCASB instruction: Scan String by Byte. - For up-memory searches, the CLD instruction is used to ensure that the DF is cleared. - The address of the first byte of the string to be searched is placed in RDI. - The value to be search for is placed in 8-bit register AL. - The maximum count is placed in RCX.</p>
+<p>The prefix may be REPE or REPNE.</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb65-1"><a href="#cb65-1"></a><span class="bu">REPNE</span> SCANSB</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Use REPNE: Repeat SCASB as long as the content pointed by RDI does not equal AL.</p>
+<p>Use REPE: Repeat SCASB as long as <code>[RDI]</code> equals AL.</p>
+<p>Program Prologus and Epilogs.</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode numberSource asm number-lines code-with-copy"><code class="sourceCode fasm"><span id="cb66-1"><a href="#cb66-1"></a><span class="co">;intel syntax </span></span>
+<span id="cb66-2"><a href="#cb66-2"></a><span class="co">;prologue </span></span>
+<span id="cb66-3"><a href="#cb66-3"></a><span class="bu">push</span> <span class="kw">rbp</span> </span>
+<span id="cb66-4"><a href="#cb66-4"></a><span class="bu">mov</span> <span class="kw">rbp</span><span class="op">,</span> <span class="kw">rsp</span> </span>
+<span id="cb66-5"><a href="#cb66-5"></a><span class="bu">and</span> <span class="kw">rsp</span><span class="op">,</span> <span class="op">-</span><span class="dv">16</span> </span>
+<span id="cb66-6"><a href="#cb66-6"></a></span>
+<span id="cb66-7"><a href="#cb66-7"></a><span class="co">;epilogue </span></span>
+<span id="cb66-8"><a href="#cb66-8"></a><span class="bu">mov</span> <span class="kw">rsp</span><span class="op">,</span> <span class="kw">rbp</span> </span>
+<span id="cb66-9"><a href="#cb66-9"></a><span class="bu">pop</span> <span class="kw">rbp</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="chap12-calling-external-functions-written-in-the-c-language" class="level2">
+<h2 class="anchored" data-anchor-id="chap12-calling-external-functions-written-in-the-c-language">Chap12, Calling external functions written in the C language</h2>
 </section>
 </section>
 <section id="end" class="level1">
 <h1>end</h1>
-<p>page 251 Chap9</p>
 <p>ideas:</p>
 <p>how to use <code>.equ . - MSGBEGIN</code> to define the message length, to be used in sys call.</p>
 <p>how to zero a register.</p>
 <p>Recursive function call after loop.</p>
 <p>Use MUL and SHIFT operations for multiplication.</p>
+<p>conditional move instructions</p>
+<p>how to inline assembly in Free PASCAL and GCC?</p>
+<p>using macros?</p>
+<p>local labels?</p>
 
 
 </section>
