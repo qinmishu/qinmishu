@@ -714,7 +714,7 @@ You can specify more than one value on a directive to place in memory:
 values: .int 10, 15, 20, 25, 30 
 ```
 
-When referencing data in the array, you must use an index system to determine which value you are accessing.  The way this id done is called "indexed memory mode". The memory location is determined by the following: 
+When referencing data in the array, you must use an index system to determine which value you are accessing.  The way this is done is called "indexed memory mode". The memory location is determined by the following: 
 
 - A base address 
 - A offset address to add to the base address 
@@ -1747,5 +1747,5 @@ using macros?
 
 local labels? 
 
-
+movsb,storsb,loop instructions? 
 
