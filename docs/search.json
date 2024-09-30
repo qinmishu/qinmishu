@@ -165,7 +165,7 @@
     "href": "posts/signal-and-system/index.html#deconvolution",
     "title": "Signal and System a Primer",
     "section": "2.8 Deconvolution",
-    "text": "2.8 Deconvolution"
+    "text": "2.8 Deconvolution\nWe know that if the impulse response h[n] of a system is known, we can find the response y[n] to an input x[n] as simply the convolution of x[n] and h[n]. If we know x[n] and y[n], how do we get h[n]? The process of getting h[n], given x[n] and y[n], is known as deconvolution. The process is also known as inverse filtering or system identification.\nDeconvolution has no direct mathematical definition in the continuous-time domain. Discrete convolution can be done in 2 ways: poly-nomial division and recursive algorithm."
   },
   {
     "objectID": "posts/arm-assembly/index.html#first-arm-assembly-program",
